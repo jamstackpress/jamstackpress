@@ -2,40 +2,50 @@
 
 namespace JamstackPress\Http;
 
-use JamstackPress\Http\Controllers\PostController;
-
-class Api
+/**
+ * @since 0.0.1
+ */
+class Api 
 {
-    /**
-     * The routes registered by the API.
-     * 
-     * @var array
-     */
-    protected static $endpoints = [
-        'posts' => [
-            'methods' => [\WP_REST_Server::READABLE],
-            'callback' => [PostController::class, 'get']
-        ],
-    ];
 
     /**
      * The API endpoints prefix.
      * 
      * @var string
      */
-    protected static $prefix = 'jamstackpress/v1';
+    private static $prefix = 'jamstackpress/v1';
 
     /**
-     * Register the API endpoints.
+     * The endpoints registered by the API.
+     * 
+     * @var array
+     */
+    private static $endpoints = [
+        'posts' => [
+            'methods' => \WP_REST_Server::READABLE,
+            'callback' => [Controllers\PostController::class, 'get'],
+            'permission_callback' => '__return_true'
+        ],
+        'comments' => [
+            'methods' => \WP_REST_Server::READABLE,
+            'callback' => [Controllers\CommentController::class, 'get'],
+            'permission_callback' => '__return_true'
+        ]
+    ];
+
+    /**
+     * Bootstrap the API functionalities.
      * 
      * @return void
      */
-    public static function registerEndpoints()
+    public static function register_endpoints()
     {
-        add_action('rest_api_init', function() {
-            foreach (static::$endpoints as $endpoint => $args) {
-                register_rest_route(static::$prefix, $endpoint, $args);
-            }
-        });
+        foreach (self::$endpoints as $endpoint => $parameters) {
+            register_rest_route(
+                self::$prefix,
+                $endpoint,
+                $parameters
+            );
+        }
     }
 }

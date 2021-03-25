@@ -2,34 +2,34 @@
 
 namespace JamstackPress;
 
-use JamstackPress\Http\Api;
-
-class Plugin
+/**
+ * @since 0.0.1
+ */
+class Plugin 
 {
-    /**
-     * The plugin current version.
-     * 
-     * @var string
-     */
-    public static $version = '0.0.1';
 
     /**
-     * Bootup the plugin instance.
+     * Boot the plugin.
      * 
      * @return void
      */
     public function boot()
     {
-        $this->registerApiRoutes();
+        // Setup the ORM.
+        Core\Database::boot();
+
+        // Add the plugin actions.
+        $this->add_actions();
     }
 
     /**
-     * Register the API routes that will be accessible.
+     * Register the plugin actions.
      * 
      * @return void
      */
-    private function registerApiRoutes()
+    public function add_actions()
     {
-        Api::registerEndpoints();
+        // Register the API endpoints.
+        add_action('rest_api_init', [Http\Api::class, 'register_endpoints']);
     }
 }

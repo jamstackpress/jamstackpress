@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '48a553126913815dda7109114413ab194e03d1fc',
+    'reference' => '704f928ad556c0cbe5f54becbf025d05225ce56e',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -105,7 +105,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '48a553126913815dda7109114413ab194e03d1fc',
+      'reference' => '704f928ad556c0cbe5f54becbf025d05225ce56e',
     ),
     'nesbot/carbon' => 
     array (

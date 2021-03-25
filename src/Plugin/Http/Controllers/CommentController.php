@@ -2,14 +2,15 @@
 
 namespace JamstackPress\Http\Controllers;
 
-use JamstackPress\Models\Post;
-use JamstackPress\Http\Filters\PostFilter;
+use JamstackPress\Models\Comment;
+use JamstackPress\Http\Filters\CommentFilter;
 
 /**
  * @since 0.0.1
  */
-class PostController 
+class CommentController 
 {
+
     /**
      * Return a listing of the resource.
      * 
@@ -18,6 +19,6 @@ class PostController
      */
     public static function get(\WP_REST_Request $request)
     {
-        return new \WP_REST_Response(Post::filter(new PostFilter($request))->get());
+        return Comment::filter(new CommentFilter($request))->get();
     }
 }

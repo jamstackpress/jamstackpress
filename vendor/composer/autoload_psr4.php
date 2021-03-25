@@ -20,6 +20,7 @@ return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'JamstackPress\\' => array($baseDir . '/src/Plugin'),
     'Illuminate\\Support\\' => array($vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/macroable', $vendorDir . '/illuminate/support'),
     'Illuminate\\Database\\' => array($vendorDir . '/illuminate/database'),
     'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),

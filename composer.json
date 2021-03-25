@@ -1,10 +1,9 @@
 {
     "name": "jamstackpress/jamstackpress",
-    "description": "Power-up your WordPress site and get it ready for JAMStack",
     "type": "project",
     "minimum-stability": "stable",
     "autoload": {
-        "psr-4": {"JamstackPress\\": "src/Plugin"}
+        "psr-4": { "JamstackPress\\" : "src/Plugin" }
     },
     "require": {
         "illuminate/database": "^8.34"
