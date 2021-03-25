@@ -3,8 +3,10 @@
     "description": "Power-up your WordPress site and get it ready for JAMStack",
     "type": "project",
     "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"JamstackPress\\": "src/Plugin"}
+    },
     "require": {
-        "illuminate/collections": "^8.34",
-        "clancats/hydrahon": "^1.1"
+        "illuminate/database": "^8.34"
     }
 }
