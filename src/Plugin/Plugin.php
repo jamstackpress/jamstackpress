@@ -2,11 +2,17 @@
 
 namespace JamstackPress;
 
-/**
- * @since 0.0.1
- */
+use JamstackPress\Http\Api;
+use JamstackPress\Database\Capsule;
+
 class Plugin 
 {
+    /**
+     * The plugin version.
+     * 
+     * @var string
+     */
+    public static $version = '0.0.1';
 
     /**
      * Boot the plugin.
@@ -15,21 +21,10 @@ class Plugin
      */
     public function boot()
     {
-        // Setup the ORM.
-        Core\Database::boot();
+        // Register the database provider.
+        Capsule::boot();
 
-        // Add the plugin actions.
-        $this->add_actions();
-    }
-
-    /**
-     * Register the plugin actions.
-     * 
-     * @return void
-     */
-    public function add_actions()
-    {
         // Register the API endpoints.
-        add_action('rest_api_init', [Http\Api::class, 'register_endpoints']);
+        Api::boot();
     }
 }

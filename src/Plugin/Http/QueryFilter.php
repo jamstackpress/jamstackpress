@@ -1,6 +1,6 @@
 <?php
 
-namespace JamstackPress\Core;
+namespace JamstackPress\Http;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
  */
 abstract class QueryFilter 
 {
-
     /**
      * The current request.
      * 

@@ -2,11 +2,9 @@
 
 namespace JamstackPress\Models;
 
-use JamstackPress\Core\Traits\Filterable;
+use JamstackPress\Database\Concerns\Filterable;
+use Illuminate\Database\Eloquent\Model;
 
-/**
- * @since 0.0.1
- */
 class Comment extends \Illuminate\Database\Eloquent\Model
 {
     use Filterable;

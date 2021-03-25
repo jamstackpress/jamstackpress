@@ -2,25 +2,21 @@
 
 namespace JamstackPress\Http;
 
-/**
- * @since 0.0.1
- */
-class Api 
+class Api
 {
-
     /**
-     * The API endpoints prefix.
+     * The endpoints prefix.
      * 
      * @var string
      */
-    private static $prefix = 'jamstackpress/v1';
+    protected static $prefix = 'jamstackpress/v1';
 
     /**
-     * The endpoints registered by the API.
+     * The endpoints available through the API.
      * 
      * @var array
      */
-    private static $endpoints = [
+    protected static $endpoints = [
         'posts' => [
             'methods' => \WP_REST_Server::READABLE,
             'callback' => [Controllers\PostController::class, 'get'],
@@ -30,22 +26,25 @@ class Api
             'methods' => \WP_REST_Server::READABLE,
             'callback' => [Controllers\CommentController::class, 'get'],
             'permission_callback' => '__return_true'
-        ]
+        ],
     ];
 
     /**
-     * Bootstrap the API functionalities.
+     * Bootstrap the API.
      * 
      * @return void
      */
-    public static function register_endpoints()
+    public static function boot()
     {
-        foreach (self::$endpoints as $endpoint => $parameters) {
-            register_rest_route(
-                self::$prefix,
-                $endpoint,
-                $parameters
-            );
-        }
+        // Create a new rest_api_init hook.
+        add_action('rest_api_init', function() {
+            foreach (static::$endpoints as $endpoint => $args) {
+                register_rest_route(
+                    static::$prefix,
+                    $endpoint,
+                    $args
+                );
+            }
+        });
     }
 }

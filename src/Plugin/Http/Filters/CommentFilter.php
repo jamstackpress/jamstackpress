@@ -2,7 +2,7 @@
 
 namespace JamstackPress\Http\Filters;
 
-use JamstackPress\Core\QueryFilter;
+use JamstackPress\Http\QueryFilter;
 
 /**
  * @since 0.0.1

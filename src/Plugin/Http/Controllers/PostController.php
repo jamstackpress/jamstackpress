@@ -4,6 +4,7 @@ namespace JamstackPress\Http\Controllers;
 
 use JamstackPress\Models\Post;
 use JamstackPress\Http\Filters\PostFilter;
+use WP_REST_Response;
 
 /**
  * @since 0.0.1
@@ -18,6 +19,6 @@ class PostController
      */
     public static function get(\WP_REST_Request $request)
     {
-        return new \WP_REST_Response(Post::filter(new PostFilter($request))->get());
+        return new WP_REST_Response(Post::filter(new PostFilter($request))->get());
     }
 }
