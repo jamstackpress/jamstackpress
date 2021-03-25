@@ -2,7 +2,8 @@
 
 namespace JamstackPress\Models;
 
-use JamstackPress\Database\Concerns\Filterable;
+use Illuminate\Database\Eloquent\Builder;
+use JamstackPress\Models\Concerns\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -10,14 +11,14 @@ class Post extends Model
     use Filterable;
 
     /**
-     * The primary key associated with the table.
+     * The model's primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ID';
 
     /**
-     * The list of attributes of the model.
+     * The model's attributes.
      * 
      * @var array
      */
@@ -47,6 +48,7 @@ class Post extends Model
      */
     public function getPostContentAttribute($value)
     {
+        // Apply the WordPress filters to the content.
         return apply_filters('the_content', $value);
     }
 
@@ -58,6 +60,7 @@ class Post extends Model
      */
     public function getPostTitleAttribute($value)
     {
+        // Apply the WordPress filters to the title.
         return apply_filters('the_title', $value);
     }
 

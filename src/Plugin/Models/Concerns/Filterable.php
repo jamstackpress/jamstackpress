@@ -1,6 +1,6 @@
 <?php
 
-namespace JamstackPress\Database\Concerns;
+namespace JamstackPress\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Http\QueryFilter;

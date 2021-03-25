@@ -48,7 +48,7 @@ class PostFilter extends QueryFilter
         if (!$status)
             return;
 
-        $this->builder->where('post_status', $status);
+        $this->builder->withoutGlobalScope('published')->where('post_status', $status);
     }
 
     /**
