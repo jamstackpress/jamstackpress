@@ -1,0 +1,10 @@
+{
+    "name": "jamstackpress/jamstackpress",
+    "description": "Power-up your WordPress site and get it ready for JAMStack",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {
+        "illuminate/collections": "^8.34",
+        "clancats/hydrahon": "^1.1"
+    }
+}
