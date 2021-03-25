@@ -33,7 +33,7 @@ if ( ! function_exists( 'jam_fs' ) ) {
 
         if ( ! isset( $jam_fs ) ) {
             // Include Freemius SDK.
-            require_once dirname(__FILE__) . '/freemius/start.php';
+            require_once dirname(__FILE__) . '/src/freemius/start.php';
 
             $jam_fs = fs_dynamic_init( array(
                 'id'                  => '8016',
