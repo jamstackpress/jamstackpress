@@ -24,6 +24,8 @@
  * 
  * @see https://dashboard.freemius.com/#!/live/plugins/8016/integration/
  */
+
+
 if ( ! function_exists( 'jam_fs' ) ) {
     // Create a helper function for easy SDK access.
     function jam_fs() {
@@ -31,21 +33,26 @@ if ( ! function_exists( 'jam_fs' ) ) {
 
         if ( ! isset( $jam_fs ) ) {
             // Include Freemius SDK.
-            require_once dirname(__FILE__) . '/src/freemius/start.php';
+            require_once dirname(__FILE__) . '/freemius/start.php';
 
             $jam_fs = fs_dynamic_init( array(
                 'id'                  => '8016',
                 'slug'                => 'jamstackpress',
                 'type'                => 'plugin',
                 'public_key'          => 'pk_444c369102867988cad4363ec8c6d',
-                'is_premium'          => false,
+                'is_premium'          => true,
+                'premium_suffix'      => 'Premium',
+                // If your plugin is a serviceware, set this option to false.
+                'has_premium_version' => true,
                 'has_addons'          => false,
-                'has_paid_plans'      => false,
+                'has_paid_plans'      => true,
                 'menu'                => array(
                     'slug'           => 'jamstackpress',
-                    'account'        => false,
                     'support'        => false,
                 ),
+                // Set the SDK to work in a sandbox mode (for development & testing).
+                // IMPORTANT: MAKE SURE TO REMOVE SECRET KEY BEFORE DEPLOYMENT.
+                'secret_key'          => 'sk_z?S8-S^O[ksO3*#V$b(9EZ(43>9Nf',
             ) );
         }
 
@@ -57,6 +64,7 @@ if ( ! function_exists( 'jam_fs' ) ) {
     // Signal that SDK was initiated.
     do_action( 'jam_fs_loaded' );
 }
+
 
 if (! defined( 'ABSPATH' ) ) {
     exit;
