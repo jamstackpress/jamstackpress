@@ -2,40 +2,19 @@
 
 namespace JamstackPress\Http\Filters;
 
-use JamstackPress\Http\Filters\Concerns\HasRelationships;
-use JamstackPress\Http\QueryFilter;
+use JamstackPress\Http\Filters\Filter;
 
-/**
- * @since 0.0.1
- */
-class PostFilter extends QueryFilter
+class PostFilter extends Filter
 {
-    use HasRelationships;
-
     /**
      * Filter by ID.
      * 
-     * @param int $id
+     * @param string $id
      * @return void
      */
-    public function id($id = null)
+    public function id($id)
     {
-        if (!$id) return;
-
-        $this->builder->where('ID', $id);
-    }
-
-    /**
-     * Filter by slug.
-     * 
-     * @param string $slug
-     * @return void
-     */
-    public function slug($slug = null)
-    {
-        if (!$slug) return;
-
-        $this->builder->where('post_name', $slug);
+        $this->builder->where('id', $id);
     }
 
     /**
@@ -44,10 +23,20 @@ class PostFilter extends QueryFilter
      * @param string $status
      * @return void
      */
-    public function status($status = null)
+    public function status($status)
     {
-        if (!$status) return;
+        $this->builder->withoutGlobalScope('is_published')
+            ->where('post_status', $status);
+    }
 
-        $this->builder->where('post_status', $status);
+    /**
+     * Filter by slug.
+     * 
+     * @param string $slug
+     * @return void
+     */
+    public function slug($slug)
+    {
+        $this->builder->where('post_name', $slug);
     }
 }

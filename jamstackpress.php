@@ -77,4 +77,4 @@ if (! defined( 'ABSPATH' ) ) {
  */
 require_once __DIR__ . '/vendor/autoload.php';
 
-(new JamstackPress\Plugin)->boot();
+JamstackPress\Kernel::boot();

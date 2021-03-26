@@ -8,5 +8,8 @@
     "require": {
         "illuminate/database": "^8.34",
         "illuminate/pagination": "^8.34"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.2"
     }
 }

@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '41628ad32b8da32359a1f0385ccc0d5f1f5dbd00',
+    'reference' => '1621e2417073b8019b361da6004ee3702065428f',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -114,7 +114,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '41628ad32b8da32359a1f0385ccc0d5f1f5dbd00',
+      'reference' => '1621e2417073b8019b361da6004ee3702065428f',
     ),
     'nesbot/carbon' => 
     array (
@@ -262,6 +262,15 @@ private static $installed = array (
       array (
         0 => '2.3',
       ),
+    ),
+    'symfony/var-dumper' => 
+    array (
+      'pretty_version' => 'v5.2.5',
+      'version' => '5.2.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '002ab5a36702adf0c9a11e6d8836623253e9045e',
     ),
     'voku/portable-ascii' => 
     array (

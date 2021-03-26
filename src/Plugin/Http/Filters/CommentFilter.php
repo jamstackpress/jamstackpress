@@ -2,65 +2,41 @@
 
 namespace JamstackPress\Http\Filters;
 
-use JamstackPress\Http\Filters\Concerns\HasRelationships;
-use JamstackPress\Http\QueryFilter;
+use JamstackPress\Http\Filters\Filter;
 
-/**
- * @since 0.0.1
- */
-class CommentFilter extends QueryFilter
+class CommentFilter extends Filter
 {
-    use HasRelationships;
-
     /**
      * Filter by ID.
      * 
-     * @param int $id
+     * @param string $id
      * @return void
      */
-    public function id($id = null)
+    public function id($id)
     {
-        if (!$id) return;
-
-        $this->builder->where('comment_ID', $id);
+        $this->builder->where('comment_id', $id);
     }
 
     /**
-     * Filter by author name.
+     * Filter by status.
      * 
-     * @param string $author
+     * @param string $status
      * @return void
      */
-    public function author($author = null)
+    public function status($status)
     {
-        if (!$author) return;
-
-        $this->builder->where('comment_author', $author);
+        $this->builder->withoutGlobalScope('is_approved')
+            ->where('comment_approved', (int) $status);
     }
 
     /**
      * Filter by post.
      * 
-     * @param string $post
+     * @param string $id
      * @return void
      */
-    public function post($post = null)
+    public function post($id)
     {
-        if (!$post) return;
-
-        $this->builder->where('comment_post_ID', $post);
-    }
-
-    /**
-     * Filter by approvement status.
-     * 
-     * @param string $approved
-     * @return void
-     */
-    public function approved($approved = null)
-    {
-        if (!$approved) return;
-
-        $this->builder->where('comment_approved', $approved);
+        $this->builder->where('comment_post_id', $id);
     }
 }

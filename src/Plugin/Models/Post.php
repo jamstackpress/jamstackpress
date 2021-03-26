@@ -5,13 +5,22 @@ namespace JamstackPress\Models;
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use JamstackPress\Models\Contracts\WordPressEntitiable;
+use WP_Post;
 
-class Post extends Model
+class Post extends Model implements WordPressEntitiable
 {
     use Filterable;
 
     /**
-     * The model's primary key.
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'posts';
+
+    /**
+     * The primary key for the model.
      *
      * @var string
      */
@@ -19,25 +28,26 @@ class Post extends Model
 
     /**
      * The model's attributes.
-     * 
+     *
      * @var array
      */
     protected $attributes = [
-        'ID', 'post_author', 'post_date', 'post_date_gmt', 'post_content',
-        'post_title', 'post_excerpt', 'post_status', 'comment_status', 'ping_status',
-        'post_password', 'post_name', 'to_ping', 'pinged', 'post_modified',
-        'post_modified_gmt', 'post_content_filtered', 'post_parent', 'guid',
-        'menu_order', 'post_type', 'post_mime_type', 'comment_count'
+        'ID', 'post_author', 'post_date', 'post_date_gmt',
+        'post_content', 'post_title', 'post_excerpt', 'post_status',
+        'comment_status', 'ping_status', 'post_password', 'post_name',
+        'to_ping', 'pinged', 'post_modified', 'post_modified_gmt',
+        'post_content_filtered', 'post_parent', 'guid', 'menu_order',
+        'post_type', 'post_mime_type', 'comment_count'
     ];
 
     /**
-     * The list of hidden attributes.
-     * 
+     * The attributes that should be hidden for serialization.
+     *
      * @var array
      */
     protected $hidden = [
-        'post_password', 'ping_status', 'to_ping', 'pinged',
-        'menu_order'
+        'ping_status', 'post_password', 'to_ping', 'pinged',
+        'menu_order', 'post_mime_type'
     ];
 
     /**
@@ -48,42 +58,90 @@ class Post extends Model
     protected static function booted()
     {
         // Return only the posts with type "post".
-        static::addGlobalScope('type', function (Builder $builder) {
-            $builder->where('post_Type', 'post');
+        static::addGlobalScope('is_post', function(Builder $builder) {
+            $builder->where('post_type', 'post');
+        });
+
+        // Return only the published posts.
+        static::addGlobalScope('is_published', function(Builder $builder) {
+            $builder->where('post_status', 'publish');
         });
     }
 
     /**
-     * Returns the content attribute.
+     * Transform the current model to its WordPress entity.
      * 
-     * @param string $value
-     * @return string
+     * @return mixed
      */
-    public function getPostContentAttribute($value)
+    public function toWordPressEntity()
     {
-        // Apply the WordPress filters to the content.
-        return apply_filters('the_content', $value);
+        return new WP_Post($this->toArray());
     }
 
     /**
-     * Returns the title attribute.
-     * 
-     * @param string $value
+     * Get the post's title.
+     *
+     * @param  string  $value
      * @return string
      */
     public function getPostTitleAttribute($value)
     {
-        // Apply the WordPress filters to the title.
         return apply_filters('the_title', $value);
     }
 
     /**
-     * Comments relation for a post.
+     * Get the post's content.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPostContentAttribute($value)
+    {
+        return apply_filters('the_content', $value);
+    }
+
+    /**
+     * Comment relation for the post.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
-        return $this->hasMany(\JamstackPress\Models\Comment::class, 'comment_post_ID', 'ID');
+        return $this->hasMany(\JamstackPress\Models\Comment::class, 'comment_post_ID');
+    }
+
+    /**
+     * Terms relation for the post.
+     * 
+     * @return Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function terms()
+    {
+        return $this->hasManyThrough(
+            \JamstackPress\Models\Term\Taxonomy::class,
+            \JamstackPress\Models\Term\Relationship::class,
+            'object_id',
+            'term_taxonomy_id'
+        );
+    }
+
+    /**
+     * The categories associated to the post.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function categories()
+    {
+        return $this->terms()->where('taxonomy', 'category');
+    }
+
+    /**
+     * The tags associated to the post.
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function tags()
+    {
+        return $this->terms()->where('taxonomy', 'post_tag');
     }
 }
