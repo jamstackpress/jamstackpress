@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '1621e2417073b8019b361da6004ee3702065428f',
+    'reference' => 'a8e923862532afd6b7dd0390eaa1fa357480b0cd',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -90,7 +90,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '1621e2417073b8019b361da6004ee3702065428f',
+      'reference' => 'a8e923862532afd6b7dd0390eaa1fa357480b0cd',
     ),
     'nesbot/carbon' => 
     array (
@@ -238,15 +238,6 @@
       array (
         0 => '2.3',
       ),
-    ),
-    'symfony/var-dumper' => 
-    array (
-      'pretty_version' => 'v5.2.5',
-      'version' => '5.2.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '002ab5a36702adf0c9a11e6d8836623253e9045e',
     ),
     'voku/portable-ascii' => 
     array (
