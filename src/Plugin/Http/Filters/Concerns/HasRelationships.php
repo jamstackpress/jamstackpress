@@ -13,9 +13,6 @@ trait HasRelationships
      */
     public function include($relationships = null)
     {
-        if (!$relationships)
-            return;
-
         // Get the builder model.
         $model = $this->builder->getModel();
 

@@ -2,6 +2,7 @@
 
 namespace JamstackPress\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,19 @@ class Comment extends Model
         'comment_approved', 'comment_agent', 'comment_type', 'comment_parent',
         'user_id'
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        // Return only the comments with type "comment".
+        static::addGlobalScope('type', function (Builder $builder) {
+            $builder->where('comment_type', 'comment');
+        });
+    }
 
     /**
      * Post relation for a comment.

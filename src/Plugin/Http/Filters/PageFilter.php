@@ -8,7 +8,7 @@ use JamstackPress\Http\QueryFilter;
 /**
  * @since 0.0.1
  */
-class PostFilter extends QueryFilter
+class PageFilter extends QueryFilter
 {
     use HasRelationships;
 

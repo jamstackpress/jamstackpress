@@ -3,19 +3,22 @@
 namespace JamstackPress\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use JamstackPress\Models\Concerns\Filterable;
-use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Page extends Post
 {
-    use Filterable;
-
     /**
      * The model's primary key.
      *
      * @var string
      */
     protected $primaryKey = 'ID';
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'posts';
 
     /**
      * The model's attributes.
@@ -47,43 +50,9 @@ class Post extends Model
      */
     protected static function booted()
     {
-        // Return only the posts with type "post".
+        // Return only the posts with type "page".
         static::addGlobalScope('type', function (Builder $builder) {
-            $builder->where('post_Type', 'post');
+            $builder->where('post_type', 'page');
         });
-    }
-
-    /**
-     * Returns the content attribute.
-     * 
-     * @param string $value
-     * @return string
-     */
-    public function getPostContentAttribute($value)
-    {
-        // Apply the WordPress filters to the content.
-        return apply_filters('the_content', $value);
-    }
-
-    /**
-     * Returns the title attribute.
-     * 
-     * @param string $value
-     * @return string
-     */
-    public function getPostTitleAttribute($value)
-    {
-        // Apply the WordPress filters to the title.
-        return apply_filters('the_title', $value);
-    }
-
-    /**
-     * Comments relation for a post.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany(\JamstackPress\Models\Comment::class, 'comment_post_ID', 'ID');
     }
 }

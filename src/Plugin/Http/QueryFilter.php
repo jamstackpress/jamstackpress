@@ -5,9 +5,6 @@ namespace JamstackPress\Http;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-/**
- * @since 0.0.1
- */
 abstract class QueryFilter 
 {
     /**
@@ -84,9 +81,6 @@ abstract class QueryFilter
      */
     public function fields($_fields = null)
     {
-        if (!$_fields)
-            return;
-
         // Get the current table.
         $model = $this->builder->getModel();
 

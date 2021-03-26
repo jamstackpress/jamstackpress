@@ -17,14 +17,19 @@ class Api
      * @var array
      */
     protected static $endpoints = [
-        'posts' => [
-            'methods' => \WP_REST_Server::READABLE,
-            'callback' => [Controllers\PostController::class, 'get'],
-            'permission_callback' => '__return_true'
-        ],
         'comments' => [
             'methods' => \WP_REST_Server::READABLE,
             'callback' => [Controllers\CommentController::class, 'get'],
+            'permission_callback' => '__return_true'
+        ],
+        'pages' => [
+            'methods' => \WP_REST_Server::READABLE,
+            'callback' => [Controllers\PageController::class, 'get'],
+            'permission_callback' => '__return_true'
+        ],
+        'posts' => [
+            'methods' => \WP_REST_Server::READABLE,
+            'callback' => [Controllers\PostController::class, 'get'],
             'permission_callback' => '__return_true'
         ],
     ];

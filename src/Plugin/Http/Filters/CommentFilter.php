@@ -20,6 +20,8 @@ class CommentFilter extends QueryFilter
      */
     public function id($id = null)
     {
+        if (!$id) return;
+
         $this->builder->where('comment_ID', $id);
     }
 
@@ -31,6 +33,8 @@ class CommentFilter extends QueryFilter
      */
     public function author($author = null)
     {
+        if (!$author) return;
+
         $this->builder->where('comment_author', $author);
     }
 
@@ -42,6 +46,8 @@ class CommentFilter extends QueryFilter
      */
     public function post($post = null)
     {
+        if (!$post) return;
+
         $this->builder->where('comment_post_ID', $post);
     }
 
@@ -53,6 +59,8 @@ class CommentFilter extends QueryFilter
      */
     public function approved($approved = null)
     {
+        if (!$approved) return;
+
         $this->builder->where('comment_approved', $approved);
     }
 }
