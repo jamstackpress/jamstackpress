@@ -2,12 +2,16 @@
 
 namespace JamstackPress\Models\Term;
 
+use Illuminate\Database\Eloquent\Builder;
+use JamstackPress\Models\Concerns\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use JamstackPress\Models\Contracts\WordPressEntitiable;
 use WP_Taxonomy;
 
 class Taxonomy extends Model implements WordPressEntitiable
 {
+    use Filterable;
+
     /**
      * The table associated with the model.
      *
@@ -57,5 +61,27 @@ class Taxonomy extends Model implements WordPressEntitiable
     public function term()
     {
         return $this->belongsTo(\JamstackPress\Models\Term::class, 'term_id', 'term_id');
+    }
+
+    /**
+     * Get the taxonomies corresponding to a category.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeIsCategory(Builder $builder)
+    {
+        return $builder->where('taxonomy', 'category');
+    }
+
+    /**
+     * Get the taxonomies corresponding to a post tag.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function scopeIsPostTag(Builder $builder)
+    {
+        return $builder->where('taxonomy', 'post_tag');
     }
 }

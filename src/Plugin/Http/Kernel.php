@@ -33,6 +33,11 @@ class Kernel
             'methods' => [WP_REST_Server::READABLE],
             'callback' => [Controllers\Comments::class, 'get'],
             'permission_callback' => '__return_true'
+        ],
+        'categories' => [
+            'methods' => [WP_REST_Server::READABLE],
+            'callback' => [Controllers\Taxonomies::class, 'categories'],
+            'permission_callback' => '__return_true'
         ]
     ];
 
