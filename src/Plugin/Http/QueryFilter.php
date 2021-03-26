@@ -45,8 +45,9 @@ abstract class QueryFilter
     {
         $this->builder = $builder;
 
+        $params = $this->request->get_params();
         // Apply each of the filters specified.
-        foreach ($this->request->get_params() as $name => $value)
+        foreach ($params as $name => $value)
         {
             // If the filter doesn't exist, continue.
             if (!method_exists($this, $name)) {
@@ -64,5 +65,46 @@ abstract class QueryFilter
                 $this->$name();
             }
         }
+
+        // Paginate the response.
+        if (array_key_exists('page', $params)) {
+            $perPage = $params['per_page'] ?? get_option('posts_per_page');
+            
+            return $this->builder->paginate($perPage, ['*'], 'page', $params['page']);
+        }
+
+        return $this->builder->get();
+    }
+
+    /**
+     * Select only the given fields.
+     * 
+     * @param string $fields
+     * @return void
+     */
+    public function fields($_fields = null)
+    {
+        if (!$_fields)
+            return;
+
+        // Get the current table.
+        $model = $this->builder->getModel();
+
+        // Explode the string into an array.
+        $fields = explode(',', $_fields);
+
+        // Filter the columns that exist in the schema.
+        $columns = array_filter(
+            $fields,
+            function($column) use ($model) {
+                return in_array(
+                    $column, 
+                    $model->getAttributes()
+                );
+            }
+        );
+
+        // Select the columns
+        $this->builder->select(...$columns);
     }
 }

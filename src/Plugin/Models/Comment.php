@@ -2,10 +2,10 @@
 
 namespace JamstackPress\Models;
 
-use JamstackPress\Database\Concerns\Filterable;
+use JamstackPress\Models\Concerns\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends \Illuminate\Database\Eloquent\Model
+class Comment extends Model
 {
     use Filterable;
 

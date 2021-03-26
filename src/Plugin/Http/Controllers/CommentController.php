@@ -19,6 +19,6 @@ class CommentController
      */
     public static function get(\WP_REST_Request $request)
     {
-        return new WP_REST_Response(Comment::filter(new CommentFilter($request))->get());
+        return new WP_REST_Response(Comment::filter(new CommentFilter($request)));
     }
 }

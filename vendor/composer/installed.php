@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '704f928ad556c0cbe5f54becbf025d05225ce56e',
+    'reference' => '41628ad32b8da32359a1f0385ccc0d5f1f5dbd00',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -65,6 +65,15 @@
       ),
       'reference' => '300aa13c086f25116b5f3cde3ca54ff5c822fb05',
     ),
+    'illuminate/pagination' => 
+    array (
+      'pretty_version' => 'v8.34.0',
+      'version' => '8.34.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'fc5464ff89e85b3973793bbf520638c9f272eb39',
+    ),
     'illuminate/support' => 
     array (
       'pretty_version' => 'v8.34.0',
@@ -81,7 +90,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '704f928ad556c0cbe5f54becbf025d05225ce56e',
+      'reference' => '41628ad32b8da32359a1f0385ccc0d5f1f5dbd00',
     ),
     'nesbot/carbon' => 
     array (

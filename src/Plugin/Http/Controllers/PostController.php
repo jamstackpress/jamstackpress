@@ -19,6 +19,6 @@ class PostController
      */
     public static function get(\WP_REST_Request $request)
     {
-        return new WP_REST_Response(Post::filter(new PostFilter($request))->get());
+        return new WP_REST_Response(Post::filter(new PostFilter($request)));
     }
 }

@@ -6,6 +6,7 @@
         "psr-4": { "JamstackPress\\" : "src/Plugin" }
     },
     "require": {
-        "illuminate/database": "^8.34"
+        "illuminate/database": "^8.34",
+        "illuminate/pagination": "^8.34"
     }
 }
