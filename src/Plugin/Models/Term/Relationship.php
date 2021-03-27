@@ -2,7 +2,7 @@
 
 namespace JamstackPress\Models\Term;
 
-use Illuminate\Database\Eloquent\Model;
+use JamstackPress\Models\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Relationship extends Model

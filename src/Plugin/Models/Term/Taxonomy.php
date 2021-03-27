@@ -4,7 +4,7 @@ namespace JamstackPress\Models\Term;
 
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
-use Illuminate\Database\Eloquent\Model;
+use JamstackPress\Models\Model;
 use JamstackPress\Models\Contracts\WordPressEntitiable;
 use WP_Taxonomy;
 

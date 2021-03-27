@@ -4,7 +4,7 @@ namespace JamstackPress\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
-use Illuminate\Database\Eloquent\Model;
+use JamstackPress\Models\Model;
 use JamstackPress\Models\Contracts\WordPressEntitiable;
 use WP_Post;
 
@@ -58,7 +58,7 @@ class Post extends Model implements WordPressEntitiable
     protected static function booted()
     {
         // Return only the posts with type "post".
-        static::addGlobalScope('is_post', function(Builder $builder) {
+        static::addGlobalScope('type', function(Builder $builder) {
             $builder->where('post_type', 'post');
         });
 

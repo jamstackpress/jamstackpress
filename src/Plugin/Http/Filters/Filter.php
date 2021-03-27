@@ -88,7 +88,7 @@ abstract class Filter
      * @param string $fields
      * @return void
      */
-    public function fields($fields = null)
+    public function fields($fields)
     {
         $attributes = $this->builder->getModel()->getAttributes();
         $columns = explode(',', $fields);
@@ -115,7 +115,7 @@ abstract class Filter
      * @param string $relationships
      * @return void
      */
-    public function include($relationships = null)
+    public function include($relationships)
     {
         // Get the builder model.
         $model = $this->builder->getModel();
