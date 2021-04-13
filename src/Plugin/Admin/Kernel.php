@@ -52,7 +52,7 @@ class Kernel
 		);
 
 		add_settings_section(
-			'jamstackpress_settings_setting_section', // id
+			'jamstackpress_setting_section', // id
 			'Settings', // title
 			[static::class, 'jamstackpress_settings_section_info' ], // callback
 			'jamstackpress-admin' // page
@@ -63,7 +63,7 @@ class Kernel
 			'Front Base URL', // title
 			[static::class, 'front_base_url_0_callback' ], // callback
 			'jamstackpress-admin', // page
-			'jamstackpress_settings_setting_section' // section
+			'jamstackpress_setting_section' // section
 		);
 
 		add_settings_field(
@@ -71,7 +71,7 @@ class Kernel
 			'Legible Human Date', // title
 			[static::class, 'legible_human_date_1_callback' ], // callback
 			'jamstackpress-admin', // page
-			'jamstackpress_settings_setting_section' // section
+			'jamstackpress_setting_section' // section
 		);
 
 		add_settings_field(
@@ -79,7 +79,7 @@ class Kernel
 			'Full Slug field', // title
 			[static::class, 'full_slug_field_2_callback' ], // callback
 			'jamstackpress-admin', // page
-			'jamstackpress_settings_setting_section' // section
+			'jamstackpress_setting_section' // section
 		);
 
 		add_settings_field(
@@ -87,7 +87,7 @@ class Kernel
 			'Front URL Field', // title
 			[static::class, 'front_url_field_3_callback' ], // callback
 			'jamstackpress-admin', // page
-			'jamstackpress_settings_setting_section' // section
+			'jamstackpress_setting_section' // section
 		);
 	}
 
