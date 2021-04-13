@@ -18,7 +18,8 @@ class Kernel
      */
     protected static $bootable = [
         \JamstackPress\Http\Kernel::class,
-        \JamstackPress\Database\Kernel::class
+        \JamstackPress\Database\Kernel::class,
+        \JamstackPress\Admin\Kernel::class
     ];
 
     /**
