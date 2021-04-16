@@ -58,16 +58,16 @@ class Kernel
      * 
      * @return void
      */
-	public static function addMenuPageToSidebar()
+    public static function addMenuPageToSidebar()
     {
-		add_menu_page(
-			'JamstackPress',
-			'JamstackPress',
-			'manage_options',
-			'jamstackpress',
-			[static::class, 'renderPage' ],
-			'dashicons-rest-api',
-		);
+        add_menu_page(
+            'JamstackPress',
+            'JamstackPress',
+            'manage_options',
+            'jamstackpress',
+            [static::class, 'renderPage' ],
+            'dashicons-rest-api',
+        );
 	}
 
     /**
@@ -75,7 +75,7 @@ class Kernel
      * 
      * @return void
      */
-	public static function renderPage()
+    public static function renderPage()
     {
         // Render the page view.
         require_once 'views/page.php';
