@@ -61,8 +61,8 @@ class Kernel
     public static function addMenuPageToSidebar()
     {
         add_menu_page(
-            'JamstackPress',
-            'JamstackPress',
+            'JAMStackPress',
+            'JAMStackPress',
             'manage_options',
             'jamstackpress',
             [static::class, 'renderPage' ],
