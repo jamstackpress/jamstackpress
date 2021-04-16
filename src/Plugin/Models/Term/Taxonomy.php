@@ -27,11 +27,11 @@ class Taxonomy extends Model implements WordPressEntitiable
     protected $primaryKey = 'term_taxonomy_id';
 
     /**
-     * The model's attributes.
+     * The model's fillable attributes.
      *
      * @var array
      */
-    protected $attributes = [
+    protected $fillable = [
         'term_taxonomy_id', 'term_id', 'taxonomy', 'description',
         'parent', 'count'
     ];
