@@ -4,6 +4,7 @@ namespace JamstackPress\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
+use JamstackPress\Admin\Helper as AdminHelper;
 use JamstackPress\Models\Model;
 use JamstackPress\Models\Contracts\WordPressEntitiable;
 use WP_Post;
@@ -27,11 +28,11 @@ class Post extends Model implements WordPressEntitiable
     protected $primaryKey = 'ID';
 
     /**
-     * The model's attributes.
+     * The model's fillable attributes.
      *
      * @var array
      */
-    protected $attributes = [
+    protected $fillable = [
         'ID', 'post_author', 'post_date', 'post_date_gmt',
         'post_content', 'post_title', 'post_excerpt', 'post_status',
         'comment_status', 'ping_status', 'post_password', 'post_name',
@@ -47,8 +48,15 @@ class Post extends Model implements WordPressEntitiable
      */
     protected $hidden = [
         'ping_status', 'post_password', 'to_ping', 'pinged',
-        'menu_order', 'post_mime_type'
+        'menu_order', 'post_mime_type', 'full_slug'
     ];
+
+    /**
+     * The attributes that should be appended.
+     * 
+     * @var array
+     */
+    protected $appends = ['full_slug'];
 
     /**
      * The "booted" method of the model.
@@ -79,6 +87,24 @@ class Post extends Model implements WordPressEntitiable
     }
 
     /**
+     * Return an array with the list of selectable attributes
+     * of the model.
+     * 
+     * @return void
+     */
+    public function getSelectableAttributes()
+    {
+        $attributes = parent::getSelectableAttributes();
+
+        // Full slug field.
+        if (!get_option('jamstackpress_full_slug_field', false)) {
+            unset($attributes[array_search('full_slug', $attributes)]);
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Get the post's title.
      *
      * @param  string  $value
@@ -87,6 +113,34 @@ class Post extends Model implements WordPressEntitiable
     public function getPostTitleAttribute($value)
     {
         return apply_filters('the_title', $value);
+    }
+
+    /**
+     * Get the post's full slug attribute.
+     * 
+     * @return string
+     */
+    public function getFullSlugAttribute()
+    {
+        // Get the frontend url.
+        $frontendUrl = get_option('jamstackpress_frontend_base_url', get_site_url());
+        if (empty($frontendUrl)) {
+            $frontendUrl = get_site_url();
+        }
+
+        /* Get the permalink created by WordPress, and return the
+         * mutations we need. */
+        return [
+            'slug' => str_replace(
+                get_site_url(), 
+                '', 
+                get_permalink($this->attributes['ID'])
+            ),
+            'front_url' => str_replace(
+                get_site_url(), trim($frontendUrl, '/'),  
+                get_permalink($this->attributes['ID'])
+            )
+        ];
     }
 
     /**

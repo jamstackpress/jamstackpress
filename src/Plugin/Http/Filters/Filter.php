@@ -53,6 +53,12 @@ abstract class Filter
 
             $method = Str::camel($parameter);
 
+            // We're going to handle the fields method afterwards.
+            if ($method == 'fields') {
+                $fields = explode(',', $value);
+                continue;
+            }
+
             /* Check if the method needs parameters and if we received
              * a value for that method. If no value was received, continue
              * with the loop, else call the method without parameters. */
@@ -70,16 +76,50 @@ abstract class Filter
 
         // For last, check if there's a page filter.
         if (in_array('page', array_keys($parameters))) {
-            return $this->builder->paginate(
+            // Paginate the results.
+            $rows = $this->builder->paginate(
                 $parameters['per_page'] ?? get_option('posts_per_page'),
                 ['*'],
                 'page',
                 $parameters['page']
             );
+        } else {
+            $rows = $this->builder->get();
         }
 
-        // Return the results.
-        return $this->builder->get();
+        /* If the fields method was specified, get only the
+         * corresponding fields. */
+        if (isset($fields)) {
+            // Check if there are selectable attributes.
+            $attributes = array_intersect(
+                $this->builder->getModel()->getSelectableAttributes(),
+                $fields
+            );
+
+            /* If there are attributes, get them, otherwise return all
+             * the attributes */
+            if ($attributes) {
+                // If the result is paginated, we need another treatment.
+                if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+                    return $rows->setCollection(
+                        $rows->getCollection()->map->only($attributes)
+                    );
+                }
+
+                return $rows->map->only($attributes);
+            }
+        }
+
+        // If there are no fields specified, return all of them.
+        if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+            return $rows->setCollection(
+                $rows->getCollection()->map->only(
+                    $this->builder->getModel()->getSelectableAttributes()
+                )
+            );
+        }
+
+        return $rows->map->only($this->builder->getModel()->getSelectableAttributes());
     }
 
     /**
@@ -90,7 +130,7 @@ abstract class Filter
      */
     public function fields($fields)
     {
-        $attributes = $this->builder->getModel()->getAttributes();
+        $attributes = $this->builder->getModel()->getFillable();
         $columns = explode(',', $fields);
 
         // Select only the columns that exist in the model.

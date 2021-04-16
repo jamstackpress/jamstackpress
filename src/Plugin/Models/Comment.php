@@ -27,11 +27,11 @@ class Comment extends Model implements WordPressEntitiable
     protected $primaryKey = 'comment_ID';
 
     /**
-     * The model's attributes.
+     * The model's fillable attributes.
      *
      * @var array
      */
-    protected $attributes = [
+    protected $fillable = [
         'comment_id', 'comment_post_ID', 'comment_author',
         'comment_author_email', 'comment_author_url',
         'comment_author_ip', 'comment_date', 'comment_date_gmt',

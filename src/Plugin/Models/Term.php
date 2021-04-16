@@ -23,11 +23,11 @@ class Term extends Model implements WordPressEntitiable
     protected $primaryKey = 'term_id';
 
     /**
-     * The model's attributes.
+     * The model's fillable attributes.
      *
      * @var array
      */
-    protected $attributes = [
+    protected $fillable = [
         'term_id', 'name', 'slug', 'term_group'
     ];
 
