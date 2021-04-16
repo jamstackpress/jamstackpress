@@ -68,7 +68,7 @@ class Kernel
             [static::class, 'renderPage' ],
             'dashicons-rest-api',
         );
-	}
+    }
 
     /**
      * Render the options page.
@@ -79,7 +79,7 @@ class Kernel
     {
         // Render the page view.
         require_once 'views/page.php';
-	}
+    }
 
     /**
      * Register the settings and sections corresponding to the
@@ -90,12 +90,12 @@ class Kernel
     public static function registerSettings()
     {
         // Register the general section.
-		add_settings_section(
-			'jamstackpress-options',
-			'Settings',
-			null,
-			'jamstackpress-admin'
-		);
+        add_settings_section(
+            'jamstackpress-options',
+            'Settings',
+            null,
+            'jamstackpress-admin'
+        );
 
         // Add the corresponding settings fields.
         foreach (static::$settings as $setting) {
