@@ -112,7 +112,7 @@ abstract class Filter
      * @param string $fields
      * @return void
      */
-    public function fields($rows, $fields)
+    protected function fields($rows, $fields)
     {
         // Check if there are selectable attributes.
         $attributes = array_intersect(
@@ -143,7 +143,7 @@ abstract class Filter
      * @param string $relationships
      * @return void
      */
-    public function include($relationships)
+    protected function include($relationships)
     {
         // Get the builder model.
         $model = $this->builder->getModel();
