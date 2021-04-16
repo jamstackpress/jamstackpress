@@ -3,6 +3,7 @@
 namespace JamstackPress\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use ReflectionMethod;
 use WP_REST_Request;
 use Illuminate\Support\Str;
@@ -54,8 +55,18 @@ abstract class Filter
             $method = Str::camel($parameter);
 
             // We're going to handle the fields method afterwards.
-            if ($method == 'fields') {
-                $fields = explode(',', $value);
+            if ($method === 'fields') {
+                $fields = isset($fields) && is_array($fields) ? 
+                    array_merge(explode(',', $value)) : 
+                    explode(',', $value);
+                continue;
+            }
+
+            // The include function returns the relationship fields.
+            if ($method === 'include') {
+                $relationshipsFields = isset($relationshipsFields) && !is_array($relationshipsFields) ?
+                    array_merge($this->include($value)) :
+                    $this->include($value);
                 continue;
             }
 
@@ -74,66 +85,64 @@ abstract class Filter
             }
         }   
 
-        // For last, check if there's a page filter.
-        if (in_array('page', array_keys($parameters))) {
-            // Paginate the results.
-            $rows = $this->builder->paginate(
-                $parameters['per_page'] ?? get_option('posts_per_page'),
-                ['*'],
-                'page',
-                $parameters['page']
-            );
-        } else {
-            $rows = $this->builder->get();
-        }
+        // Get the rows.
+        $rows = $this->builder->get();
 
         /* If the fields method was specified, get only the
          * corresponding fields. */
-        if (isset($fields) && $result = $this->fields($rows, $fields)) {
-            return $result;
-        }
+        $rows = $this->fields($rows, $fields ?? null, $relationshipsFields ?? null);
 
-        // If there are no fields specified, return all of them.
-        if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-            return $rows->setCollection(
-                $rows->getCollection()->map->only(
-                    $this->builder->getModel()->getSelectableAttributes()
-                )
+        // Check if we need to paginate the results.
+        if (in_array('page', array_keys($parameters))) {
+            $sliced = $rows->slice(
+                ($parameters['per_page'] ?? get_option('posts_per_page')) * ($parameters['page'] - 1),
+                $parameters['per_page'] ?? get_option('posts_per_page')
+            );
+
+            return new LengthAwarePaginator(
+                $sliced->values(),
+                $sliced->count(),
+                $parameters['per_page'] ?? get_option('posts_per_page'),
+                $parameters['page']
             );
         }
 
-        return $rows->map->only($this->builder->getModel()->getSelectableAttributes());
+
+        return $rows;
     }
 
     /**
      * Select only a set of fields from the model.
      * 
      * @param mixed $rows
-     * @param string $fields
+     * @param array $fields
+     * @param array $relationshipsFields
      * @return void
      */
-    protected function fields($rows, $fields)
+    protected function fields($rows, $fields = null, $relationshipsFields = null)
     {
+        $attributes = $this->builder->getModel()->getSelectableAttributes();
+
         // Check if there are selectable attributes.
-        $attributes = array_intersect(
-            $this->builder->getModel()->getSelectableAttributes(),
-            $fields
-        );
+        if ($fields) {
+            $attributes = array_intersect(
+                $this->builder->getModel()->getSelectableAttributes(),
+                $fields
+            );
+        }
+
+        // Check if there are selectable relationships fields.
+        if ($relationshipsFields) {
+            $attributes = array_merge($attributes, $relationshipsFields);
+        }
 
         /* If there are attributes, get them, otherwise return all
          * the attributes */
         if ($attributes) {
-            // If the result is paginated, we need another treatment.
-            if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-                return $rows->setCollection(
-                    $rows->getCollection()->map->only($attributes)
-                );
-            }
-
             return $rows->map->only($attributes);
         }
 
-        return null;
+        return $rows->map->only($this->builder->getModel()->getSelectableAttributes());
     }
 
     /**
@@ -145,6 +154,9 @@ abstract class Filter
      */
     protected function include($relationships)
     {
+        // The fields that will be selected.
+        $fields = [];
+
         // Get the builder model.
         $model = $this->builder->getModel();
 
@@ -160,6 +172,9 @@ abstract class Filter
                 if (!method_exists($model, $parts[0])) {
                     continue;
                 }
+
+                // Set the relationship as a selectable field.
+                array_push($fields, $relationship);
                 
                 /* If we select custom columns on a relationship, Eloquent needs
                  * the child's primary key and the parent foreign key to work.
@@ -171,18 +186,18 @@ abstract class Filter
                 $related = $model->$relationship()->getRelated();
                 $childPrimaryKey = $related->getKeyName();
                 if (!strpos($columns, $childPrimaryKey)) {
-                    $columns .= ",{$related->getQualifiedKeyName()}";
+                    $columns .= ",{$related->getKeyName()}";
                 }
 
                 // Add the foreign key if not exists.
                 $parentForeignKey = $model->$relationship()->getForeignKeyName();
                 if (!strpos($columns, $parentForeignKey)) {
-                    $columns .= ",{$model->$relationship()->getQualifiedForeignKeyName()}";
+                    $columns .= ",{$model->$relationship()->getForeignKeyName()}";
                 }
 
                 // Relationship with some columns.
-                $attributes = $related->getAttributes();
-                $this->builder->with($relationship, function($query) use ($attributes, $columns) {
+                $attributes = $related->getFillable();
+                $this->builder->with($relationship, function($query) use ($attributes, $columns, $relationship) {
                     // Filter the columns that exist in the schema of the related model.
                     $columns = array_filter(
                         explode(',', $columns),
@@ -194,7 +209,11 @@ abstract class Filter
                         }
                     );
 
-                    $query->select(...$columns);
+                    $query->select(
+                        ...array_map(function($column) use ($relationship) {
+                            return "{$relationship}.{$column}";
+                        }, $columns)
+                    );
                 });
             } else {
                 $relationship = $value;
@@ -204,9 +223,15 @@ abstract class Filter
                     continue;
                 }
 
+                // Set the relationship as a selectable field.
+                array_push($fields, $relationship);
+
                 // Relationship with all columns.
                 $this->builder->with($relationship);
             }
         }
+
+        // Return the list of selectable fields.
+        return $fields;
     }
 }

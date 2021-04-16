@@ -92,7 +92,7 @@ class Kernel
         // Register the general section.
         add_settings_section(
             'jamstackpress-options',
-            'Settings',
+            __('Settings', 'jamstackpress'),
             null,
             'jamstackpress-admin'
         );
@@ -106,7 +106,7 @@ class Kernel
 
             add_settings_field(
                 $setting['id'],
-                $setting['title'],
+                __($setting['title'], 'jamstackpress'),
                 [static::class, $setting['callback']],
                 $setting['page'],
                 $setting['section']

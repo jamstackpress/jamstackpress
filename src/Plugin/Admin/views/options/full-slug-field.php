@@ -1,2 +1,2 @@
 <input name="jamstackpress_full_slug_field" type="checkbox" value="true" <?php echo get_option('jamstackpress_full_slug_field', false) ? 'checked' : ''; ?> />
-<i>Include a full slug field in the REST api?</i>
+<i><?php _e('Include a full slug field in the REST api, that contains the post slug, and the frontend post url', 'jamstackpress'); ?></i>

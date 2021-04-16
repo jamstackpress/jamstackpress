@@ -15,7 +15,7 @@
  * Author URI:        
  * License:           GPL version 3 or any later version
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       jamstack-press
+ * Text Domain: jamstackpress
  */
 
 

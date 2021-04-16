@@ -56,7 +56,7 @@ class Post extends Model implements WordPressEntitiable
      * 
      * @var array
      */
-    protected $appends = ['full_slug'];
+    protected $appends = ['full_slug', 'readable_date'];
 
     /**
      * The "booted" method of the model.
@@ -99,6 +99,11 @@ class Post extends Model implements WordPressEntitiable
         // Full slug field.
         if (!get_option('jamstackpress_full_slug_field', false)) {
             unset($attributes[array_search('full_slug', $attributes)]);
+        }
+
+        // Readable date field.
+        if (!get_option('jamstackpress_human_readable_date', false)) {
+            unset($attributes[array_search('readable_date', $attributes)]);
         }
 
         return $attributes;
@@ -153,6 +158,17 @@ class Post extends Model implements WordPressEntitiable
                 get_permalink($this->attributes['ID'])
             )
         ];
+    }
+
+    /**
+     * Get the post's readable date attribute.
+     * 
+     * @return string
+     */
+    public function getReadableDateAttribute()
+    {
+        // Set the date according to the locale.
+        return get_the_date('', $this->attributes['ID']);
     }
 
     /**

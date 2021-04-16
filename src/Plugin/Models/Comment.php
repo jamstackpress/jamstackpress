@@ -32,7 +32,7 @@ class Comment extends Model implements WordPressEntitiable
      * @var array
      */
     protected $fillable = [
-        'comment_id', 'comment_post_ID', 'comment_author',
+        'comment_ID', 'comment_post_ID', 'comment_author',
         'comment_author_email', 'comment_author_url',
         'comment_author_ip', 'comment_date', 'comment_date_gmt',
         'comment_content', 'comment_karma', 'comment_approved',
