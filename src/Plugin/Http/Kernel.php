@@ -24,11 +24,6 @@ class Kernel
             'callback' => [Controllers\Posts::class, 'get'],
             'permission_callback' => '__return_true'
         ],
-        'pages' => [
-            'methods' => [WP_REST_Server::READABLE],
-            'callback' => [Controllers\Pages::class, 'get'],
-            'permission_callback' => '__return_true'
-        ],
         'comments' => [
             'methods' => [WP_REST_Server::READABLE],
             'callback' => [Controllers\Comments::class, 'get'],
