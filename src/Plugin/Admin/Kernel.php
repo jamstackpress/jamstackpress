@@ -50,7 +50,7 @@ class Kernel
     public static function boot()
     {
         add_action('admin_menu', [static::class, 'addMenuPageToSidebar']);
-		add_action('admin_init', [static::class, 'registerSettings']);
+        add_action('admin_init', [static::class, 'registerSettings']);
     }
 
     /**
