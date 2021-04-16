@@ -116,6 +116,17 @@ class Post extends Model implements WordPressEntitiable
     }
 
     /**
+     * Get the post's content.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPostContentAttribute($value)
+    {
+        return apply_filters('the_content', $value);
+    }
+
+    /**
      * Get the post's full slug attribute.
      * 
      * @return string
@@ -137,21 +148,11 @@ class Post extends Model implements WordPressEntitiable
                 get_permalink($this->attributes['ID'])
             ),
             'front_url' => str_replace(
-                get_site_url(), trim($frontendUrl, '/'),  
+                get_site_url(), 
+                trim($frontendUrl, '/'),  
                 get_permalink($this->attributes['ID'])
             )
         ];
-    }
-
-    /**
-     * Get the post's content.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getPostContentAttribute($value)
-    {
-        return apply_filters('the_content', $value);
     }
 
     /**
