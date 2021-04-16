@@ -89,25 +89,8 @@ abstract class Filter
 
         /* If the fields method was specified, get only the
          * corresponding fields. */
-        if (isset($fields)) {
-            // Check if there are selectable attributes.
-            $attributes = array_intersect(
-                $this->builder->getModel()->getSelectableAttributes(),
-                $fields
-            );
-
-            /* If there are attributes, get them, otherwise return all
-             * the attributes */
-            if ($attributes) {
-                // If the result is paginated, we need another treatment.
-                if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
-                    return $rows->setCollection(
-                        $rows->getCollection()->map->only($attributes)
-                    );
-                }
-
-                return $rows->map->only($attributes);
-            }
+        if (isset($fields) && $result = $this->fields($rows, $fields)) {
+            return $result;
         }
 
         // If there are no fields specified, return all of them.
@@ -125,27 +108,32 @@ abstract class Filter
     /**
      * Select only a set of fields from the model.
      * 
+     * @param mixed $rows
      * @param string $fields
      * @return void
      */
-    public function fields($fields)
+    public function fields($rows, $fields)
     {
-        $attributes = $this->builder->getModel()->getFillable();
-        $columns = explode(',', $fields);
-
-        // Select only the columns that exist in the model.
-        $columns = array_filter(
-            $columns,
-            function($column) use ($attributes) {
-                return in_array(
-                    $column,
-                    $attributes
-                );
-            }
+        // Check if there are selectable attributes.
+        $attributes = array_intersect(
+            $this->builder->getModel()->getSelectableAttributes(),
+            $fields
         );
 
-        // Make the query.
-        $this->builder->select(...$columns);
+        /* If there are attributes, get them, otherwise return all
+         * the attributes */
+        if ($attributes) {
+            // If the result is paginated, we need another treatment.
+            if ($rows instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+                return $rows->setCollection(
+                    $rows->getCollection()->map->only($attributes)
+                );
+            }
+
+            return $rows->map->only($attributes);
+        }
+
+        return null;
     }
 
     /**
