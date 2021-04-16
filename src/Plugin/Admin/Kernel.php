@@ -87,7 +87,7 @@ class Kernel
      * 
      * @return void
      */
-	public static function registerSettings()
+    public static function registerSettings()
     {
         // Register the general section.
 		add_settings_section(
@@ -98,7 +98,7 @@ class Kernel
 		);
 
         // Add the corresponding settings fields.
-        foreach(static::$settings as $setting) {
+        foreach (static::$settings as $setting) {
             register_setting(
                 'jamstackpress-options',
                 $setting['id']
@@ -112,7 +112,7 @@ class Kernel
                 $setting['section']
             );
         }
-	}
+    }
 
     /**
      * Handle the statically called methods of the class, that are not
