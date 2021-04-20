@@ -37,11 +37,13 @@ class Taxonomy extends Model implements WordPressEntitiable
     ];
 
     /**
-     * The relations to eager load on every query.
+     * The attributes that should be hidden for serialization.
      *
      * @var array
      */
-    protected $with = ['term'];
+    protected $hidden = [
+        'laravel_through_key'
+    ];
 
     /**
      * Transform the current model to its WordPress entity.

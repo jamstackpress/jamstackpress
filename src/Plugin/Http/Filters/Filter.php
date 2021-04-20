@@ -56,17 +56,13 @@ abstract class Filter
 
             // We're going to handle the fields method afterwards.
             if ($method === 'fields') {
-                $fields = isset($fields) && is_array($fields) ? 
-                    array_merge(explode(',', $value)) : 
-                    explode(',', $value);
+                $fields = explode(',', $value);
                 continue;
             }
 
             // The include function returns the relationship fields.
             if ($method === 'include') {
-                $relationshipsFields = isset($relationshipsFields) && !is_array($relationshipsFields) ?
-                    array_merge($this->include($value)) :
-                    $this->include($value);
+                $relationships = explode(';', $value);
                 continue;
             }
 
@@ -88,9 +84,20 @@ abstract class Filter
         // Get the rows.
         $rows = $this->builder->get();
 
-        /* If the fields method was specified, get only the
-         * corresponding fields. */
-        $rows = $this->fields($rows, $fields ?? null, $relationshipsFields ?? null);
+        // Load the corresponding relationships and their fields.
+        if (isset($relationships)) {
+            $relationshipsNames = $this->include($rows, $relationships, isset($fields));
+
+            // Merge the selected fields with the relationships.
+            if ($relationships && isset($fields)) {
+                $fields = array_merge($fields, $relationshipsNames);
+            }
+        }
+
+        // Filter the fields.
+        if (isset($fields)) {
+            $rows = $this->fields($rows, $fields);
+        }
 
         // Check if we need to paginate the results.
         if (in_array('page', array_keys($parameters))) {
@@ -99,7 +106,7 @@ abstract class Filter
                 $parameters['per_page'] ?? get_option('posts_per_page')
             );
 
-            return new LengthAwarePaginator(
+            $rows = new LengthAwarePaginator(
                 $sliced->values(),
                 $sliced->count(),
                 $parameters['per_page'] ?? get_option('posts_per_page'),
@@ -107,131 +114,48 @@ abstract class Filter
             );
         }
 
-
         return $rows;
     }
 
     /**
-     * Select only a set of fields from the model.
+     * Include only the selected fields in the result collection.
      * 
-     * @param mixed $rows
-     * @param array $fields
-     * @param array $relationshipsFields
+     * @param \Illuminate\Database\Eloquent\Collection $rows
+     * @param string $fields
      * @return void
      */
-    protected function fields($rows, $fields = null, $relationshipsFields = null)
+    protected function fields($rows, $fields)
     {
-        $attributes = $this->builder->getModel()->getSelectableAttributes();
-
-        // Check if there are selectable attributes.
-        if ($fields) {
-            $attributes = array_intersect(
-                $this->builder->getModel()->getSelectableAttributes(),
-                $fields
-            );
-        }
-
-        // Check if there are selectable relationships fields.
-        if ($relationshipsFields) {
-            $attributes = array_merge($attributes, $relationshipsFields);
-        }
-
-        /* If there are attributes, get them, otherwise return all
-         * the attributes */
-        if ($attributes) {
-            return $rows->map->only($attributes);
-        }
-
-        return $rows->map->only($this->builder->getModel()->getSelectableAttributes());
+        // Get only the selected fields.
+        return $rows->map->only($fields);
     }
-
+    
     /**
-     * Include the relationships given. Optionally, select only
-     * a set of fields of each relationship.
+     * Include the given relationships and their fields.
      * 
+     * @param \Illuminate\Database\Eloquent\Collection $rows
      * @param string $relationships
+     * @param boolean $selectFields
      * @return void
      */
-    protected function include($relationships)
+    protected function include(&$rows, $relationships, $selectFields)
     {
-        // The fields that will be selected.
-        $fields = [];
-
-        // Get the builder model.
-        $model = $this->builder->getModel();
-
-        // Loop the relationships and include the ones that exist.
-        foreach (explode(';', $relationships) as $value) {
-            // Check if the relationship contains custom fields.
-            if (strpos($value, ':')) {
-                $parts = explode(':', $value);
-                $relationship = $parts[0];
-                $columns = $parts[1];
-
-                // Continue if the relationship doesn't exist.
-                if (!method_exists($model, $parts[0])) {
-                    continue;
-                }
-
-                // Set the relationship as a selectable field.
-                array_push($fields, $relationship);
-                
-                /* If we select custom columns on a relationship, Eloquent needs
-                 * the child's primary key and the parent foreign key to work.
-                 * Otherwise, it will return a null object.
-                 * This way, we don't need to ask the user to send the primary
-                 * and foreign key in the included fields of each relationship. */
-
-                // Add the related primary key.
-                $related = $model->$relationship()->getRelated();
-                $childPrimaryKey = $related->getKeyName();
-                if (!strpos($columns, $childPrimaryKey)) {
-                    $columns .= ",{$related->getKeyName()}";
-                }
-
-                // Add the foreign key if not exists.
-                $parentForeignKey = $model->$relationship()->getForeignKeyName();
-                if (!strpos($columns, $parentForeignKey)) {
-                    $columns .= ",{$model->$relationship()->getForeignKeyName()}";
-                }
-
-                // Relationship with some columns.
-                $attributes = $related->getFillable();
-                $this->builder->with($relationship, function($query) use ($attributes, $columns, $relationship) {
-                    // Filter the columns that exist in the schema of the related model.
-                    $columns = array_filter(
-                        explode(',', $columns),
-                        function($column) use ($attributes) {
-                            return in_array(
-                                $column, 
-                                $attributes
-                            );
-                        }
-                    );
-
-                    $query->select(
-                        ...array_map(function($column) use ($relationship) {
-                            return "{$relationship}.{$column}";
-                        }, $columns)
-                    );
-                });
-            } else {
-                $relationship = $value;
-
-                // Continue if the relationship doesn't exist.
-                if (!method_exists($model, $relationship)) {
-                    continue;
-                }
-
-                // Set the relationship as a selectable field.
-                array_push($fields, $relationship);
-
-                // Relationship with all columns.
-                $this->builder->with($relationship);
+        // Load the relationships.
+        $rows = $rows->map(function($row) use ($relationships){
+            foreach ($relationships as $relationship) {
+                $row = $row->load($relationship);
             }
-        }
 
-        // Return the list of selectable fields.
-        return $fields;
+            return $row;
+        });
+
+        // Return the fields that will be selected, if any
+        return $selectFields ? array_map(
+                function ($relationship) {
+                    return explode(':', $relationship)[0];
+                },
+                $relationships
+            ) :
+            null;
     }
 }
