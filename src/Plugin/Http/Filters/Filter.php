@@ -114,7 +114,20 @@ abstract class Filter
             );
         }
 
-        return $rows;
+        // Remove hidden fields before returning the result.
+        return $rows->map(function ($row) {
+            foreach ($this->builder->getModel()->getHidden() as $attribute) {
+                if (!is_array($row)) {
+                    $row = $row->toArray();
+                }
+                
+                if (array_key_exists($attribute, $row)) {
+                    unset($row[$attribute]);
+                }
+            }
+
+            return $row;
+        });
     }
 
     /**

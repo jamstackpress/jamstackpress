@@ -2,11 +2,9 @@
 
 namespace JamstackPress\Models;
 
-use JamstackPress\Models\Model;
-use JamstackPress\Models\Contracts\WordPressEntitiable;
-use WP_Term;
+use Illuminate\Database\Eloquent\Model;
 
-class Term extends Model implements WordPressEntitiable
+class Term extends Model
 {
     /**
      * The table associated with the model.
@@ -30,16 +28,6 @@ class Term extends Model implements WordPressEntitiable
     protected $fillable = [
         'term_id', 'name', 'slug', 'term_group'
     ];
-
-    /**
-     * Transform the current model to its WordPress entity.
-     * 
-     * @return mixed
-     */
-    public function toWordPressEntity()
-    {
-        return new WP_Term($this->toArray());
-    }
 
     /**
      * Taxonomy relation for the term.

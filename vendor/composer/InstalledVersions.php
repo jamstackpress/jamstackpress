@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'a8e923862532afd6b7dd0390eaa1fa357480b0cd',
+    'reference' => 'dc6e8f73a44958670c2d4847e47bfac68a5576ec',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -114,7 +114,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'a8e923862532afd6b7dd0390eaa1fa357480b0cd',
+      'reference' => 'dc6e8f73a44958670c2d4847e47bfac68a5576ec',
     ),
     'nesbot/carbon' => 
     array (
@@ -156,6 +156,33 @@ private static $installed = array (
       array (
       ),
       'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
+    ),
+    'sofa/eloquence-base' => 
+    array (
+      'pretty_version' => 'v7.1.2',
+      'version' => '7.1.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '53aada32e381b0dcf1534d26e9d483fe8919ad7b',
+    ),
+    'sofa/eloquence-mappable' => 
+    array (
+      'pretty_version' => 'v7.0.2',
+      'version' => '7.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '309a4d3580866335b1e5384a8962d08005bde521',
+    ),
+    'sofa/hookable' => 
+    array (
+      'pretty_version' => 'v7.0.1',
+      'version' => '7.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '39d020a45f763020bb5001c3e8dbd4d4c6b7ac34',
     ),
     'symfony/console' => 
     array (

@@ -4,11 +4,9 @@ namespace JamstackPress\Models\Term;
 
 use Illuminate\Database\Eloquent\Builder;
 use JamstackPress\Models\Concerns\Filterable;
-use JamstackPress\Models\Model;
-use JamstackPress\Models\Contracts\WordPressEntitiable;
-use WP_Taxonomy;
+use Illuminate\Database\Eloquent\Model;
 
-class Taxonomy extends Model implements WordPressEntitiable
+class Taxonomy extends Model
 {
     use Filterable;
 
@@ -44,16 +42,6 @@ class Taxonomy extends Model implements WordPressEntitiable
     protected $hidden = [
         'laravel_through_key'
     ];
-
-    /**
-     * Transform the current model to its WordPress entity.
-     * 
-     * @return mixed
-     */
-    public function toWordPressEntity()
-    {
-        return new WP_Taxonomy($this->toArray());
-    }
 
     /**
      * Term relation for the taxonomy.

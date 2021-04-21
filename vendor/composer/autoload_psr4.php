@@ -18,6 +18,8 @@ return array(
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Symfony\\Component\\String\\' => array($vendorDir . '/symfony/string'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Sofa\\Hookable\\' => array($vendorDir . '/sofa/hookable/src'),
+    'Sofa\\Eloquence\\' => array($vendorDir . '/sofa/eloquence-base/src', $vendorDir . '/sofa/eloquence-mappable/src'),
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'JamstackPress\\' => array($baseDir . '/src/Plugin'),

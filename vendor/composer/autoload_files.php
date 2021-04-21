@@ -16,4 +16,5 @@ return array(
     '60799491728b879e74601d83e38b2cad' => $vendorDir . '/illuminate/collections/helpers.php',
     'a1105708a18b76903365ca1c4aa61b02' => $vendorDir . '/symfony/translation/Resources/functions.php',
     '72579e7bd17821bb1321b87411366eae' => $vendorDir . '/illuminate/support/helpers.php',
+    '3d7167bb5c3fe4baa10f347ccc41140d' => $vendorDir . '/sofa/eloquence-base/src/helpers.php',
 );

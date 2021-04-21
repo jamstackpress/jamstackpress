@@ -17,6 +17,7 @@ class ComposerStaticInitcf513ccdb2404f222a16398b47c708e6
         '60799491728b879e74601d83e38b2cad' => __DIR__ . '/..' . '/illuminate/collections/helpers.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
+        '3d7167bb5c3fe4baa10f347ccc41140d' => __DIR__ . '/..' . '/sofa/eloquence-base/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -37,6 +38,8 @@ class ComposerStaticInitcf513ccdb2404f222a16398b47c708e6
             'Symfony\\Component\\Translation\\' => 30,
             'Symfony\\Component\\String\\' => 25,
             'Symfony\\Component\\Console\\' => 26,
+            'Sofa\\Hookable\\' => 14,
+            'Sofa\\Eloquence\\' => 15,
         ),
         'P' => 
         array (
@@ -113,6 +116,15 @@ class ComposerStaticInitcf513ccdb2404f222a16398b47c708e6
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'Sofa\\Hookable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sofa/hookable/src',
+        ),
+        'Sofa\\Eloquence\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sofa/eloquence-base/src',
+            1 => __DIR__ . '/..' . '/sofa/eloquence-mappable/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
