@@ -144,21 +144,16 @@ class Post extends Model
      */
     public function getPostContentAttribute($value)
     {
+        // Get the frontend's url.
+        $frontendUrl = trim(get_option('jamstackpress_frontend_base_url', get_site_url()), '/');
+
         // Replace the backend url with the frontend's url.
         $replaces = [
             // The urls with the format href="/"
-            'href="/' => 
-                sprintf(
-                    'href="%1$s', 
-                    trim(get_option('jamstackpress_frontend_base_url', get_site_url()), '/')
-                ),
+            'href="/' => sprintf('href="%1$s', $frontendUrl),
 
             // The urls with the format href="https://backend-example.com"
-            sprintf('href="%1$s', get_site_url()) => 
-                sprintf(
-                    'href="%1$s',
-                    trim(get_option('jamstackpress_frontend_base_url', get_site_url()), '/')
-                )
+            sprintf('href="%1$s', get_site_url()) => sprintf('href="%1$s', $frontendUrl)
         ];
     
         return apply_filters(
