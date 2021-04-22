@@ -1,13 +1,15 @@
 {
-    "name": "jamstackpress/jamstackpress",
-    "type": "project",
-    "minimum-stability": "stable",
-    "autoload": {
-        "psr-4": { "JamstackPress\\" : "src/Plugin" }
-    },
-    "require": {
-        "illuminate/database": "^8.34",
-        "illuminate/pagination": "^8.34",
-        "sofa/eloquence-mappable": "^7.0"
+  "name": "jamstackpress/jamstackpress",
+  "type": "project",
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "JamstackPress\\": "src/Plugin"
     }
+  },
+  "require": {
+    "illuminate/database": "^8.34",
+    "illuminate/pagination": "^8.34",
+    "sofa/eloquence-mappable": "^7.0"
+  }
 }

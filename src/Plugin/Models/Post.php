@@ -131,7 +131,7 @@ class Post extends Model
      * @param  string  $value
      * @return string
      */
-    public function getTitleAttribute($value)
+    public function getPostTitleAttribute($value)
     {
         return apply_filters('the_title', $value);
     }
@@ -142,9 +142,29 @@ class Post extends Model
      * @param  string  $value
      * @return string
      */
-    public function getContentAttribute($value)
+    public function getPostContentAttribute($value)
     {
-        return apply_filters('the_content', $value);
+        // Replace the backend url with the frontend's url.
+        $replaces = [
+            // The urls with the format href="/"
+            'href="/' => 
+                sprintf(
+                    'href="%1$s', 
+                    trim(get_option('jamstackpress_frontend_base_url', get_site_url()), '/')
+                ),
+
+            // The urls with the format href="https://backend-example.com"
+            sprintf('href="%1$s', get_site_url()) => 
+                sprintf(
+                    'href="%1$s',
+                    trim(get_option('jamstackpress_frontend_base_url', get_site_url()), '/')
+                )
+        ];
+    
+        return apply_filters(
+            'the_content', 
+            str_replace(array_keys($replaces), array_values($replaces), $value)
+        );
     }
 
     /**
@@ -156,9 +176,6 @@ class Post extends Model
     {
         // Get the frontend url.
         $frontendUrl = get_option('jamstackpress_frontend_base_url', get_site_url());
-        if (empty($frontendUrl)) {
-            $frontendUrl = get_site_url();
-        }
 
         /* Get the permalink created by WordPress, and return the
          * mutations we need. */

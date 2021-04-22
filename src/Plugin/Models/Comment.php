@@ -100,7 +100,7 @@ class Comment extends Model
      * @param  string  $value
      * @return string
      */
-    public function getContentAttribute($value)
+    public function getCommentContentAttribute($value)
     {
         return apply_filters('comment_text', $value);
     }
