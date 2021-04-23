@@ -47,22 +47,16 @@ abstract class Filter
 
         // Apply the filters specified for each parameter.
         foreach ($parameters as $parameter => $value) {
+            $method = Str::camel($parameter);
+
             // If the filter is not defined, continue looping.
-            if (!method_exists($this, $parameter)) {
+            if (!method_exists($this, $method)) {
                 continue;
             }
-
-            $method = Str::camel($parameter);
 
             // We're going to handle the fields method afterwards.
             if ($method === 'fields') {
                 $fields = explode(',', $value);
-                continue;
-            }
-
-            // The include function returns the relationship fields.
-            if ($method === 'include') {
-                $relationships = explode(';', $value);
                 continue;
             }
 
@@ -83,16 +77,6 @@ abstract class Filter
 
         // Get the rows.
         $rows = $this->builder->get();
-
-        // Load the corresponding relationships and their fields.
-        if (isset($relationships)) {
-            $relationshipsNames = $this->include($rows, $relationships, isset($fields));
-
-            // Merge the selected fields with the relationships.
-            if ($relationships && isset($fields)) {
-                $fields = array_merge($fields, $relationshipsNames);
-            }
-        }
 
         // Filter the fields.
         if (isset($fields)) {
@@ -115,19 +99,7 @@ abstract class Filter
         }
 
         // Remove hidden fields before returning the result.
-        return $rows->map(function ($row) {
-            foreach ($this->builder->getModel()->getHidden() as $attribute) {
-                if (!is_array($row)) {
-                    $row = $row->toArray();
-                }
-                
-                if (array_key_exists($attribute, $row)) {
-                    unset($row[$attribute]);
-                }
-            }
-
-            return $row;
-        });
+        return $rows;
     }
 
     /**
@@ -139,36 +111,16 @@ abstract class Filter
      */
     protected function fields($rows, $fields)
     {
-        // Get only the selected fields.
+        // Filter only the attributes that can be selected.
+        $fields = array_intersect(
+            $this->builder->getModel()->getSelectableAttributes(),
+            $fields
+        );
+
+        if (empty($fields)) {
+            return $rows;
+        }
+
         return $rows->map->only($fields);
-    }
-    
-    /**
-     * Include the given relationships and their fields.
-     * 
-     * @param \Illuminate\Database\Eloquent\Collection $rows
-     * @param string $relationships
-     * @param boolean $selectFields
-     * @return void
-     */
-    protected function include(&$rows, $relationships, $selectFields)
-    {
-        // Load the relationships.
-        $rows = $rows->map(function($row) use ($relationships){
-            foreach ($relationships as $relationship) {
-                $row = $row->load($relationship);
-            }
-
-            return $row;
-        });
-
-        // Return the fields that will be selected, if any
-        return $selectFields ? array_map(
-                function ($relationship) {
-                    return explode(':', $relationship)[0];
-                },
-                $relationships
-            ) :
-            null;
     }
 }

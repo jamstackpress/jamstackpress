@@ -3,12 +3,15 @@
 namespace JamstackPress\Models\Term;
 
 use Illuminate\Database\Eloquent\Builder;
+use Sofa\Eloquence\Eloquence;
 use JamstackPress\Models\Concerns\Filterable;
+use JamstackPress\Models\Concerns\HasSelectableAttributes;
+use Sofa\Eloquence\Mappable;
 use Illuminate\Database\Eloquent\Model;
 
 class Taxonomy extends Model
 {
-    use Filterable;
+    use Eloquence, Filterable, HasSelectableAttributes, Mappable;
 
     /**
      * The table associated with the model.
@@ -35,13 +38,39 @@ class Taxonomy extends Model
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The model's hidden attributes.
      *
      * @var array
      */
     protected $hidden = [
-        'laravel_through_key'
+        'laravel_through_key', 'term',
     ];
+
+    /**
+     * The model's attributes that are mapped with another name.
+     * 
+     * @var array
+     */
+    protected $maps = [
+        'name' => 'term.name', 'slug' => 'term.slug', 
+        'term_group' => 'term.term_group'
+    ];
+
+    /**
+     * The attributes that should be appended.
+     * 
+     * @var array
+     */
+    protected $appends = [
+        'name', 'slug', 'term_group' 
+    ];
+
+    /**
+     * The relationships that should be always loaded.
+     * 
+     * @var array
+     */
+    protected $with = ['term'];
 
     /**
      * Term relation for the taxonomy.

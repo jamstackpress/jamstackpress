@@ -9,34 +9,49 @@ class CommentFilter extends Filter
     /**
      * Filter by ID.
      * 
-     * @param string $id
+     * @param int $id
      * @return void
      */
     public function id($id)
     {
-        $this->builder->where('comment_id', $id);
+        $this->builder->where('comment_ID', intval($id));
     }
 
     /**
      * Filter by status.
      * 
-     * @param string $status
+     * @param mixed $status
      * @return void
      */
-    public function status($status)
+    public function approved($status)
     {
-        $this->builder->withoutGlobalScope('is_approved')
-            ->where('comment_approved', (int) $status);
+        $this->builder->withoutGlobalScope('is_approved');
+
+        if ($status !== 'all') {
+            $this->builder
+                ->where('comment_approved', intval(boolval($status)));
+        }
     }
 
     /**
      * Filter by post.
      * 
-     * @param string $id
+     * @param int $id
      * @return void
      */
     public function post($id)
     {
-        $this->builder->where('comment_post_id', $id);
+        $this->builder->where('comment_post_ID', intval($id));
+    }
+
+    /**
+     * Filter by user id.
+     * 
+     * @param int $id
+     * @return void
+     */
+    public function user($id)
+    {
+        $this->builder->where('user_id', intval($id));
     }
 }

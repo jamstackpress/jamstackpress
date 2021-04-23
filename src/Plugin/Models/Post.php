@@ -5,13 +5,14 @@ namespace JamstackPress\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Sofa\Eloquence\Eloquence;
 use JamstackPress\Models\Concerns\Filterable;
+use JamstackPress\Models\Concerns\HasSelectableAttributes;
 use Sofa\Eloquence\Mappable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use Eloquence, Filterable, Mappable;
+    use Eloquence, Filterable, HasSelectableAttributes, Mappable;
 
     /**
      * The table associated with the model.
@@ -79,6 +80,13 @@ class Post extends Model
         'modified_gmt', 'parent', 'type', 'full_slug',
         'readable_date',
     ];
+
+    /**
+     * The relationships that should be always loaded.
+     * 
+     * @var array
+     */
+    protected $with = ['categories'];
 
     /**
      * The attributes toggled by the plugin.

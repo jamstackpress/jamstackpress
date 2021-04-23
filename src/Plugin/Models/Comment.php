@@ -5,12 +5,13 @@ namespace JamstackPress\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Sofa\Eloquence\Eloquence;
 use JamstackPress\Models\Concerns\Filterable;
+use JamstackPress\Models\Concerns\HasSelectableAttributes;
 use Sofa\Eloquence\Mappable;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use Eloquence, Filterable, Mappable;
+    use Eloquence, Filterable, HasSelectableAttributes, Mappable;
 
     /**
      * The table associated with the model.
@@ -51,7 +52,6 @@ class Comment extends Model
         'comment_author_IP', 'comment_date', 'comment_date_gmt',
         'comment_content', 'comment_karma', 'comment_approved',
         'comment_agent', 'comment_type', 'comment_parent',
-        'user_id'
     ];
 
     /**
@@ -67,7 +67,6 @@ class Comment extends Model
         'content' => 'comment_content', 'karma' => 'comment_karma',
         'approved' => 'comment_approved', 'agent' => 'comment_agent',
         'type' => 'comment_type', 'parent' => 'comment_parent',
-        'user_id' => 'user_id'
     ];
 
     /**
@@ -78,7 +77,7 @@ class Comment extends Model
     protected $appends = [
         'id', 'post_id', 'author', 'author_email', 'author_url',
         'author_ip', 'date', 'date_gmt', 'content', 'karma',
-        'approved', 'agent', 'type', 'parent', 'user_id',
+        'approved', 'agent', 'type', 'parent',
     ];
 
     /**

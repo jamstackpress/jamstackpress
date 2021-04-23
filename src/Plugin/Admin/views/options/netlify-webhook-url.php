@@ -1,0 +1,2 @@
+<input name="jamstackpress_netlify_webhook_url" type="text" value="<?php echo get_option('jamstackpress_netlify_webhook_url', '') ?>" />
+<span style="margin-top: 8px; display: block;"><?php _e('For e.g.: https://api.netlify.com/build_hooks/xxxxxxxx', 'jamstackpress'); ?></span>
