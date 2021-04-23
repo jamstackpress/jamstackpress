@@ -206,8 +206,6 @@ class Kernel
      */
     public static function addScriptsToFooter()
     {
-        wp_enqueue_script('jquery');
-
         foreach (static::$scripts as $script) {
             $view = Str::kebab($script);
 
