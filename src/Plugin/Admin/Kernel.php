@@ -7,11 +7,34 @@ use Illuminate\Support\Str;
 class Kernel
 {
     /**
-     * The current saved settings.
+     * The available pages.
      * 
      * @var array
      */
-    protected static $currentSettings;
+    protected static $pages = [
+        [
+            'id' => 'jamstackpress',
+            'title' => 'JAMStackPress',
+            'menuTitle' => 'JAMStackPress',
+            'capabilities' => 'manage_options',
+            'callback' => 'renderPage',
+            'icon' => 'dashicons-rest-api'
+        ]
+    ];
+
+    /**
+     * The available sections.
+     * 
+     * @var array
+     */
+    protected static $sections = [
+        [
+            'id' => 'jamstackpress-options',
+            'title' => 'Settings',
+            'callback' => null,
+            'page' => 'jamstackpress-admin'
+        ]
+    ];
 
     /**
      * The available settings.
@@ -23,6 +46,13 @@ class Kernel
             'id' => 'jamstackpress_frontend_base_url',
             'title' => 'Frontend\'s base url',
             'callback' => 'renderFrontendBaseUrlOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options'
+        ],
+        [
+            'id' => 'jamstackpress_build_webhook_url',
+            'title' => 'Build webhook url',
+            'callback' => 'renderBuildWebhookUrlOption',
             'page' => 'jamstackpress-admin',
             'section' => 'jamstackpress-options'
         ],
@@ -43,14 +73,46 @@ class Kernel
     ];
 
     /**
+     * The available options in the admin bar.
+     * 
+     * @var array
+     */
+    protected static $adminBar = [
+        [
+            'id' => 'jamstackpress',
+            'title' => 'JAMStackPress',
+            'href' => 'admin.php?page=jamstackpress',
+            'meta' => ['title' => 'JAMStackPress'],
+        ],
+        [
+            'id' => 'jamstackpress_build_frontend',
+            'parent' => 'jamstackpress',
+            'title' => 'Trigger frontend build',
+            'href' => '#',
+            'meta' => ['title' => 'Trigger frontend build'],
+            'dependsOnOption' => 'jamstackpress_build_webhook_url'
+        ]
+    ];
+
+    /**
+     * The scripts appended to the footer.
+     * 
+     * @var array
+     */
+    protected static $scripts = ['triggerFrontendBuild'];
+
+    /**
      * Boot the administration kernel.
      * 
      * @return void
      */
     public static function boot()
     {
-        add_action('admin_menu', [static::class, 'addMenuPageToSidebar']);
         add_action('admin_init', [static::class, 'registerSettings']);
+        add_action('admin_menu', [static::class, 'addMenuPageToSidebar']);
+        add_action('admin_bar_menu', [static::class, 'addMenuToAdminBar'], 99);
+        add_action('admin_footer', [static::class, 'addScriptsToFooter'], 99);
+        add_action('wp_footer', [static::class, 'addScriptsToFooter'], 99);
     }
 
     /**
@@ -60,14 +122,17 @@ class Kernel
      */
     public static function addMenuPageToSidebar()
     {
-        add_menu_page(
-            'JAMStackPress',
-            'JAMStackPress',
-            'manage_options',
-            'jamstackpress',
-            [static::class, 'renderPage' ],
-            'dashicons-rest-api',
-        );
+        // Add all the corresponding pages.
+        foreach (static::$pages as $page) {
+            add_menu_page(
+                $page['title'],
+                $page['menuTitle'],
+                $page['capabilities'],
+                $page['id'], 
+                [static::class, $page['callback']],
+                $page['icon']
+            );
+        }
     }
 
     /**
@@ -89,18 +154,20 @@ class Kernel
      */
     public static function registerSettings()
     {
-        // Register the general section.
-        add_settings_section(
-            'jamstackpress-options',
-            __('Settings', 'jamstackpress'),
-            null,
-            'jamstackpress-admin'
-        );
+        // Register the corresponding sections.
+        foreach (static::$sections as $section) {
+            add_settings_section(
+                $section['id'],
+                __($section['title'], 'jamstackpress'),
+                $section['callback'],
+                $section['page']
+            );
+        }
 
         // Add the corresponding settings fields.
         foreach (static::$settings as $setting) {
             register_setting(
-                'jamstackpress-options',
+                $setting['section'],
                 $setting['id']
             );
 
@@ -111,6 +178,40 @@ class Kernel
                 $setting['page'],
                 $setting['section']
             );
+        }
+    }
+
+    /**
+     * Adds a new menu to the admin bar menu.
+     * 
+     * @param mixed $adminBar
+     * @return void
+     */
+    public static function addMenuToAdminBar($adminBar)
+    {
+        foreach (static::$adminBar as $menu) {
+            if (!is_admin() || array_key_exists('dependsOnOption', $menu) &&
+            !get_option($menu['dependsOnOption'], null)) {
+                continue;
+            }
+
+            $adminBar->add_menu($menu);
+        }
+    }
+
+    /**
+     * Add custom scripts to the WordPress footer.
+     * 
+     * @return void
+     */
+    public static function addScriptsToFooter()
+    {
+        wp_enqueue_script('jquery');
+
+        foreach (static::$scripts as $script) {
+            $view = Str::kebab($script);
+
+            require_once 'views/scripts/' . $view . '.php';
         }
     }
 

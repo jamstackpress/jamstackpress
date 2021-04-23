@@ -1,2 +1,2 @@
 <input name="jamstackpress_frontend_base_url" type="text" value="<?php echo get_option('jamstackpress_frontend_base_url', '') ?>" />
-<i><?php _e('The frontend\'s base url (for e.g.: https://jamstackpress.io)', 'jamstackpress'); ?></i>
+<p style="margin-top: 8px"><?php _e('For e.g.: https://jamstackpress.io)', 'jamstackpress'); ?></p>
