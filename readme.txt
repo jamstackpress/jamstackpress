@@ -7,82 +7,79 @@ Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Power-up your WordPress site and get it ready for JAMStack. Super Fast wp-json endpoints and much more.
+Power-up your WordPress site and get it ready for JAMStack. Super fast wp-json endpoints and much more.
 
 == Description ==
-# JAMStackPress - PowerUP you WP Backend
+# JAMStackPress - Power-up you WordPress backend
 
- By adding custom endpoints that connect directly to the database, we achieve that the data consumption speed of the json api is significantly faster than the default wordpress endpoints.
-Apart  from the super fast endpoints, we think about the possible scenarios of development of static websites,  in other words we make your life easier so that you only think about developing your decoupled front end.
+By adding custom endpoints that connect directly to your database, you can achieve super fast speeds for the wp-json API, which are significantly faster than the default WordPress's endpoints.
+We think about the possible scenarios of development for your static website, so in other words, we'll try to make your life easier, so that you only think about developing your decoupled frontend.
  
 
 ## Super Fast Custom API endpoints
-JAMSTackPress plugins comes with 3 custom super fast wp-json api endpoints which connects directly to the WordPress database:
+JAMStackPress comes with 3 super fast custom wp-json API endpoints, which connect directly to your WordPress's database:
 
- - Posts
+- Posts
 `https://example.com/wp-json/jamstackpress/v1/posts`
- - Categories 
-  `https://example.com/wp-json/jamstackpress/v1/categories`
- - Comments
-  `https://example.com/wp-json/jamstackpress/v1/comments`
+- Categories 
+`https://example.com/wp-json/jamstackpress/v1/categories`
+- Comments
+`https://example.com/wp-json/jamstackpress/v1/comments`
  
 **Flexible Filtering**
-You can filter the endpoints data responses using several attributes
+You can filter the data using several attributes
 List of filters grouped by endpoint:
 
- **/posts**
+**/posts**
 	
- - **id**: Filter post by post id
- - **status**: Filter posts by post status (published, draft....)
- - **slug**: Filter post by post slug
- - **categories**: Filter posts by categories ids or categories slugs separated by commas
+- **id**: Filter posts by id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?id=1`)
+- **status**: Filter posts by status (published, draft....) (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?status=publish`)
+- **slug**: Filter posts by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?slug=my-first-post`)
+- **categories**: Filter posts by categories ids or categories slugs, separated by commas (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?categories=1,my-category,2`)
 
- **/categories**
+**/categories**
 	
- - **id**: Filter post by category id
- - **count**: Hide categories with a post count less than given in the attribute
-  - **status**: Filter all comments or only approved
+- **id**: Filter categories by id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/categories?id=1`)
+- **slug**: Filter categories by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/categories?slug=my-category`)
+- **hide_empty**: Hide the categories without posts (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/categories?hide_empty=true`)
 
- **/comments**
+**/comments**
 	
- - **id**: Filter comment by comment id
- - **approved**: Filter comment by comment status options: *all, true, false*
- - **post**: Filter comments by id
- - **user**: Filter posts by user id
+- **id**: Filter comments by id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/comments?id=1`)
+- **approved**: Filter comments by status options: *all, true, false* (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/comments?approved=false`)
+- **post**: Filter comments by post id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/comments?post=1`)
+- **user**: Filter posts by user id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/comments?user=1`)
  
- **Show/Hide response fields**
-It is possible to only retrieve the necessary fields (not every field) by using the **"fields"** attribute which is present on each endpoint:
-Example:
-`https://example.com/wp-json/jamstackpress/v1/posts?fields=slug,title,id`
-The response will contain  every post object only with the post slugs, titles and ids. 
-This behavior is the same for every jamstackpress endpoint
+**Show/Hide response fields**
+This behaviour applies to every endpoint.
+It is possible to only retrieve the necessary fields by using the **"fields"** filter, which is present on every endpoint:
+`https://yourwordpress.com/wp-json/jamstackpress/v1/posts?fields=slug,title,id`
+The response will contain only the posts fields specified in the filter.
 
 
-**Extra  fields**
-We include some extra fields that will make your  front development easier:
+**Extra fields**
+We include some extra fields that can be activated in the plugins administration page, that will make your frontend development easier:
+- Human readable date field (uses the locale defined in your WordPress panel):
+`\"readable_date\": \"March 26, 2018\"`
 
- - Human Readable Date field 
- `\"readable_date\": \"March 26, 2018\"`
- 
- - Posts full slug and front link using your permalinks options: 
- `\"full_slug\": {
-	\"slug\": \"/category/post-title/\",
+- Post's full slug and frontend link using your permalinks options:
+`\"full_slug\": {
+  \"slug\": \"/category/post-title/\",
 	\"front_url\": \"https://example.com/category/post-title/\"
 }`
 
 **Pagination**
-Built in pagination, no need to filter response headers anymore, pagination info will be available inside the data response:
-
+With our built in pagination, there's no need to filter response headers anymore. The pagination info will be available inside the data response:
 `https://example.com/wp-json/jamstackpress/v1/posts?per_page=10&page=1`
 
 ## Content filters & Deploy tools
 **Content filters**
- - Replace backed base URL (the base URL of your WP installation) with the front base URL
- - more coming.......
- 
+- Replace your WordPress base URL with the frontend URL defined in the plugin settings.
+- More coming soon...
  
 **Deploy tools**
- - Generate site button: Special button at the dashboard, once clicked it will trigger your front end build at your favorite static hosting.
+- Trigger frontend build: You can specify a build webhook url for triggering a deploy in your frontend site, directly from your WordPress backend. This
+is specially useful to keep your frontend site always updated with the latest content, without having to manually trigger a deploy.
 
 == Screenshots ==
 
