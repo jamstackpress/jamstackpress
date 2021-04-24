@@ -20,14 +20,6 @@ trait HasSelectableAttributes
      */
     public function getSelectableAttributes()
     {
-        die(print_r(array_unique(
-            array_merge(
-                array_keys($this->maps),
-                $this->appends,
-                $this->with
-            ),
-        )));
-
         return array_diff(
             array_unique(
                 array_merge(
