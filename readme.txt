@@ -50,6 +50,13 @@ List of filters grouped by endpoint:
  - **post**: Filter comments by id
  - **user**: Filter posts by user id
  
+ **Show/Hide response fields**
+It is possible to only retrieve the necessary fields (not every field) by using the **"fields"** attribute which is present on each endpoint:
+Example:
+`https://example.com/wp-json/jamstackpress/v1/posts?fields=slug,title,id`
+The response will contain  every post object only with the post slugs, titles and ids. 
+This behavior is the same for every jamstackpress endpoint
+
 
 **Extra  fields**
 We include some extra fields that will make your  front development easier:
@@ -76,6 +83,7 @@ Built in pagination, no need to filter response headers anymore, pagination info
  
 **Deploy tools**
  - Generate site button: Special button at the dashboard, once clicked it will trigger your front end build at your favorite static hosting.
+
 == Screenshots ==
 
 1. Options panel.
