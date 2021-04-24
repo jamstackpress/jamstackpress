@@ -18,9 +18,9 @@ class CategoryFilter extends Filter
     }
 
     /**
-     * Filter by status.
+     * Filter by slug.
      * 
-     * @param mixed $status
+     * @param mixed $slug
      * @return void
      */
     public function slug($slug)
