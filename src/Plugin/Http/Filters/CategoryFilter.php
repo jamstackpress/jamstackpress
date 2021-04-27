@@ -4,7 +4,7 @@ namespace JamstackPress\Http\Filters;
 
 use JamstackPress\Http\Filters\Filter;
 
-class TagFilter extends Filter
+class CategoryFilter extends Filter
 {
     /**
      * Filter by ID.
