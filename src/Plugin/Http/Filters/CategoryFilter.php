@@ -29,4 +29,17 @@ class CategoryFilter extends Filter
             return $query->where('slug', '=', $slug);
         });
     }
+
+    /**
+     * Filter by post count.
+     * 
+     * @param mixed $hideEmpty
+     * @return void
+     */
+    public function hideEmpty($hideEmpty)
+    {
+        if (boolval($hideEmpty)) {
+            $this->builder->where('count', '>', 0);
+        };
+    }
 }
