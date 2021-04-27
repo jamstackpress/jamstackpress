@@ -33,6 +33,11 @@ class Kernel
             'methods' => [WP_REST_Server::READABLE],
             'callback' => [Controllers\Taxonomies::class, 'categories'],
             'permission_callback' => '__return_true'
+        ],
+        'tags' => [
+            'methods' => [WP_REST_Server::READABLE],
+            'callback' => [Controllers\Taxonomies::class, 'tags'],
+            'permission_callback' => '__return_true'
         ]
     ];
 

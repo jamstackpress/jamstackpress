@@ -4,7 +4,7 @@ namespace JamstackPress\Http\Filters;
 
 use JamstackPress\Http\Filters\Filter;
 
-class TagFilter extends Filter
+class CategoryFilter extends Filter
 {
     /**
      * Filter by ID.
@@ -28,5 +28,18 @@ class TagFilter extends Filter
         $this->builder->whereHas('term', function ($query) use ($slug) {
             return $query->where('slug', '=', $slug);
         });
+    }
+
+    /**
+     * Filter by post count.
+     * 
+     * @param mixed $hideEmpty
+     * @return void
+     */
+    public function hideEmpty($hideEmpty)
+    {
+        if (boolval($hideEmpty)) {
+            $this->builder->where('count', '>', 0);
+        };
     }
 }
