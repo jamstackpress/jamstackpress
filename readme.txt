@@ -42,7 +42,7 @@ List of filters grouped by endpoint:
 **/tags**
 	
 - **id**: Filter tags by id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?id=1`)
-- **slug**: Filter tags by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?slug=my-category`)
+- **slug**: Filter tags by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?slug=my-tag`)
 - **hide_empty**: Hide the tags without posts (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?hide_empty=true`)
 
 **/categories**
