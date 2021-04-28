@@ -17,7 +17,7 @@ We think about the possible scenarios of development for your static website, so
  
 
 ## Super Fast Custom API endpoints
-JAMStackPress comes with 3 super fast custom wp-json API endpoints, which connect directly to your WordPress's database:
+JAMStackPress comes with 4 super fast custom wp-json API endpoints, which connect directly to your WordPress's database:
 
 - Posts
 `https://example.com/wp-json/jamstackpress/v1/posts`
