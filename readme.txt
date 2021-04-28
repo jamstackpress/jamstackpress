@@ -23,6 +23,8 @@ JAMStackPress comes with 3 super fast custom wp-json API endpoints, which connec
 `https://example.com/wp-json/jamstackpress/v1/posts`
 - Categories 
 `https://example.com/wp-json/jamstackpress/v1/categories`
+- Tags
+`https://example.com/wp-json/jamstackpress/v1/tags`
 - Comments
 `https://example.com/wp-json/jamstackpress/v1/comments`
  
@@ -36,6 +38,12 @@ List of filters grouped by endpoint:
 - **status**: Filter posts by status (published, draft....) (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?status=publish`)
 - **slug**: Filter posts by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?slug=my-first-post`)
 - **categories**: Filter posts by categories ids or categories slugs, separated by commas (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/posts?categories=1,my-category,2`)
+
+**/tags**
+	
+- **id**: Filter tags by id (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?id=1`)
+- **slug**: Filter tags by slug (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?slug=my-category`)
+- **hide_empty**: Hide the tags without posts (for e.g: `https://yourwordpress.com/wp-json/jamstackpress/v1/tags?hide_empty=true`)
 
 **/categories**
 	
