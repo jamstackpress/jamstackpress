@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'ba0d0a6c322419ea277cd323832221332c0482f4',
+    'reference' => '7ab503efba26716ad01060db8941632597c10176',
     'name' => 'jamstackpress/jamstackpress',
   ),
   'versions' => 
@@ -90,7 +90,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'ba0d0a6c322419ea277cd323832221332c0482f4',
+      'reference' => '7ab503efba26716ad01060db8941632597c10176',
     ),
     'nesbot/carbon' => 
     array (
