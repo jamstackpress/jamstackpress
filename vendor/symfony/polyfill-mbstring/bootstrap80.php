@@ -12,7 +12,7 @@
 use Symfony\Polyfill\Mbstring as p;
 
 if (!function_exists('mb_convert_encoding')) {
-    function mb_convert_encoding(array|string|null $string, ?string $to_encoding, array|string|null $from_encoding = null) { return p\Mbstring::mb_convert_encoding($string ?? '', (string) $to_encoding, $from_encoding); }
+    function mb_convert_encoding($string, ?string $to_encoding, $from_encoding = null) { return p\Mbstring::mb_convert_encoding($string ?? '', (string) $to_encoding, $from_encoding); }
 }
 if (!function_exists('mb_decode_mimeheader')) {
     function mb_decode_mimeheader(?string $string) { return p\Mbstring::mb_decode_mimeheader((string) $string); }
@@ -42,13 +42,13 @@ if (!function_exists('mb_encoding_aliases')) {
     function mb_encoding_aliases(?string $encoding) { return p\Mbstring::mb_encoding_aliases((string) $encoding); }
 }
 if (!function_exists('mb_check_encoding')) {
-    function mb_check_encoding(array|string|null $value = null, ?string $encoding = null) { return p\Mbstring::mb_check_encoding($value, $encoding); }
+    function mb_check_encoding($value = null, ?string $encoding = null) { return p\Mbstring::mb_check_encoding($value, $encoding); }
 }
 if (!function_exists('mb_detect_encoding')) {
-    function mb_detect_encoding(?string $string, array|string|null $encodings = null, ?bool $strict = false) { return p\Mbstring::mb_detect_encoding((string) $string, $encodings, (bool) $strict); }
+    function mb_detect_encoding(?string $string, $encodings = null, ?bool $strict = false) { return p\Mbstring::mb_detect_encoding((string) $string, $encodings, (bool) $strict); }
 }
 if (!function_exists('mb_detect_order')) {
-    function mb_detect_order(array|string|null $encoding = null) { return p\Mbstring::mb_detect_order((string) $encoding); }
+    function mb_detect_order($encoding = null) { return p\Mbstring::mb_detect_order((string) $encoding); }
 }
 if (!function_exists('mb_parse_str')) {
     function mb_parse_str(?string $string, &$result = []) { parse_str((string) $string, $result); }
@@ -66,7 +66,7 @@ if (!function_exists('mb_strtoupper')) {
     function mb_strtoupper(?string $string, ?string $encoding = null) { return p\Mbstring::mb_strtoupper((string) $string, $encoding); }
 }
 if (!function_exists('mb_substitute_character')) {
-    function mb_substitute_character(string|int|null $substitute_character = null) { return p\Mbstring::mb_substitute_character($substitute_character); }
+    function mb_substitute_character($substitute_character = null) { return p\Mbstring::mb_substitute_character($substitute_character); }
 }
 if (!function_exists('mb_substr')) {
     function mb_substr(?string $string, ?int $start, ?int $length = null, ?string $encoding = null) { return p\Mbstring::mb_substr((string) $string, (int) $start, $length, $encoding); }
@@ -112,7 +112,7 @@ if (!function_exists('mb_http_input')) {
 }
 
 if (!function_exists('mb_convert_variables')) {
-    function mb_convert_variables(?string $to_encoding, array|string|null $from_encoding, mixed &$var, mixed &...$vars) { return p\Mbstring::mb_convert_variables((string) $to_encoding, $from_encoding ?? '', $var, ...$vars); }
+    function mb_convert_variables(?string $to_encoding, $from_encoding, mixed &$var, mixed &...$vars) { return p\Mbstring::mb_convert_variables((string) $to_encoding, $from_encoding ?? '', $var, ...$vars); }
 }
 
 if (!function_exists('mb_ord')) {
