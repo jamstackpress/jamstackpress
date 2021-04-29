@@ -95,5 +95,5 @@ is specially useful to keep your frontend site always updated with the latest co
 1. Options panel.
 
 == Changelog ==
-= 0.0.1=
-* First version.
+= 0.0.2=
+* Add plugin assets dir.
