@@ -90,16 +90,16 @@ abstract class Filter
                 $parameters['per_page'] ?? get_option('posts_per_page')
             );
 
-            $rows = new LengthAwarePaginator(
+            return (new LengthAwarePaginator(
                 $sliced->values(),
                 $sliced->count(),
                 $parameters['per_page'] ?? get_option('posts_per_page'),
                 $parameters['page']
-            );
+            ))->toArray();
         }
 
         // Remove hidden fields before returning the result.
-        return $rows;
+        return $rows->toArray();
     }
 
     /**
