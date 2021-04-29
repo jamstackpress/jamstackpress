@@ -10,7 +10,7 @@
  * Plugin URI:        https://github.com/jamstackpress/jamstackpress
  * GitHub Plugin URI: https://github.com/jamstackpress/jamstackpress
  * Description:       Power-up your WordPress site and get it ready for JAMStack.
- * Version:           0.0.3
+ * Version:           0.0.4
  * Author:            JAMStackPress
  * Author URI:        
  * License:           GPL version 3 or any later version
