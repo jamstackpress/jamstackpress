@@ -3,7 +3,7 @@ Contributors: jamstackpress
 Tags: headless,static,jamstack,pwa,spa,api,json
 Requires at least: 5.7.1
 Tested up to: 5.7.1
-Stable tag: 0.0.4
+Stable tag: 0.0.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -108,3 +108,6 @@ is specially useful to keep your frontend site always updated with the latest co
 
 = 0.0.4 =
 * Fix endpoint response not being formatted correctly.
+
+= 0.0.5 =
+* Fix version number
