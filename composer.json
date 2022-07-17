@@ -10,6 +10,9 @@
 	"autoload": {
 		"psr-4": {
 			"Plugin\\": "src/Plugin"
-		}
+		},
+		"files": [
+			"src/Plugin/Support/helpers.php"
+		]
 	}
 }
