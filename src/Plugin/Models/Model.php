@@ -22,7 +22,7 @@ class Model
             );
         }
 
-        add_action('rest_api_init', [static::class, 'provideCustomFields'], 99);
+        add_action('rest_api_init', [static::class, 'provideCustomFields']);
     }
 
     /**

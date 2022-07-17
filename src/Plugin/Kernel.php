@@ -8,13 +8,6 @@ use Plugin\Models\Post;
 class Kernel
 {
     /**
-     * The plugin's version.
-     * 
-     * @var string
-     */
-    public static $version = '1.0.0';
-
-    /**
      * The bootable services.
      * 
      * @var array<int, string>
