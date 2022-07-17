@@ -30,4 +30,4 @@ if (! defined( 'ABSPATH' ) ) {
  */
 require_once __DIR__ . '/vendor/autoload.php';
 
-JamstackPress\Kernel::boot();
+// JamstackPress\Kernel::boot();
