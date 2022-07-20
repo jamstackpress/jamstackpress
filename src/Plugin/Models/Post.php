@@ -25,7 +25,7 @@ class Post extends Model
      * @var array<int, string>
      */
     public static $appends = [
-        'dateString', 'fullSlug'
+        'date_string', 'full_slug'
     ];
 
     /**
@@ -36,8 +36,8 @@ class Post extends Model
      */
     public static function getDateStringAttribute(array $post)
     {
-        // TODO: Implement as current wp decoupled function.
-        return 'Date string value';
+        // TODO: Implement.
+        return '';
     }
 
     /**
@@ -48,10 +48,7 @@ class Post extends Model
      */
     public static function getFullSlugAttribute(array $post)
     {
-        // TODO: Implement as current wp decoupled function.
-        return [
-            'slug' => str_replace(get_site_url(), '', $post['link']),
-            'front_link' => str_replace(get_site_url(), 'frontendURL', $post['link']),
-        ];
+        // TODO: Implement.
+        return [];
     }
 }

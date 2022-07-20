@@ -38,8 +38,11 @@ class Model
         }
 
         foreach (static::$appends as $attribute) {
+            // Get the attribute as camel case.
+            $fn = implode('', array_map(fn ($part) => ucfirst($part), explode('_', $attribute)));
+
             register_rest_field(static::$type, $attribute, [
-                'get_callback' => [static::class, sprintf('get%sAttribute', $attribute)],
+                'get_callback' => [static::class, sprintf('get%sAttribute', $fn)],
                 'update_callback' => null,
                 'schema' => null,
             ]);
