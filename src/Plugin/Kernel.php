@@ -3,6 +3,7 @@
 namespace Plugin;
 
 use Plugin\Http\Kernel as HttpKernel;
+use Plugin\Admin\Kernel as AdminKernel;
 use Plugin\Models\Post;
 
 class Kernel
@@ -14,6 +15,7 @@ class Kernel
      */
     public static $services = [
         HttpKernel::class,
+        AdminKernel::class
     ];
 
     /**

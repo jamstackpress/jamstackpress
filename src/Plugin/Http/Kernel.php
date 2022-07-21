@@ -3,6 +3,7 @@
 namespace Plugin\Http;
 
 use Plugin\Http\Controllers\PostController;
+use Plugin\Http\Controllers\SitemapController;
 use WP_REST_Server;
 
 class Kernel
@@ -23,6 +24,11 @@ class Kernel
         'posts' => [
             'methods' => WP_REST_Server::READABLE,
             'callback' => [PostController::class, 'index'],
+            'permission_callback' => '__return_true',
+        ],
+        'sitemap' => [
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => [SitemapController::class, 'index'],
             'permission_callback' => '__return_true',
         ],
     ];
