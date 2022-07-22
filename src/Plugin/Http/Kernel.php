@@ -4,6 +4,7 @@ namespace Plugin\Http;
 
 use Plugin\Http\Controllers\SitemapController;
 use Plugin\Http\Filters\FilterExternalUrls;
+use Plugin\Http\Filters\ReplaceBackUrl;
 use WP_REST_Server;
 
 class Kernel
@@ -38,6 +39,7 @@ class Kernel
     public static $filters = [
         'the_content' => [
             FilterExternalUrls::class,
+            ReplaceBackUrl::class
         ],
     ];
 
