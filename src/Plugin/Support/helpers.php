@@ -1,7 +1,7 @@
 <?php
 
-use Plugin\Support\HigherOrderTapProxy;
 use Plugin\Support\Constants\SeoPlugin;
+use Plugin\Support\HigherOrderTapProxy;
 
 if (! function_exists('tap')) {
     /**
@@ -36,7 +36,7 @@ if (! function_exists('getSeoPlugin')) {
         // Include the plugin file.
         include_once ABSPATH . WPINC . '/plugin.php';
 
-        // Check if any of the installed plugins 
+        // Check if any of the installed plugins
         // corresponds to a supported SEO plugin and
         // return the internal value.
         foreach (get_plugins() as $plugin) {

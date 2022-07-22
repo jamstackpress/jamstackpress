@@ -11,18 +11,18 @@ abstract class SeoPlugin
     /**
      * The list of supported plugins and
      * their mappings to internal values.
-     * 
+     *
      * @var array<string, string>
      */
     protected static $supported = [
         'Yoast SEO' => 'yoast',
-        'Rank Math SEO' => 'rank_math'
+        'Rank Math SEO' => 'rank_math',
     ];
 
     /**
      * Given the plugin name, return the corresponding
      * value from the enum.
-     * 
+     *
      * @param  string  $name
      * @return static
      */
