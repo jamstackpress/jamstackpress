@@ -97,12 +97,9 @@ class Post extends Model
      */
     public static function getSeoAttribute($object)
     {
-        // Get the installed plugin.
-        $plugin = getSeoPlugin();
-
         // Return the fields that correspond
         // to the plugin.
-        switch ($plugin) {
+        switch (getSeoPlugin()) {
             case SeoPlugin::RANK_MATH:
                 // Create a new Rank Math post.
                 $post = new RankMathPost($object);

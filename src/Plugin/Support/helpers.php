@@ -33,16 +33,6 @@ if (! function_exists('getSeoPlugin')) {
      */
     function getSeoPlugin()
     {
-        // Include the plugin file.
-        include_once ABSPATH . WPINC . '/plugin.php';
-
-        // Check if any of the installed plugins
-        // corresponds to a supported SEO plugin and
-        // return the internal value.
-        foreach (get_plugins() as $plugin) {
-            if ($plugin = SeoPlugin::from($plugin['Name'])) {
-                return $plugin;
-            }
-        }
+        return SeoPlugin::getActive();
     }
 }

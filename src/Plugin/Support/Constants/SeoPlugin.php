@@ -10,29 +10,32 @@ abstract class SeoPlugin
 
     /**
      * The list of supported plugins and
-     * their mappings to internal values.
+     * their mappings to the plugin name.
      *
      * @var array<string, string>
      */
     protected static $supported = [
-        'Yoast SEO' => 'yoast',
-        'Rank Math SEO' => 'rank_math',
+        'rank_math' => 'seo-by-rank-math/rank-math.php',
+        'yoast' => 'wordpress-seo/wp-seo.php',
     ];
 
     /**
-     * Given the plugin name, return the corresponding
-     * value from the enum.
+     * Get the first active plugin of the supported
+     * list.
      *
-     * @param  string  $name
      * @return static
      */
-    public static function from(string $name)
+    public static function getActive()
     {
-        // Check if the plugin is not supported.
-        if (! array_key_exists($name, static::$supported)) {
-            return null;
-        }
+        // Include the plugin file.
+        include_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-        return static::$supported[$name];
+        // Loop through the list and get the first
+        // active plugin.
+        foreach (static::$supported as $plugin => $file) {
+            if (is_plugin_active($file)) {
+                return $plugin;
+            }
+        }
     }
 }

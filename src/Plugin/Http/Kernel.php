@@ -3,6 +3,7 @@
 namespace Plugin\Http;
 
 use Plugin\Http\Controllers\SitemapController;
+use Plugin\Http\Filters\FilterExternalUrls;
 use WP_REST_Server;
 
 class Kernel
@@ -28,13 +29,30 @@ class Kernel
     ];
 
     /**
+     * The filters for the REST Api. The key
+     * represents the WordPress hook to which
+     * the filters will be attached.
+     * 
+     * @var array<string, string>
+     */
+    public static $filters = [
+        'the_content' => [
+            FilterExternalUrls::class,
+        ]
+    ];
+
+    /**
      * Initialize the HTTP service.
      *
      * @return void
      */
     public static function boot()
     {
+        // Register the routes.
         add_action('rest_api_init', [static::class, 'registerRoutes']);
+
+        // Register the filters.
+        self::applyFilters();
     }
 
     /**
@@ -50,6 +68,21 @@ class Kernel
                 $endpoint,
                 $args,
             );
+        }
+    }
+
+    /**
+     * Register the HTTP filters applied
+     * to the REST Api.
+     * 
+     * @return void
+     */
+    public static function applyFilters()
+    {
+        foreach (static::$filters as $hook => $filters) {
+            foreach ($filters as $filter) {
+                add_filter($hook, [$filter, 'apply']);
+            }
         }
     }
 }
