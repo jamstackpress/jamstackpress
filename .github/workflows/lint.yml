@@ -20,7 +20,7 @@ jobs:
         run: composer install
 
       - name: PHP CS Fixer
-        run: ./vendor/bin/php-cs-fixer fix src --config=.php-cs-fixer.php
+        run: ./vendor/bin/php-cs-fixer fix src --config=.php-cs-fixer.php --allow-risky=yes
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
