@@ -16,7 +16,7 @@ class SitemapController
     {
         // TODO: Implement pagination.
         return array_merge(
-            Post::getSlugs(), 
+            Post::getSlugs(),
             Category::getSlugs()
         );
     }
