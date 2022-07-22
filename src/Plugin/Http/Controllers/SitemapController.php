@@ -10,12 +10,14 @@ class SitemapController
     /**
      * Display a listing of the resource.
      *
-     * @return array of slugs
+     * @return array<int, string>
      */
     public static function index()
     {
-        // TODO: Implement pagination?
-
-        return array_merge(Post::getSlugs(), Category::getSlugs());
+        // TODO: Implement pagination.
+        return array_merge(
+            Post::getSlugs(), 
+            Category::getSlugs()
+        );
     }
 }

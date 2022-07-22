@@ -3,7 +3,6 @@
 namespace Plugin\Models;
 
 use Exception;
-use WP_REST_Request;
 
 class Model
 {
@@ -15,9 +14,9 @@ class Model
     public static function boot()
     {
         // Check if the WordPress type for the model is set.
-        if (!property_exists(get_called_class(), 'type') || !static::$type) {
+        if (! property_exists(static::class, 'type') || ! static::$type) {
             throw new Exception(
-                sprintf('No WordPress type specified for [%s].', get_called_class())
+                sprintf('No WordPress type specified for [%s].', static::class)
             );
         }
 
@@ -32,43 +31,69 @@ class Model
      */
     public static function provideCustomFields()
     {
-        if (!property_exists(get_called_class(), 'appends') || !static::$appends) {
+        if (! property_exists(static::class, 'appends') || ! static::$appends) {
             return;
         }
 
-        foreach (static::$appends as $attribute) {
-            // Get the attribute as camel case.
-            $fn = implode('', array_map(fn ($part) => ucfirst($part), explode('_', $attribute)));
-
-            register_rest_field(static::$type, $attribute, [
-                'get_callback' => [static::class, sprintf('get%sAttribute', $fn)],
-                'update_callback' => null,
-                'schema' => null,
-            ]);
-        }
+        // Register the "jamstackpress" field.
+        register_rest_field(static::$type, 'jamstackpress', [
+            'get_callback' => [static::class, 'getJamstackPressAttribute'],
+            'update_callback' => null,
+            'schema' => null,
+        ]);
     }
 
     /**
-     * Return a resource of the model from a
-     * WordPress's request.
+     * Return the JamstackPress attribute.
      *
      * @return array<string, mixed>
      */
-    public static function fromRequest(WP_REST_Request $request)
+    public static function getJamstackPressAttribute($object)
     {
-        // Check if the endpoint is set in the model.
-        if (!property_exists(get_called_class(), 'endpoint') || !static::$endpoint) {
+        // Loop through the defined appends in the model
+        // and return the corresponding values for each
+        // field.
+        $values = array_map(
+            function ($field) use ($object) {
+                // Get the field accessor.
+                $accessor = static::getAttributeAccessor($field);
+
+                // Return the field with the value from the
+                // given accessor.
+                return [
+                    $field => static::$accessor($object),
+                ];
+            },
+            static::$appends
+        );
+
+        // Return the flatten array.
+        return array_merge(...$values);
+    }
+
+    /**
+     * Given an attribute, get the name of
+     * attribute's accessor.
+     *
+     * @param  string  $attribute
+     * @return string
+     */
+    protected static function getAttributeAccessor(string $attribute)
+    {
+        // Get the name of the accessor.
+        $accessor = sprintf(
+            'get%sAttribute',
+            implode('', array_map(fn ($part) => ucfirst($part), explode('_', $attribute)))
+        );
+
+        // Check if the accessor exists, or throw
+        // an exception.
+        if (! method_exists(static::class, $accessor)) {
             throw new Exception(
-                sprintf('No endpoint specified for [%s].', get_called_class())
+                sprintf('No accessor defined for %s in [%s].', $field, static::class)
             );
         }
 
-        return rest_get_server()->response_to_data(
-            rest_do_request(
-                tap(new WP_REST_Request($request->get_method(), static::$endpoint))
-                    ->set_query_params($request->get_params()),
-            ),
-            true
-        );
+        return $accessor;
     }
 }

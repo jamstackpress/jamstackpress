@@ -12,36 +12,24 @@ class Category extends Model
     public static $type = 'category';
 
     /**
-     * The custom attributes appended to
-     * the model, when calling the API.
-     *
-     * @var array<int, string>
-     */
-    public static $appends = [
-    ];
-
-    /**
      * Get slugs of every published category.
      *
-     * @return array
+     * @return array<int, string>
      */
     public static function getSlugs()
     {
-        $slugs = [];
-
+        // Get the list of categories.
         $categories = get_categories([
             'orderby' => 'name',
             'order' => 'ASC',
             'hide_empty' => true,
         ]);
 
-        foreach ($categories as $cat) {
-            // TODO: sitemap options (show cats with x number of posts)
-            if ($cat->count > 4) {
-                array_push($slugs, '/'.$cat->slug.'/');
-            }
-        }
-        // TODO:  extend for more  taxonomies types
-        return array_values($slugs);
+        // Return the slugs of the categories
+        // which have more than 4 posts.
+        return array_filter(array_map(
+            fn ($category) => $category->count > 4 ? sprintf('/%s/', $category->slug) : null,
+            $categories
+        ));
     }
 }

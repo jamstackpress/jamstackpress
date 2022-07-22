@@ -216,8 +216,8 @@ class Kernel
     public static function addMenuToAdminBar($adminBar)
     {
         foreach (static::$adminBar as $menu) {
-            if (!is_admin() || array_key_exists('dependsOnOption', $menu)
-            && !get_option($menu['dependsOnOption'], null)) {
+            if (! is_admin() || array_key_exists('dependsOnOption', $menu)
+            && ! get_option($menu['dependsOnOption'], null)) {
                 continue;
             }
 
