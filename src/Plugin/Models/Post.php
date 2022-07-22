@@ -22,7 +22,8 @@ class Post extends Model
      * @var array<int, string>
      */
     public static $appends = [
-        'date_string', 'routes', 'seo',
+        'date_string', 'featured_image',
+        'routes', 'seo',
     ];
 
     /**
@@ -40,11 +41,37 @@ class Post extends Model
     }
 
     /**
+     * Interact with the featured image attribute.
+     * TODO: Implement for other post types.
+     * 
+     * @param  array<string, mixed>  $object
+     * @return 
+     */
+    public static function getFeaturedImageAttribute($object)
+    {
+        // The available sizes.
+        $sizes = [
+            'thumbnail', 'medium', 
+            'medium_large', 'large'
+        ];
+
+        // Get the thumbnail id.
+        $image = get_post_thumbnail_id($object['id']);
+
+        // For each size, return the corresponding
+        // featured image.
+        return array_merge(...array_map(
+            fn ($size) => [$size => wp_get_attachment_image_src($image, $size)[0] ?: null],
+            $sizes
+        ));
+    }
+
+    /**
      * Interact with the full slug attribute.
      *
      * @param  string  $link
      * @param  array<string, mixed>  $object
-     * @return array
+     * @return array<string, string>
      */
     public static function getRoutesAttribute($object)
     {
@@ -66,7 +93,7 @@ class Post extends Model
      * to the configured plugin's SEO plugin.
      *
      * @param  array<string, mixed>  $object
-     * @return mixed
+     * @return array<string, string|null>
      */
     public static function getSeoAttribute($object)
     {
