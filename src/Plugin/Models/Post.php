@@ -32,16 +32,9 @@ class Post extends Model
      */
     public static function getDateStringAttribute($object)
     {
-        // Add compatiblity with Bogo translate plugin,
-        // if the plugin is installed and configured.
-        /** @see https://es.wordpress.org/plugins/bogo/ */
-        if (! empty($object['meta']['_locale'])) {
-            setlocale(LC_TIME, $object['meta']['_locale'].'.UTF-8');
-        }
-
         return wp_date(
             get_option('date_format'),
-            strtotime($object['date_gmt'])
+            strtotime($object['date_gmt']),
         );
     }
 
