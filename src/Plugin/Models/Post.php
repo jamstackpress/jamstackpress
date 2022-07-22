@@ -34,7 +34,7 @@ class Post extends Model
     {
         // Set the locale.
         setlocale(LC_TIME, '');
-        setlocale(LC_TIME, getlocale().'.UTF-8');
+        setlocale(LC_TIME, get_locale().'.UTF-8');
 
         // Add compatiblity with Bogo translate plugin,
         // if the plugin is installed and configured.
