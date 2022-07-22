@@ -34,13 +34,17 @@ class Post extends Model
     {
         // Set the locale.
         setlocale(LC_TIME, '');
-        setlocale(LC_TIME, get_locale().'.UTF-8');
+        setlocale(LC_TIME, str_replace(
+            '_', '-', get_locale().'.UTF-8'
+        ));
 
         // Add compatiblity with Bogo translate plugin,
         // if the plugin is installed and configured.
         /** @see https://es.wordpress.org/plugins/bogo/ */
         if (! empty($object['meta']['_locale'])) {
-            setlocale(LC_TIME, $object['meta']['_locale'].'.UTF-8');
+            setlocale(LC_TIME, str_replace(
+                '_', '-', $object['meta']['_locale'].'.UTF-8'
+            ));
         }
 
         return strftime(
