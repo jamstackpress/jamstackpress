@@ -44,7 +44,7 @@ class Post extends Model
         }
 
         return strftime(
-            '%d %B, %Y', 
+            '%d %B, %Y',
             strtotime($object['date_gmt'])
         );
     }
