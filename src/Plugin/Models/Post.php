@@ -33,7 +33,8 @@ class Post extends Model
     public static function getDateStringAttribute($object)
     {
         // Set the locale.
-        setlocale(LC_TIME, get_locale().'.UTF-8');
+        setlocale(LC_TIME, '');
+        setlocale(LC_TIME, getlocale().'.UTF-8');
 
         // Add compatiblity with Bogo translate plugin,
         // if the plugin is installed and configured.
@@ -43,7 +44,8 @@ class Post extends Model
         }
 
         return strftime(
-            '%d %B, %Y', strtotime($object['date_gmt'])
+            '%d %B, %Y', 
+            strtotime($object['date_gmt'])
         );
     }
 

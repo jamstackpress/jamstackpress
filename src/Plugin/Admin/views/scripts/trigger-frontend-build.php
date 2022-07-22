@@ -10,7 +10,7 @@ if (is_admin_bar_showing() && $url = get_option('jamstackpress_build_webhook_url
                     alert('<?php _e('Frontend build triggered', 'jamstackpress'); ?>');
                 })
                 .fail((xhr, status, error) => {
-                    alert('<?php _e('There was an error triggering the frontend build'); ?>');
+                    alert('<?php _e('There was an error triggering the frontend build', 'jamstackpress'); ?>');
                 });
         });
     </script>
