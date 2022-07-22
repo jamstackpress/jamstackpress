@@ -7,7 +7,7 @@ class Kernel
     /**
      * The available pages.
      *
-     * @var array
+     * @var array<int, array<string, string>>
      */
     protected static $pages = [
         [
@@ -23,7 +23,7 @@ class Kernel
     /**
      * The available sections.
      *
-     * @var array
+     * @var array<int, array<string, string>
      */
     protected static $sections = [
         [
@@ -37,7 +37,7 @@ class Kernel
     /**
      * The available settings.
      *
-     * @var array
+     * @var array<int, array<string, string>
      */
     protected static $settings = [
         [
@@ -73,7 +73,7 @@ class Kernel
     /**
      * The available options in the admin bar.
      *
-     * @var array
+     * @var array<int, array<string, string>
      */
     protected static $adminBar = [
         [
@@ -95,17 +95,18 @@ class Kernel
     /**
      * The scripts appended to the footer.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected static $scripts = ['triggerFrontendBuild'];
+    protected static $scripts = [
+        'triggerFrontendBuild'
+    ];
 
     /**
      * Handle the statically called methods of the class, that are not
      * explicity defined.
      *
-     * @param string $method
-     * @param array  $arguments
-     *
+     * @param  string $method
+     * @param  array<string, mixed>  $arguments
      * @return mixed
      */
     public static function __callStatic($method, $arguments)
