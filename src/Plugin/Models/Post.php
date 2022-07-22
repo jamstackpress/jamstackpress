@@ -43,16 +43,16 @@ class Post extends Model
     /**
      * Interact with the featured image attribute.
      * TODO: Implement for other post types.
-     * 
+     *
      * @param  array<string, mixed>  $object
-     * @return 
+     * @return
      */
     public static function getFeaturedImageAttribute($object)
     {
         // The available sizes.
         $sizes = [
-            'thumbnail', 'medium', 
-            'medium_large', 'large'
+            'thumbnail', 'medium',
+            'medium_large', 'large',
         ];
 
         // Get the thumbnail id.

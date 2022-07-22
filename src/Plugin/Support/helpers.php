@@ -34,7 +34,7 @@ if (! function_exists('getSeoPlugin')) {
     function getSeoPlugin()
     {
         // Include the plugin file.
-        include_once ABSPATH . WPINC . '/plugin.php';
+        include_once ABSPATH.WPINC.'/plugin.php';
 
         // Check if any of the installed plugins
         // corresponds to a supported SEO plugin and
