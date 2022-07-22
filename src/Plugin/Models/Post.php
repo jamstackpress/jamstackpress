@@ -3,6 +3,7 @@
 namespace Plugin\Models;
 
 use Plugin\Support\Constants\SeoPlugin;
+use RankMath\Post as RankMathPost;
 use WP_Query;
 
 class Post extends Model
@@ -76,9 +77,13 @@ class Post extends Model
         // to the plugin.
         switch ($plugin) {
             case SeoPlugin::RANK_MATH:
+                // Create a new Rank Math post.
+                $post = new RankMathPost($object);
+
+                // Return the corresponding fields.
                 return [
-                    'title' => get_post_meta($object['id'], 'rank_math_title', true),
-                    'description' => get_post_meta($object['id'], 'rank_math_description', true),
+                    'title' => $post->get_metadata('title', null),
+                    'description' => $post->get_metadata('description', null),
                 ];
 
             case SeoPlugin::YOAST:

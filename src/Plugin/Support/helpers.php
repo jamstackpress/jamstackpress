@@ -1,6 +1,7 @@
 <?php
 
 use Plugin\Support\HigherOrderTapProxy;
+use Plugin\Support\Constants\SeoPlugin;
 
 if (! function_exists('tap')) {
     /**
@@ -35,7 +36,13 @@ if (! function_exists('getSeoPlugin')) {
         // Include the plugin file.
         include_once 'wp-admin/includes/plugin.php';
 
-        // TODO: Implement.
-        return null;
+        // Check if any of the installed plugins 
+        // corresponds to a supported SEO plugin and
+        // return the internal value.
+        foreach (get_plugins() as $plugin) {
+            if ($plugin = SeoPlugin::from($plugin['Name'])) {
+                return $plugin;
+            }
+        }
     }
 }
