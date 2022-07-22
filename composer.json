@@ -14,5 +14,8 @@
 		"files": [
 			"src/Plugin/Support/helpers.php"
 		]
+	},
+	"require": {
+		"friendsofphp/php-cs-fixer": "^3.9"
 	}
 }
