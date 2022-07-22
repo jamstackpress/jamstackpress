@@ -32,6 +32,9 @@ if (! function_exists('getSeoPlugin')) {
      */
     function getSeoPlugin()
     {
+        // Include the plugin file.
+        include_once 'wp-admin/includes/plugin.php';
+
         // TODO: Implement.
         return null;
     }
