@@ -98,7 +98,7 @@ class Kernel
      * @var array<int, string>
      */
     protected static $scripts = [
-        'triggerFrontendBuild'
+        'triggerFrontendBuild',
     ];
 
     /**
