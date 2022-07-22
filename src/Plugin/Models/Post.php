@@ -121,6 +121,30 @@ class Post extends Model
         return array_values($slugs);
     }
 
+
+  /**
+     * Returns the corresponding post metadata according
+     * to the configured plugin's SEO plugin.
+     *
+     * @param array $object
+     * @return mixed
+     */
+    public static function getSeoMetaFields($object)
+    {
+        $seo_plugin = 'yoast';        
+
+        if ($seo_plugin != 'yoast') {
+            return array('title' => get_post_meta($object['id'], 'rank_math_title', true), 'description' => get_post_meta($object['id'], 'rank_math_description', true) );
+           
+        } else {
+            return array('title' => YoastSEO()->meta->for_post( $object['id'] )->title, 'description' => YoastSEO()->meta->for_post( $object['id'] )->description );
+         
+            
+        }
+        
+        
+    }
+
      /**
      * Generate the jamstackpress object with every
      * field
@@ -130,8 +154,9 @@ class Post extends Model
     public static function getJamstackpressAttribute($object)
     {
 
-       return array('routes' => self::getFullSlugAttribute($object), 'date_string' => self::getDateStringAttribute($object));
-        
+       return array('routes' => self::getFullSlugAttribute($object), 
+                    'date_string' => self::getDateStringAttribute($object), 
+                    'seo' => self::getSeoMetaFields($object));
         
 
     }

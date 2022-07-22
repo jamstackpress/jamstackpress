@@ -41,7 +41,7 @@ class Category extends Model
         ));
 
         foreach ($categories as $cat) {
-        //TODO sitemap options (show cats with x number of posts)
+        //TODO: sitemap options (show cats with x number of posts)
             if ($cat->count > 4) {
                 array_push( $slugs, '/' . $cat->slug . '/');
             }  
