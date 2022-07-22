@@ -1,2 +1,2 @@
-<input name="jamstackpress_frontend_base_url" type="text" value="<?php echo get_option('jamstackpress_frontend_base_url', '') ?>" />
+<input name="jamstackpress_frontend_base_url" type="text" value="<?php echo get_option('jamstackpress_frontend_base_url', ''); ?>" />
 <p style="margin-top: 8px"><?php _e('For e.g.: (https://yourwordpress.com/)', 'jamstackpress'); ?></p>

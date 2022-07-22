@@ -10,14 +10,14 @@ class Kernel
 {
     /**
      * The routes prefix.
-     * 
+     *
      * @var string
      */
     public static $prefix = 'jamstackpress/v1';
 
     /**
      * The plugin routes.
-     * 
+     *
      * @var array<int, string>
      */
     public static $routes = [
@@ -35,7 +35,7 @@ class Kernel
 
     /**
      * Initialize the HTTP service.
-     * 
+     *
      * @return void
      */
     public static function boot()
@@ -45,14 +45,16 @@ class Kernel
 
     /**
      * Register the plugin routes.
-     * 
+     *
      * @return void
      */
     public static function registerRoutes()
     {
         foreach (static::$routes as $endpoint => $args) {
             register_rest_route(
-                static::$prefix, $endpoint, $args,
+                static::$prefix,
+                $endpoint,
+                $args,
             );
         }
     }

@@ -6,8 +6,8 @@
     <form method="post" action="options.php">
         <?php
             settings_fields('jamstackpress-options');
-            do_settings_sections('jamstackpress-admin');
-            submit_button();
-        ?>
+    do_settings_sections('jamstackpress-admin');
+    submit_button();
+    ?>
     </form>
 </div>

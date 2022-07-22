@@ -2,25 +2,25 @@
 
 namespace Plugin;
 
-use Plugin\Http\Kernel as HttpKernel;
 use Plugin\Admin\Kernel as AdminKernel;
+use Plugin\Http\Kernel as HttpKernel;
 use Plugin\Models\Post;
 
 class Kernel
 {
     /**
      * The bootable services.
-     * 
+     *
      * @var array<int, string>
      */
     public static $services = [
         HttpKernel::class,
-        AdminKernel::class
+        AdminKernel::class,
     ];
 
     /**
      * The bootable models.
-     * 
+     *
      * @var array<int, string>
      */
     public static $models = [
@@ -29,7 +29,7 @@ class Kernel
 
     /**
      * Initialize the plugin.
-     * 
+     *
      * @return void
      */
     public static function boot()

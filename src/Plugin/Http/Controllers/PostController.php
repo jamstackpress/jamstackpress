@@ -10,8 +10,7 @@ class PostController
 {
     /**
      * Display a listing of the resource.
-     * 
-     * @param  \WP_REST_Request  $request
+     *
      * @return \WP_REST_Response
      */
     public static function index(WP_REST_Request $request)

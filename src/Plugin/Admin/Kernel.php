@@ -2,13 +2,11 @@
 
 namespace Plugin\Admin;
 
-use Illuminate\Support\Str;
-
 class Kernel
 {
     /**
      * The available pages.
-     * 
+     *
      * @var array
      */
     protected static $pages = [
@@ -18,13 +16,13 @@ class Kernel
             'menuTitle' => 'JAMStackPress',
             'capabilities' => 'manage_options',
             'callback' => 'renderPage',
-            'icon' => 'dashicons-rest-api'
-        ]
+            'icon' => 'dashicons-rest-api',
+        ],
     ];
 
     /**
      * The available sections.
-     * 
+     *
      * @var array
      */
     protected static $sections = [
@@ -32,13 +30,13 @@ class Kernel
             'id' => 'jamstackpress-options',
             'title' => 'Settings',
             'callback' => null,
-            'page' => 'jamstackpress-admin'
-        ]
+            'page' => 'jamstackpress-admin',
+        ],
     ];
 
     /**
      * The available settings.
-     * 
+     *
      * @var array
      */
     protected static $settings = [
@@ -47,34 +45,34 @@ class Kernel
             'title' => 'Frontend\'s base url',
             'callback' => 'renderFrontendBaseUrlOption',
             'page' => 'jamstackpress-admin',
-            'section' => 'jamstackpress-options'
+            'section' => 'jamstackpress-options',
         ],
         [
             'id' => 'jamstackpress_build_webhook_url',
             'title' => 'Build webhook url',
             'callback' => 'renderBuildWebhookUrlOption',
             'page' => 'jamstackpress-admin',
-            'section' => 'jamstackpress-options'
+            'section' => 'jamstackpress-options',
         ],
         [
             'id' => 'jamstackpress_human_readable_date',
             'title' => 'Human readable date',
             'callback' => 'renderHumanReadableDateOption',
             'page' => 'jamstackpress-admin',
-            'section' => 'jamstackpress-options'
+            'section' => 'jamstackpress-options',
         ],
         [
             'id' => 'jamstackpress_full_slug_field',
             'title' => 'Full slug field',
             'callback' => 'renderFullSlugFieldOption',
             'page' => 'jamstackpress-admin',
-            'section' => 'jamstackpress-options'
+            'section' => 'jamstackpress-options',
         ],
     ];
 
     /**
      * The available options in the admin bar.
-     * 
+     *
      * @var array
      */
     protected static $adminBar = [
@@ -90,20 +88,47 @@ class Kernel
             'title' => 'Trigger frontend build',
             'href' => '#',
             'meta' => ['title' => 'Trigger frontend build'],
-            'dependsOnOption' => 'jamstackpress_build_webhook_url'
-        ]
+            'dependsOnOption' => 'jamstackpress_build_webhook_url',
+        ],
     ];
 
     /**
      * The scripts appended to the footer.
-     * 
+     *
      * @var array
      */
     protected static $scripts = ['triggerFrontendBuild'];
 
     /**
+     * Handle the statically called methods of the class, that are not
+     * explicity defined.
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public static function __callStatic($method, $arguments)
+    {
+        if ($pieces = preg_split('/(?=[A-Z])/', lcfirst($method))) {
+            /* Check if we're calling a render method and include the
+             * corresponding view. */
+            if ('render' === strtolower($pieces[0]) && 'option' === strtolower(end($pieces))) {
+                // Remove the first and last elements of the pieces array.
+                array_shift($pieces);
+                array_pop($pieces);
+
+                // Get the view name.
+                $view = _wp_to_kebab_case(implode($pieces));
+
+                require_once 'views/options/'.$view.'.php';
+            }
+        }
+    }
+
+    /**
      * Boot the administration kernel.
-     * 
+     *
      * @return void
      */
     public static function boot()
@@ -117,7 +142,7 @@ class Kernel
 
     /**
      * Add the menu page to the admin panel's sidebar.
-     * 
+     *
      * @return void
      */
     public static function addMenuPageToSidebar()
@@ -128,7 +153,7 @@ class Kernel
                 $page['title'],
                 $page['menuTitle'],
                 $page['capabilities'],
-                $page['id'], 
+                $page['id'],
                 [static::class, $page['callback']],
                 $page['icon']
             );
@@ -137,7 +162,7 @@ class Kernel
 
     /**
      * Render the options page.
-     * 
+     *
      * @return void
      */
     public static function renderPage()
@@ -149,7 +174,7 @@ class Kernel
     /**
      * Register the settings and sections corresponding to the
      * plugin's options.
-     * 
+     *
      * @return void
      */
     public static function registerSettings()
@@ -183,15 +208,16 @@ class Kernel
 
     /**
      * Adds a new menu to the admin bar menu.
-     * 
+     *
      * @param mixed $adminBar
+     *
      * @return void
      */
     public static function addMenuToAdminBar($adminBar)
     {
         foreach (static::$adminBar as $menu) {
-            if (!is_admin() || array_key_exists('dependsOnOption', $menu) &&
-            !get_option($menu['dependsOnOption'], null)) {
+            if (!is_admin() || array_key_exists('dependsOnOption', $menu)
+            && !get_option($menu['dependsOnOption'], null)) {
                 continue;
             }
 
@@ -201,7 +227,7 @@ class Kernel
 
     /**
      * Add custom scripts to the WordPress footer.
-     * 
+     *
      * @return void
      */
     public static function addScriptsToFooter()
@@ -209,34 +235,7 @@ class Kernel
         foreach (static::$scripts as $script) {
             $view = _wp_to_kebab_case($script);
 
-            require_once 'views/scripts/' . $view . '.php';
-        }
-    }
-
-    /**
-     * Handle the statically called methods of the class, that are not
-     * explicity defined.
-     * 
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     */
-    public static function __callStatic($method, $arguments)
-    {
-        if ($pieces = preg_split('/(?=[A-Z])/', lcfirst($method))) {
-            /* Check if we're calling a render method and include the 
-             * corresponding view. */
-            if (strtolower($pieces[0]) === 'render' && strtolower(end($pieces)) === 'option') {
-                // Remove the first and last elements of the pieces array.
-                array_shift($pieces);
-                array_pop($pieces);
-
-                // Get the view name.
-                $view = _wp_to_kebab_case(implode($pieces));
-
-                require_once 'views/options/' . $view . '.php';
-            }
+            require_once 'views/scripts/'.$view.'.php';
         }
     }
 }
-

@@ -2,12 +2,13 @@
 
 use Plugin\Support\HigherOrderTapProxy;
 
-if (! function_exists('tap')) {
+if (!function_exists('tap')) {
     /**
      * Call the given Closure with the given value then return the value.
      *
-     * @param  mixed  $value
-     * @param  callable|null  $callback
+     * @param mixed         $value
+     * @param null|callable $callback
+     *
      * @return mixed
      */
     function tap($value, $callback = null)
