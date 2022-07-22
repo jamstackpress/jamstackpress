@@ -6,7 +6,7 @@ class FilterExternalUrls
 {
     /**
      * Add the target to all external urls.
-     * 
+     *
      * @param  string  $content
      * @return string
      */

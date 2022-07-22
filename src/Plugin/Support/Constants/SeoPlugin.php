@@ -28,7 +28,7 @@ abstract class SeoPlugin
     public static function getActive()
     {
         // Include the plugin file.
-        include_once ABSPATH . 'wp-admin/includes/plugin.php';
+        include_once ABSPATH.'wp-admin/includes/plugin.php';
 
         // Loop through the list and get the first
         // active plugin.

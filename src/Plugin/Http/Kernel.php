@@ -32,13 +32,13 @@ class Kernel
      * The filters for the REST Api. The key
      * represents the WordPress hook to which
      * the filters will be attached.
-     * 
+     *
      * @var array<string, string>
      */
     public static $filters = [
         'the_content' => [
             FilterExternalUrls::class,
-        ]
+        ],
     ];
 
     /**
@@ -74,7 +74,7 @@ class Kernel
     /**
      * Register the HTTP filters applied
      * to the REST Api.
-     * 
+     *
      * @return void
      */
     public static function applyFilters()
