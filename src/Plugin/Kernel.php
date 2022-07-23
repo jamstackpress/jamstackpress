@@ -4,8 +4,8 @@ namespace Plugin;
 
 use Plugin\Admin\Kernel as AdminKernel;
 use Plugin\Http\Kernel as HttpKernel;
-use Plugin\Models\Post;
 use Plugin\Models\Contact;
+use Plugin\Models\Post;
 
 class Kernel
 {

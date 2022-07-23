@@ -19,11 +19,10 @@ class Model
                 sprintf('No WordPress type specified for [%s].', static::class)
             );
         }
-        
+
         add_action('init', [static::class, 'registerCustomType']);
         add_action('rest_api_init', [static::class, 'provideCustomFields']);
     }
-
 
     /**
      * Register Post types.
@@ -35,7 +34,7 @@ class Model
         if (! property_exists(static::class, 'custom') || ! static::$custom) {
             return;
         }
-    
+
         // Register post type using static::$type
         register_post_type(
             static::$type, static::$type_args

@@ -1,6 +1,6 @@
 <?php
-namespace Plugin\Models;
 
+namespace Plugin\Models;
 
 class Contact extends Model
 {
@@ -18,7 +18,6 @@ class Contact extends Model
      */
     public static $custom = true;
 
-
     /**
      * Arguments for the $args parameter
      * in order to register the post type
@@ -34,5 +33,4 @@ class Contact extends Model
         'has_archive' => false,
         'show_in_menu' => true,
     ];
- 
 }

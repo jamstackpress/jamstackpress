@@ -2,8 +2,9 @@
 
 namespace Plugin\Http\Controllers;
 
-use WP_REST_Response;
 use Plugin\Models\Contact;
+use WP_REST_Response;
+
 class ContactController
 {
     /**
@@ -32,7 +33,7 @@ class ContactController
         );
 
         // Si hay error devolvemos el mensaje.
-        if (!$response['success']) {
+        if (! $response['success']) {
             return new WP_REST_Response(['success' => false, 'message' => $failMessage]);
         }
 
