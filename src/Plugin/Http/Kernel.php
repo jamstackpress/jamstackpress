@@ -45,7 +45,7 @@ class Kernel
     public static $filters = [
         'the_content' => [
             FilterExternalUrls::class,
-            ReplaceBackUrl::class
+            ReplaceBackUrl::class,
         ],
     ];
 
