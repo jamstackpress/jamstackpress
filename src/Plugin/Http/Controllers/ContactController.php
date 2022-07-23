@@ -12,8 +12,9 @@ class ContactController
      * @param WP_REST_Request $request
      * @return WP_REST_Response
      */
-    public static function index($request)
+    public static function store($request)
     {
+        // TODO: Refactor.
         $params = $request->get_json_params();
         $failMessage = get_option('wpdecoupled_contact_fail');
         $successMessage = get_option('wpdecoupled_contact_success');

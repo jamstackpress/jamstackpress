@@ -12,9 +12,10 @@ class Contact extends Model
     public static $type = 'jp_contact';
 
     /**
-     * The model's WordPress object type.
+     * Indicate if the model is a custom
+     * type.
      *
-     * @var string
+     * @var bool
      */
     public static $custom = true;
 
@@ -27,7 +28,7 @@ class Contact extends Model
     public static $type_args = [
         'labels' => [
             'name' => 'Contacts',
-            'singular_name' => 'Cobtact',
+            'singular_name' => 'Contact',
         ],
         'public' => true,
         'has_archive' => false,

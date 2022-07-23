@@ -4,8 +4,8 @@ namespace Plugin\Http;
 
 use Plugin\Http\Controllers\ContactController;
 use Plugin\Http\Controllers\SitemapController;
-use Plugin\Http\Filters\FilterExternalUrls;
-use Plugin\Http\Filters\ReplaceBackUrl;
+use Plugin\Http\Filters\AddTargetToExternalUrls;
+use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
 use WP_REST_Server;
 
 class Kernel
@@ -28,9 +28,10 @@ class Kernel
             'callback' => [SitemapController::class, 'index'],
             'permission_callback' => '__return_true',
         ],
+
         'contact' => [
             'methods' => WP_REST_Server::CREATABLE,
-            'callback' => [ContactController::class, 'index'],
+            'callback' => [ContactController::class, 'store'],
             'permission_callback' => '__return_true',
         ],
     ];
@@ -44,8 +45,8 @@ class Kernel
      */
     public static $filters = [
         'the_content' => [
-            FilterExternalUrls::class,
-            ReplaceBackUrl::class,
+            AddTargetToExternalUrls::class,
+            ReplaceBackendUrlWithFrontendUrl::class,
         ],
     ];
 
