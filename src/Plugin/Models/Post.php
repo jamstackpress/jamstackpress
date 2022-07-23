@@ -33,18 +33,17 @@ class Post extends Model
      * @return string
      */
     public static function getDateStringAttribute($object)
-    {   
+    {
         // Check readable date option
-        if(get_option('jamstackpress_human_readable_date')) {
+        if (get_option('jamstackpress_human_readable_date')) {
             return wp_date(
                 get_option('date_format'),
                 strtotime($object['date_gmt']),
             );
         } else {
-        // Return null if readable date option is off
-        return null;
+            // Return null if readable date option is off
+            return null;
         }
-
     }
 
     /**
@@ -57,8 +56,8 @@ class Post extends Model
     public static function getFeaturedImageAttribute($object)
     {
         // Check featured image field option
-        if(get_option('jamstackpress_featured_image_field')) {
-            
+        if (get_option('jamstackpress_featured_image_field')) {
+
             // The available sizes.
             $sizes = [
                 'thumbnail', 'medium',
@@ -75,8 +74,8 @@ class Post extends Model
                 $sizes
             ));
         } else {
-        // Return null if image field option is off
-        return null; 
+            // Return null if image field option is off
+            return null;
         }
     }
 
@@ -90,7 +89,7 @@ class Post extends Model
     public static function getRoutesAttribute($object)
     {
         // Check full slug option option
-        if(get_option('jamstackpress_full_slug_field')) {
+        if (get_option('jamstackpress_full_slug_field')) {
             return [
                 'slug' => str_replace(
                     get_site_url(), '', $object['link'],
@@ -102,7 +101,6 @@ class Post extends Model
                     $object['link']
                 ),
             ];
-        
         } else {
             // Return null if slug option is off
             return null;
@@ -119,8 +117,8 @@ class Post extends Model
     public static function getSeoAttribute($object)
     {
         // Check seo field option
-        if(get_option('jamstackpress_seo_field')) {
-            
+        if (get_option('jamstackpress_seo_field')) {
+
             // Return the fields that correspond
             // to the plugin.
             switch (getSeoPlugin()) {
@@ -145,12 +143,11 @@ class Post extends Model
                         'title' => null,
                         'description' => null,
                     ];
-            } 
+            }
         } else {
             // Return null if SEO field option is off
             return null;
         }
-
     }
 
     /**
