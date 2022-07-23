@@ -19,7 +19,7 @@ class AddTargetToExternalUrls
             return $content;
         }
 
-        // Create the DOM document with the 
+        // Create the DOM document with the
         // corresponding encoding.
         $dom = new DOMDocument('1.0', 'utf-8');
 
@@ -44,7 +44,7 @@ class AddTargetToExternalUrls
     /**
      * Return a boolean indicating if the given string
      * corresponds to an external URL.
-     * 
+     *
      * @param  string  $url
      * @return bool
      */

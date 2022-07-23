@@ -25,7 +25,7 @@ class ReplaceBackendUrlWithFrontendUrl
     /**
      * Replace the home url with the
      * frontend url.
-     * 
+     *
      * @param  string  $content
      * @return string
      */
@@ -35,7 +35,7 @@ class ReplaceBackendUrlWithFrontendUrl
         $frontendUrl = get_option('jamstackpress_frontend_base_url');
 
         return str_replace(
-            'href="/', 
+            'href="/',
             trailingslashit('href="'.$frontendUrl),
             $content
         );
@@ -44,7 +44,7 @@ class ReplaceBackendUrlWithFrontendUrl
     /**
      * Replace the url in the other links
      * that don't match an uploaded media link.
-     * 
+     *
      * @param  string  $content
      * @return string
      */
