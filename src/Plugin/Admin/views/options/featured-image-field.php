@@ -1,0 +1,2 @@
+<input name="jamstackpress_featured_image_field" type="checkbox" value="true" <?php echo get_option('jamstackpress_featured_image_field', false) ? 'checked' : ''; ?> />
+<p style="margin-top: 8px;"><?php _e('Include Featured image field with every image size'); ?></p>

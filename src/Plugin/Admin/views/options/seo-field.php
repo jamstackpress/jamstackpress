@@ -1,0 +1,2 @@
+<input name="jamstackpress_seo_field" type="checkbox" value="true" <?php echo get_option('jamstackpress_seo_field', false) ? 'checked' : ''; ?> />
+<p style="margin-top: 8px;"><?php _e('Include SEO field with title and description from your SEO plugin'); ?></p>

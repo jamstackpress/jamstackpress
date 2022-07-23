@@ -63,8 +63,22 @@ class Kernel
         ],
         [
             'id' => 'jamstackpress_full_slug_field',
-            'title' => 'Full slug field',
+            'title' => 'Routes - (full slug and front URL)',
             'callback' => 'renderFullSlugFieldOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_seo_field',
+            'title' => 'SEO',
+            'callback' => 'renderSeoFieldOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_featured_image_field',
+            'title' => 'Fetaured images',
+            'callback' => 'renderFeaturedImageFieldOption',
             'page' => 'jamstackpress-admin',
             'section' => 'jamstackpress-options',
         ],

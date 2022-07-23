@@ -33,11 +33,18 @@ class Post extends Model
      * @return string
      */
     public static function getDateStringAttribute($object)
-    {
-        return wp_date(
-            get_option('date_format'),
-            strtotime($object['date_gmt']),
-        );
+    {   
+        // Check readable date option
+        if(get_option('jamstackpress_human_readable_date')) {
+            return wp_date(
+                get_option('date_format'),
+                strtotime($object['date_gmt']),
+            );
+        } else {
+        // Return null if readable date option is off
+        return null;
+        }
+
     }
 
     /**
@@ -49,21 +56,28 @@ class Post extends Model
      */
     public static function getFeaturedImageAttribute($object)
     {
-        // The available sizes.
-        $sizes = [
-            'thumbnail', 'medium',
-            'medium_large', 'large',
-        ];
+        // Check featured image field option
+        if(get_option('jamstackpress_featured_image_field')) {
+            
+            // The available sizes.
+            $sizes = [
+                'thumbnail', 'medium',
+                'medium_large', 'large',
+            ];
 
-        // Get the thumbnail id.
-        $image = get_post_thumbnail_id($object['id']);
+            // Get the thumbnail id.
+            $image = get_post_thumbnail_id($object['id']);
 
-        // For each size, return the corresponding
-        // featured image.
-        return array_merge(...array_map(
-            fn ($size) => [$size => wp_get_attachment_image_src($image, $size)[0] ?: null],
-            $sizes
-        ));
+            // For each size, return the corresponding
+            // featured image.
+            return array_merge(...array_map(
+                fn ($size) => [$size => wp_get_attachment_image_src($image, $size)[0] ?: null],
+                $sizes
+            ));
+        } else {
+        // Return null if image field option is off
+        return null; 
+        }
     }
 
     /**
@@ -75,17 +89,24 @@ class Post extends Model
      */
     public static function getRoutesAttribute($object)
     {
-        return [
-            'slug' => str_replace(
-                get_site_url(), '', $object['link'],
-            ),
+        // Check full slug option option
+        if(get_option('jamstackpress_full_slug_field')) {
+            return [
+                'slug' => str_replace(
+                    get_site_url(), '', $object['link'],
+                ),
 
-            'front_link' => str_replace(
-                get_site_url(),
-                get_option('jamstackpress_frontend_base_url', get_site_url()),
-                $object['link']
-            ),
-        ];
+                'front_link' => str_replace(
+                    get_site_url(),
+                    get_option('jamstackpress_frontend_base_url', get_site_url()),
+                    $object['link']
+                ),
+            ];
+        
+        } else {
+            // Return null if slug option is off
+            return null;
+        }
     }
 
     /**
@@ -97,31 +118,39 @@ class Post extends Model
      */
     public static function getSeoAttribute($object)
     {
-        // Return the fields that correspond
-        // to the plugin.
-        switch (getSeoPlugin()) {
-            case SeoPlugin::RANK_MATH:
-                // Create a new Rank Math post.
-                $post = new RankMathPost($object);
+        // Check seo field option
+        if(get_option('jamstackpress_seo_field')) {
+            
+            // Return the fields that correspond
+            // to the plugin.
+            switch (getSeoPlugin()) {
+                case SeoPlugin::RANK_MATH:
+                    // Create a new Rank Math post.
+                    $post = new RankMathPost($object);
 
-                // Return the corresponding fields.
-                return [
-                    'title' => $post->get_metadata('title', null),
-                    'description' => $post->get_metadata('description', null),
-                ];
+                    // Return the corresponding fields.
+                    return [
+                        'title' => $post->get_metadata('title', null),
+                        'description' => $post->get_metadata('description', null),
+                    ];
 
-            case SeoPlugin::YOAST:
-                return [
-                    'title' => YoastSEO()->meta->for_post($object['id'])->title,
-                    'description' => YoastSEO()->meta->for_post($object['id'])->description,
-                ];
+                case SeoPlugin::YOAST:
+                    return [
+                        'title' => YoastSEO()->meta->for_post($object['id'])->title,
+                        'description' => YoastSEO()->meta->for_post($object['id'])->description,
+                    ];
 
-            default:
-                return [
-                    'title' => null,
-                    'description' => null,
-                ];
+                default:
+                    return [
+                        'title' => null,
+                        'description' => null,
+                    ];
+            } 
+        } else {
+            // Return null if SEO field option is off
+            return null;
         }
+
     }
 
     /**
