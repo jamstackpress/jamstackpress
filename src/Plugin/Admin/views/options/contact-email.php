@@ -1,0 +1,2 @@
+<input name="jamstackpress_contact_email" type="email" value="<?php echo get_option('jamstackpress_contact_email', ''); ?>" />
+<p style="margin-top: 8px"><?php _e('Contact Email', 'jamstackpress'); ?></p>

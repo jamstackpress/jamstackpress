@@ -5,6 +5,7 @@ namespace Plugin;
 use Plugin\Admin\Kernel as AdminKernel;
 use Plugin\Http\Kernel as HttpKernel;
 use Plugin\Models\Post;
+use Plugin\Models\Contact;
 
 class Kernel
 {
@@ -25,6 +26,7 @@ class Kernel
      */
     public static $models = [
         Post::class,
+        Contact::class,
     ];
 
     /**

@@ -68,6 +68,34 @@ class Kernel
             'page' => 'jamstackpress-admin',
             'section' => 'jamstackpress-options',
         ],
+        [
+            'id' => 'jamstackpress_contact_email',
+            'title' => 'Contact Email',
+            'callback' => 'renderContactEmailOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_contact_fail_message',
+            'title' => 'Contact Fail Message',
+            'callback' => 'renderContactFailMessageOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_contact_success_message',
+            'title' => 'Contact Success Message',
+            'callback' => 'renderContactSuccessMessageOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_recaptcha_secret_key',
+            'title' => 'reCaptcha Secret Key',
+            'callback' => 'renderRecaptchaSecretKeyOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
     ];
 
     /**

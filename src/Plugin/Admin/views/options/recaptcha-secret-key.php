@@ -1,0 +1,2 @@
+<input name="jamstackpress_recaptcha_secret_key" type="text" value="<?php echo get_option('jamstackpress_recaptcha_secret_key', ''); ?>" />
+<p style="margin-top: 8px"><?php _e('reCaptcha Secret Key', 'jamstackpress'); ?></p>

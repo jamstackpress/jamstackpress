@@ -1,0 +1,2 @@
+<input name="jamstackpress_contact_fail_messagge" type="text" value="<?php echo get_option('jamstackpress_contact_fail_messagge', ''); ?>" />
+<p style="margin-top: 8px"><?php _e('Contact Fail messagge', 'jamstackpress'); ?></p>

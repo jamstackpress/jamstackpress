@@ -1,0 +1,2 @@
+<input name="jamstackpress_contact_success_message" type="text" value="<?php echo get_option('jamstackpress_contact_success_message', ''); ?>" />
+<p style="margin-top: 8px"><?php _e('Contact Siuccess message', 'jamstackpress'); ?></p>

@@ -3,6 +3,7 @@
 namespace Plugin\Http;
 
 use Plugin\Http\Controllers\SitemapController;
+use Plugin\Http\Controllers\ContactController;
 use Plugin\Http\Filters\FilterExternalUrls;
 use Plugin\Http\Filters\ReplaceBackUrl;
 use WP_REST_Server;
@@ -27,6 +28,11 @@ class Kernel
             'callback' => [SitemapController::class, 'index'],
             'permission_callback' => '__return_true',
         ],
+        'contact' =>  [
+            'methods' => WP_REST_Server::CREATABLE,
+            'callback' => [ContactController::class, 'index'],
+            'permission_callback' => '__return_true',
+        ]
     ];
 
     /**
