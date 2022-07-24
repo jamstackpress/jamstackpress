@@ -1,12 +1,13 @@
 <?php
 
 namespace Plugin\Http;
-
+use Plugin\Models\Contact;
 use Plugin\Http\Controllers\ContactController;
 use Plugin\Http\Controllers\SitemapController;
 use Plugin\Http\Filters\AddTargetToExternalUrls;
 use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
 use WP_REST_Server;
+
 
 class Kernel
 {
@@ -32,7 +33,7 @@ class Kernel
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => [ContactController::class, 'store'],
             'permission_callback' => '__return_true',
-        ],
+        ]
     ];
 
     /**

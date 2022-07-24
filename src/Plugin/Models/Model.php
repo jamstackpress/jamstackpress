@@ -31,7 +31,7 @@ class Model
      */
     public static function registerCustomType()
     {
-        if (! property_exists(static::class, 'custom') || ! static::$custom || ! static::isActive()) {
+        if (! property_exists(static::class, 'custom') || ! static::$custom || ! static::isEnabled()) {
             return;
         }
 
@@ -86,7 +86,7 @@ class Model
         );
 
         // Return the flatten array.
-        return array_merge(...$values);
+        return array_filter(array_merge(...$values));
     }
 
     /**
@@ -113,5 +113,19 @@ class Model
         }
 
         return $accessor;
+    }
+
+    /**
+     * Check if custom Post registerd by 
+     * JP plugin is enabled
+     *
+     * @return bool
+     */
+    public static function isEnabled()
+    {
+       return ! static::$custom || get_option(sprintf(
+        'jamstackpress_%s_enabled',
+        static::$type
+       ));
     }
 }

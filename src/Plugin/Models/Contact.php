@@ -34,20 +34,4 @@ class Contact extends Model
         'has_archive' => false,
         'show_in_menu' => true,
     ];
-
-    /**
-     * Check if the contact endpoint
-     * plugin option is true or false.
-     *
-     * @return bool
-     */
-    public static function isActive()
-    {
-        // Check contact endpoint option
-        if (get_option('jamstackpress_contact_endpoint')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
