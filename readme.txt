@@ -16,15 +16,12 @@ Power-up your WordPress site and get it ready for JAMStack. Take advantage of us
 This plugin extends the WP-JSON api by adding a new useful set of fields to the WP-JSON api response, this new set of fields will make your frontend development easier. JAMStackPress also applies some optional filters
 to the content in order to make it front-end ready (no need to make replaces at front-end level).
 We think about the possible scenarios of development for your static website, so in other words, we'll try to make your life easier, so that you only think about developing your decoupled frontend.
- 
 
-## Super Fast Custom API endpoints
-JAMStackPress comes with 4 super fast custom wp-json API endpoints, which connect directly to your WordPress's database:
 
-- Posts
 
-**Extra fields (jamstackpress object)**
+## Extra fields (jamstackpress object)
 We include some extra fields that can be activated in the plugins administration page, that will make your frontend development easier:
+
 - Human readable date field (uses the locale defined in your WordPress panel):
 `\"readable_date\": \"March 26, 2018\"`
 
