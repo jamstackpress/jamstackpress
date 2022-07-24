@@ -22,7 +22,7 @@ class Post extends Model
      * @var array<int, string>
      */
     public static $appends = [
-        'date_string', 'featured_image',
+        'readable_date', 'featured_image',
         'routes', 'seo',
     ];
 
@@ -32,7 +32,7 @@ class Post extends Model
      * @param  array<string, mixed>  $object
      * @return string
      */
-    public static function getDateStringAttribute($object)
+    public static function getReadableDateAttribute($object)
     {
         // Check readable date option
         if (get_option('jamstackpress_human_readable_date')) {
