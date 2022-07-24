@@ -31,7 +31,7 @@ class Model
      */
     public static function registerCustomType()
     {
-        if (! property_exists(static::class, 'custom') || ! static::$custom) {
+        if (! property_exists(static::class, 'custom') || ! static::$custom || ! static::isActive()) {
             return;
         }
 

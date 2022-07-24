@@ -33,7 +33,7 @@ class ContactController
             true
         );
 
-        // Si hay error devolvemos el mensaje.
+        // If there is an error, return the message.
         if (! $response['success']) {
             return new WP_REST_Response(['success' => false, 'message' => $failMessage]);
         }
@@ -43,7 +43,7 @@ class ContactController
             'post_title' => $params['subject'],
             'post_type' => Contact::$type,
             'post_content' => sprintf(
-                '<b>Name: </b>%s<br /><b>Email: </b>%s<br /><b>Subject: </b>%s<br /><b>Mensaage:</b><br/>%s',
+                '<b>Name: </b>%s<br /><b>Email: </b>%s<br /><b>Subject: </b>%s<br /><b>Menssage:</b><br/>%s',
                 sanitize_text_field($params['name']),
                 sanitize_text_field($params['email']),
                 sanitize_text_field($params['subject']),
@@ -62,7 +62,7 @@ class ContactController
             get_option('jamstackpress_contact_email'),
             sanitize_text_field($params['subject']),
             sprintf(
-                '<b>Name: </b>%s<br /><b>Email: </b>%s<br /><b>Subject: </b>%s<br /><b>Mensaage:</b><br/>%s',
+                '<b>Name: </b>%s<br /><b>Email: </b>%s<br /><b>Subject: </b>%s<br /><b>Menssage:</b><br/>%s',
                 sanitize_text_field($params['name']),
                 sanitize_text_field($params['email']),
                 sanitize_text_field($params['subject']),
