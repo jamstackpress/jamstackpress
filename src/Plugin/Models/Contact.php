@@ -36,7 +36,7 @@ class Contact extends Model
     ];
 
     /**
-     * Check if the contact endpoint 
+     * Check if the contact endpoint
      * plugin option is true or false.
      *
      * @return bool
@@ -44,10 +44,10 @@ class Contact extends Model
     public static function isActive()
     {
         // Check contact endpoint option
-        if (get_option('jamstackpress_contact_endpoint')) { 
+        if (get_option('jamstackpress_contact_endpoint')) {
             return true;
         } else {
             return false;
-        }     
+        }
     }
 }
