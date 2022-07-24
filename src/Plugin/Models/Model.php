@@ -116,16 +116,16 @@ class Model
     }
 
     /**
-     * Check if custom Post registerd by 
+     * Check if custom Post registerd by
      * JP plugin is enabled
      *
      * @return bool
      */
     public static function isEnabled()
     {
-       return ! static::$custom || get_option(sprintf(
-        'jamstackpress_%s_enabled',
-        static::$type
-       ));
+        return ! static::$custom || get_option(sprintf(
+            'jamstackpress_%s_enabled',
+            static::$type
+        ));
     }
 }
