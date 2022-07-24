@@ -28,7 +28,6 @@ class Kernel
             'callback' => [SitemapController::class, 'index'],
             'permission_callback' => '__return_true',
         ],
-
         'contact' => [
             'methods' => WP_REST_Server::CREATABLE,
             'callback' => [ContactController::class, 'store'],

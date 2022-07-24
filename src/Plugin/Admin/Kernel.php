@@ -83,6 +83,20 @@ class Kernel
             'section' => 'jamstackpress-options',
         ],
         [
+            'id' => 'jamstackpress_sitemap_endpoint',
+            'title' => 'Sitemap endpoint',
+            'callback' => 'renderSitemapEndpointOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
+            'id' => 'jamstackpress_contact_endpoint',
+            'title' => 'Contact form endpoint',
+            'callback' => 'renderContactEndpointOption',
+            'page' => 'jamstackpress-admin',
+            'section' => 'jamstackpress-options',
+        ],
+        [
             'id' => 'jamstackpress_contact_email',
             'title' => 'Contact Email',
             'callback' => 'renderContactEmailOption',
@@ -110,6 +124,7 @@ class Kernel
             'page' => 'jamstackpress-admin',
             'section' => 'jamstackpress-options',
         ],
+
     ];
 
     /**
