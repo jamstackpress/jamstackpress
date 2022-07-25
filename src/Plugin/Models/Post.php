@@ -37,14 +37,13 @@ class Post extends Model
         // Check readable date option
         if (! get_option('jamstackpress_human_readable_date')) {
             return null;
-        } 
-        
+        }
+
         // Return null if readable date option is off
-            return wp_date(
-                get_option('date_format'),
-                strtotime($object['date_gmt']),
-            );
-        
+        return wp_date(
+            get_option('date_format'),
+            strtotime($object['date_gmt']),
+        );
     }
 
     /**
@@ -63,8 +62,8 @@ class Post extends Model
             return null;
         }
 
-         // The available sizes.
-         $sizes = [
+        // The available sizes.
+        $sizes = [
             'thumbnail', 'medium',
             'medium_large', 'large',
         ];
@@ -92,20 +91,19 @@ class Post extends Model
         // Check full slug option option
         if (! get_option('jamstackpress_full_slug_field')) {
             return null;
-        } 
-           
-        return [
-                'slug' => str_replace(
-                    get_site_url(), '', $object['link'],
-                ),
+        }
 
-                'front_link' => str_replace(
-                    get_site_url(),
-                    get_option('jamstackpress_frontend_base_url', get_site_url()),
-                    $object['link']
-                ),
-            ];
-        
+        return [
+            'slug' => str_replace(
+                get_site_url(), '', $object['link'],
+            ),
+
+            'front_link' => str_replace(
+                get_site_url(),
+                get_option('jamstackpress_frontend_base_url', get_site_url()),
+                $object['link']
+            ),
+        ];
     }
 
     /**
@@ -122,32 +120,31 @@ class Post extends Model
             return null;
         }
 
-         // Return the fields that correspond
-            // to the plugin.
-            switch (getSeoPlugin()) {
-                case SeoPlugin::RANK_MATH:
-                    // Create a new Rank Math post.
-                    $post = new RankMathPost($object);
+        // Return the fields that correspond
+        // to the plugin.
+        switch (getSeoPlugin()) {
+            case SeoPlugin::RANK_MATH:
+                // Create a new Rank Math post.
+                $post = new RankMathPost($object);
 
-                    // Return the corresponding fields.
-                    return [
-                        'title' => $post->get_metadata('title', null),
-                        'description' => $post->get_metadata('description', null),
-                    ];
+                // Return the corresponding fields.
+                return [
+                    'title' => $post->get_metadata('title', null),
+                    'description' => $post->get_metadata('description', null),
+                ];
 
-                case SeoPlugin::YOAST:
-                    return [
-                        'title' => YoastSEO()->meta->for_post($object['id'])->title,
-                        'description' => YoastSEO()->meta->for_post($object['id'])->description,
-                    ];
+            case SeoPlugin::YOAST:
+                return [
+                    'title' => YoastSEO()->meta->for_post($object['id'])->title,
+                    'description' => YoastSEO()->meta->for_post($object['id'])->description,
+                ];
 
-                default:
-                    return [
-                        'title' => null,
-                        'description' => null,
-                    ];
-            }
-
+            default:
+                return [
+                    'title' => null,
+                    'description' => null,
+                ];
+        }
     }
 
     /**
