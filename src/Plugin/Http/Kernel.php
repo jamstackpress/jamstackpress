@@ -3,6 +3,8 @@
 namespace Plugin\Http;
 
 use Plugin\Http\Controllers\Controller;
+use Plugin\Http\Controllers\SitemapController;
+use Plugin\Http\Controllers\ContactController;
 
 use Plugin\Http\Filters\AddTargetToExternalUrls;
 use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
@@ -71,7 +73,7 @@ class Kernel
     public static function registerRoutes()
     {
         foreach (static::$routes as $endpoint => $args) {
-            if ( Controller::isEnabled()) {
+            if ( $args['callback'][0]::isEnabled()) {
                 register_rest_route(
                     static::$prefix,
                     $endpoint,
