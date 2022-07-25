@@ -35,15 +35,16 @@ class Post extends Model
     public static function getReadableDateAttribute($object)
     {
         // Check readable date option
-        if (get_option('jamstackpress_human_readable_date')) {
+        if (! get_option('jamstackpress_human_readable_date')) {
+            return null;
+        } 
+        
+        // Return null if readable date option is off
             return wp_date(
                 get_option('date_format'),
                 strtotime($object['date_gmt']),
             );
-        } else {
-            // Return null if readable date option is off
-            return null;
-        }
+        
     }
 
     /**
@@ -56,27 +57,27 @@ class Post extends Model
     public static function getFeaturedImageAttribute($object)
     {
         // Check featured image field option
-        if (get_option('jamstackpress_featured_image_field')) {
+        if (! get_option('jamstackpress_featured_image_field')) {
 
-            // The available sizes.
-            $sizes = [
-                'thumbnail', 'medium',
-                'medium_large', 'large',
-            ];
-
-            // Get the thumbnail id.
-            $image = get_post_thumbnail_id($object['id']);
-
-            // For each size, return the corresponding
-            // featured image.
-            return array_merge(...array_map(
-                fn ($size) => [$size => wp_get_attachment_image_src($image, $size)[0] ?: null],
-                $sizes
-            ));
-        } else {
             // Return null if image field option is off
             return null;
         }
+
+         // The available sizes.
+         $sizes = [
+            'thumbnail', 'medium',
+            'medium_large', 'large',
+        ];
+
+        // Get the thumbnail id.
+        $image = get_post_thumbnail_id($object['id']);
+
+        // For each size, return the corresponding
+        // featured image.
+        return array_merge(...array_map(
+            fn ($size) => [$size => wp_get_attachment_image_src($image, $size)[0] ?: null],
+            $sizes
+        ));
     }
 
     /**
@@ -89,8 +90,11 @@ class Post extends Model
     public static function getRoutesAttribute($object)
     {
         // Check full slug option option
-        if (get_option('jamstackpress_full_slug_field')) {
-            return [
+        if (! get_option('jamstackpress_full_slug_field')) {
+            return null;
+        } 
+           
+        return [
                 'slug' => str_replace(
                     get_site_url(), '', $object['link'],
                 ),
@@ -101,10 +105,7 @@ class Post extends Model
                     $object['link']
                 ),
             ];
-        } else {
-            // Return null if slug option is off
-            return null;
-        }
+        
     }
 
     /**
@@ -117,9 +118,11 @@ class Post extends Model
     public static function getSeoAttribute($object)
     {
         // Check seo field option
-        if (get_option('jamstackpress_seo_field')) {
+        if (! get_option('jamstackpress_seo_field')) {
+            return null;
+        }
 
-            // Return the fields that correspond
+         // Return the fields that correspond
             // to the plugin.
             switch (getSeoPlugin()) {
                 case SeoPlugin::RANK_MATH:
@@ -144,10 +147,7 @@ class Post extends Model
                         'description' => null,
                     ];
             }
-        } else {
-            // Return null if SEO field option is off
-            return null;
-        }
+
     }
 
     /**

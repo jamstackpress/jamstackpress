@@ -49,6 +49,8 @@ We include some extra fields that can be activated in the plugins administration
    "description": "Post SEO description"
 }
 
+## Extra endpoints
+
 
 
 ## Content filters & Deploy tools
