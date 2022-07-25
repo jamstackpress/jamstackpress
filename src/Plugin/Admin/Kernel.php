@@ -83,14 +83,14 @@ class Kernel
             'section' => 'jamstackpress-options',
         ],
         [
-            'id' => 'jamstackpress_sitemap_endpoint',
+            'id' => 'jamstackpress_sitemap_enabled',
             'title' => 'Sitemap endpoint',
             'callback' => 'renderSitemapEndpointOption',
             'page' => 'jamstackpress-admin',
             'section' => 'jamstackpress-options',
         ],
         [
-            'id' => 'jamstackpress_jp_contact_enabled',
+            'id' => 'jamstackpress_contact_enabled',
             'title' => 'Contact form endpoint',
             'callback' => 'renderContactEndpointOption',
             'page' => 'jamstackpress-admin',

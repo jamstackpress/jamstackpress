@@ -1,2 +1,2 @@
-<input name="jamstackpress_sitemap_endpoint" type="checkbox" value="true" <?php echo get_option('jamstackpress_sitempa_endpoint', false) ? 'checked' : ''; ?> />
-<p style="margin-top: 8px;"><?php _e('Activate Sitemap endpoint'); ?></p>
+<input name="jamstackpress_sitemap_enabled" type="checkbox" value="true" <?php echo get_option('jamstackpress_sitemap_enabled', false) ? 'checked' : ''; ?> />
+<p style="margin-top: 8px;"><?php _e('Activate Sitemap  endpoint'); ?></p>

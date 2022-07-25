@@ -2,8 +2,8 @@
 
 namespace Plugin\Http;
 
-use Plugin\Http\Controllers\ContactController;
-use Plugin\Http\Controllers\SitemapController;
+use Plugin\Http\Controllers\Controller;
+
 use Plugin\Http\Filters\AddTargetToExternalUrls;
 use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
 use WP_REST_Server;
@@ -71,11 +71,14 @@ class Kernel
     public static function registerRoutes()
     {
         foreach (static::$routes as $endpoint => $args) {
-            register_rest_route(
-                static::$prefix,
-                $endpoint,
-                $args,
-            );
+            if ( Controller::isEnabled()) {
+                register_rest_route(
+                    static::$prefix,
+                    $endpoint,
+                    $args,
+                );
+            }
+    
         }
     }
 

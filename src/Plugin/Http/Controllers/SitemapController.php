@@ -6,8 +6,15 @@ use Plugin\Models\Category;
 use Plugin\Models\Post;
 use WP_REST_Response;
 
-class SitemapController
+class SitemapController extends Controller
 {
+    /**
+     * Endpoint route.
+     *
+     * @var string
+     */
+    public static $route = 'sitemap';
+
     /**
      * Display a listing of the resource.
      *
