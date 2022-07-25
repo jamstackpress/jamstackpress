@@ -5,11 +5,14 @@ namespace Plugin\Models;
 class Category extends Model
 {
     /**
-     * The model's WordPress object type.
-     *
-     * @var string
+     * Return the object type.
+     * 
+     * @return array<int, string>
      */
-    public static $type = 'category';
+    public static function type() : array
+    {
+        return ['category'];
+    }
 
     /**
      * Get slugs of every published category.

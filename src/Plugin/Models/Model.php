@@ -3,77 +3,85 @@
 namespace Plugin\Models;
 
 use Exception;
+use Plugin\Models\Contracts\Typeable;
 
-class Model
+abstract class Model implements Typeable
 {
     /**
      * Initialize the model.
-     *
+     * 
      * @return void
      */
     public static function boot()
     {
-        // Check if the WordPress type for the model is set.
-        if (! property_exists(static::class, 'type') || ! static::$type) {
-            throw new Exception(
-                sprintf('No WordPress type specified for [%s].', static::class)
-            );
-        }
-
+        // Register the custom post types defined
+        // by the plugin.
         add_action('init', [static::class, 'registerCustomType']);
-        add_action('rest_api_init', [static::class, 'provideCustomFields']);
+
+        // Register the custom fields.
+        add_action('rest_api_init', [static::class, 'appendCustomFields']);
     }
 
     /**
-     * Register Post types.
+     * Register the custom type (if defined).
      *
      * @return array<string, mixed>
      */
     public static function registerCustomType()
     {
-        if (! property_exists(static::class, 'custom') || ! static::$custom || ! static::isEnabled()) {
+        // Check if the definition method is defined.
+        if (! method_exists(static::class, 'definition')) {
             return;
         }
 
-        // Register post type using static::$type
-        register_post_type(
-            static::$type, static::$type_args
-        );
+        // Check if the type is enabled.
+        if (! static::definition()['enabled']) {
+            return;
+        }
+
+        // Register the custom type.
+        register_post_Type(static::type()[0], static::definition());
     }
 
     /**
-     * Initialize the model's custom fields, if any
-     * specified.
-     *
+     * Append the defined custom fields to
+     * the REST api.
+     * 
      * @return void
      */
-    public static function provideCustomFields()
+    public static function appendCustomFields()
     {
-        if (! property_exists(static::class, 'appends') || ! static::$appends) {
+        if (! method_exists(static::class, 'appends')) {
             return;
         }
 
-        // Register the "jamstackpress" field.
-        register_rest_field(static::$type, 'jamstackpress', [
-            'get_callback' => [static::class, 'getJamstackPressAttribute'],
-            'update_callback' => null,
-            'schema' => null,
-        ]);
+        // Register the "jamstackpress" field for each
+        // type of object, in which we'll return all 
+        // the custom fields.
+        foreach (static::type() as $type) {
+            register_rest_field($type, 'jamstackpress', [
+                'get_callback' => [static::class, 'getJamstackPressAttribute'],
+                'update_callback' => null,
+                'schema' => null
+            ]);
+        }
     }
 
     /**
-     * Return the JamstackPress attribute.
-     *
-     * @return array<string, mixed>
+     * Return the "jamstackpress" attribute with
+     * all the appended fields.
+     * 
+     * @param  array<string, mixed>  $object
+     * @return array<int, array<string, mixed>>
      */
     public static function getJamstackPressAttribute($object)
     {
-        // Loop through the defined appends in the model
-        // and return the corresponding values for each
-        // field.
-        $values = array_map(
+        // Loop through the defined appends
+        // and get the corresponding values
+        // for each field.
+        return array_filter(array_merge(...array_map(
             function ($field) use ($object) {
-                // Get the field accessor.
+                // Get the accessor.
                 $accessor = static::getAttributeAccessor($field);
 
                 // Return the field with the value from the
@@ -82,16 +90,13 @@ class Model
                     $field => static::$accessor($object),
                 ];
             },
-            static::$appends
-        );
-
-        // Return the flatten array.
-        return array_filter(array_merge(...$values));
+            static::appends()
+        )));
     }
 
     /**
      * Given an attribute, get the name of
-     * attribute's accessor.
+     * corresponding accessor.
      *
      * @param  string  $attribute
      * @return string
@@ -108,24 +113,10 @@ class Model
         // an exception.
         if (! method_exists(static::class, $accessor)) {
             throw new Exception(
-                sprintf('No accessor defined for %s in [%s].', $field, static::class)
+                sprintf('No accessor %s defined in [%s].', $accessor, static::class)
             );
         }
 
         return $accessor;
-    }
-
-    /**
-     * Check if custom Post registerd by
-     * JP plugin is enabled
-     *
-     * @return bool
-     */
-    public static function isEnabled()
-    {
-        return ! static::$custom || get_option(sprintf(
-            'jamstackpress_%s_enabled',
-            static::$type
-        ));
     }
 }

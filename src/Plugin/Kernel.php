@@ -4,6 +4,7 @@ namespace Plugin;
 
 use Plugin\Admin\Kernel as AdminKernel;
 use Plugin\Http\Kernel as HttpKernel;
+use Plugin\Models\Category;
 use Plugin\Models\Contact;
 use Plugin\Models\Post;
 
@@ -15,8 +16,8 @@ class Kernel
      * @var array<int, string>
      */
     public static $services = [
-        HttpKernel::class,
         AdminKernel::class,
+        HttpKernel::class,
     ];
 
     /**
@@ -25,8 +26,9 @@ class Kernel
      * @var array<int, string>
      */
     public static $models = [
-        Post::class,
+        Category::class,
         Contact::class,
+        Post::class,
     ];
 
     /**

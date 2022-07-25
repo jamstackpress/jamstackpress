@@ -2,43 +2,63 @@
 
 namespace Plugin\Models;
 
+use Plugin\Models\Contracts\WithCustomFields;
 use Plugin\Support\Constants\SeoPlugin;
 use RankMath\Post as RankMathPost;
 use WP_Query;
 
-class Post extends Model
+class Post extends Model implements WithCustomFields
 {
     /**
-     * The model's WordPress object type.
-     *
-     * @var string
+     * Return the object type.
+     * 
+     * @return array<int, string>
      */
-    public static $type = 'post';
+    public static function type() : array
+    {
+        return ['post'];
+    }
 
     /**
-     * The custom attributes appended to
-     * the model, when calling the API.
-     *
-     * @var array<int, string>
+     * Return the list of custom fields
+     * to be added to the model.
+     * 
+     * @return array<int, string>
      */
-    public static $appends = [
-        'readable_date', 'featured_image',
-        'routes', 'seo',
-    ];
+    public static function appends() : array
+    {
+        // Get the list of enabled fields.
+        return array_keys(array_filter([
+            'readable_date' => get_option(
+                config('options.readable_date_field_enabled.id'), 
+                null
+            ),
+
+            'featured_image' => get_option(
+                config('options.featured_image_field_enabled.id'), 
+                null
+            ),
+
+            'routes' => get_option(
+                config('options.routes_field_enabled.id'), 
+                null
+            ),
+
+            'seo' => get_option(
+                config('options.seo_field_enabled.id'), 
+                null
+            ),
+        ]));
+    }
 
     /**
-     * Interact with the date string attribute.
+     * Interact with the readable date attribute.
      *
      * @param  array<string, mixed>  $object
      * @return string
      */
     public static function getReadableDateAttribute($object)
     {
-        // Check readable date option
-        if (! get_option('jamstackpress_human_readable_date')) {
-            return null;
-        }
-
         // Return null if readable date option is off
         return wp_date(
             get_option('date_format'),
@@ -55,13 +75,6 @@ class Post extends Model
      */
     public static function getFeaturedImageAttribute($object)
     {
-        // Check featured image field option
-        if (! get_option('jamstackpress_featured_image_field')) {
-
-            // Return null if image field option is off
-            return null;
-        }
-
         // The available sizes.
         $sizes = [
             'thumbnail', 'medium',
@@ -88,11 +101,6 @@ class Post extends Model
      */
     public static function getRoutesAttribute($object)
     {
-        // Check full slug option option
-        if (! get_option('jamstackpress_full_slug_field')) {
-            return null;
-        }
-
         return [
             'slug' => str_replace(
                 get_site_url(), '', $object['link'],
@@ -115,11 +123,6 @@ class Post extends Model
      */
     public static function getSeoAttribute($object)
     {
-        // Check seo field option
-        if (! get_option('jamstackpress_seo_field')) {
-            return null;
-        }
-
         // Return the fields that correspond
         // to the plugin.
         switch (getSeoPlugin()) {
@@ -157,9 +160,7 @@ class Post extends Model
         // Create the query for published posts.
         // TODO: Implement for other post types.
         $query = new WP_Query([
-            'post_type' => [
-                static::$type,
-            ],
+            'post_type' => static::type(),
             'posts_per_page' => -1,
             'post_status' => 'publish',
             'orderby' => [

@@ -2,100 +2,42 @@
 
 namespace Plugin\Http;
 
-use Plugin\Http\Controllers\Controller;
-use Plugin\Http\Controllers\SitemapController;
-use Plugin\Http\Controllers\ContactController;
-
-use Plugin\Http\Filters\AddTargetToExternalUrls;
-use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
-use WP_REST_Server;
-
 class Kernel
 {
     /**
-     * The routes prefix.
-     *
-     * @var string
-     */
-    public static $prefix = 'jamstackpress/v1';
-
-    /**
-     * The plugin routes.
-     *
-     * @var array<int, string>
-     */
-    public static $routes = [
-        'sitemap' => [
-            'methods' => WP_REST_Server::READABLE,
-            'callback' => [SitemapController::class, 'index'],
-            'permission_callback' => '__return_true',
-        ],
-        'contact' => [
-            'methods' => WP_REST_Server::CREATABLE,
-            'callback' => [ContactController::class, 'store'],
-            'permission_callback' => '__return_true',
-        ],
-    ];
-
-    /**
-     * The filters for the REST Api. The key
-     * represents the WordPress hook to which
-     * the filters will be attached.
-     *
-     * @var array<string, string>
-     */
-    public static $filters = [
-        'the_content' => [
-            AddTargetToExternalUrls::class,
-            ReplaceBackendUrlWithFrontendUrl::class,
-        ],
-    ];
-
-    /**
-     * Initialize the HTTP service.
-     *
+     * Boot the HTTP services of the
+     * plugin.
+     * 
      * @return void
      */
     public static function boot()
     {
-        // Register the routes.
-        add_action('rest_api_init', [static::class, 'registerRoutes']);
-
-        // Register the filters.
-        self::applyFilters();
+        // Register the routes in the app.
+        add_action('rest_api_init', [static::class, 'registerApiRoutes']);
     }
 
     /**
-     * Register the plugin routes.
-     *
+     * Register the routes defined in the config
+     * file of the plugin.
+     * 
      * @return void
      */
-    public static function registerRoutes()
+    public static function registerApiRoutes()
     {
-        foreach (static::$routes as $endpoint => $args) {
-            if ( $args['callback'][0]::isEnabled()) {
-                register_rest_route(
-                    static::$prefix,
-                    $endpoint,
-                    $args,
-                );
+        foreach (config('routes') as $endpoint => $args) {
+            // Check if the endpoint is enabled.
+            if (! $args['enabled']) {
+                continue;
             }
-    
-        }
-    }
 
-    /**
-     * Register the HTTP filters applied
-     * to the REST Api.
-     *
-     * @return void
-     */
-    public static function applyFilters()
-    {
-        foreach (static::$filters as $hook => $filters) {
-            foreach ($filters as $filter) {
-                add_filter($hook, [$filter, 'apply']);
-            }
+            // Register the route.
+            register_rest_route(
+                config('plugin.route_prefix'), $endpoint, [
+                    'methods' => $args['method'],
+                    'callback' => $args['handler'],
+                    'permission_callback' => '__return_true',
+                ]
+            );
         }
     }
 }

@@ -4,8 +4,10 @@
 </p>
 
 <!-- Option field -->
-<input 
+<textarea
+    rows="5"
     name="<?php echo $option['id'] ?>" 
-    type="text" 
     value="<?php echo get_option($option['id'], ''); ?>" 
-/>
+>
+    <?php echo get_option($option['id'], ''); ?>
+</textarea>

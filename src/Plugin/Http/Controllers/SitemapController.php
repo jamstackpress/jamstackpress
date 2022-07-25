@@ -6,21 +6,14 @@ use Plugin\Models\Category;
 use Plugin\Models\Post;
 use WP_REST_Response;
 
-class SitemapController extends Controller
+class SitemapController
 {
-    /**
-     * Endpoint route.
-     *
-     * @var string
-     */
-    public static $route = 'sitemap';
-
     /**
      * Display a listing of the resource.
      *
      * @return \WP_REST_Response
      */
-    public static function index()
+    public static function get()
     {
         // TODO: Implement pagination.
         return new WP_REST_Response(array_merge(

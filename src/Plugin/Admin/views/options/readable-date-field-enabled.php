@@ -6,6 +6,7 @@
 <!-- Option field -->
 <input 
     name="<?php echo $option['id'] ?>" 
-    type="text" 
-    value="<?php echo get_option($option['id'], ''); ?>" 
+    type="checkbox" 
+    value="true"
+    <?php echo get_option($option['id'], false) ? 'checked' : ''; ?>
 />

@@ -6,6 +6,6 @@
 <!-- Option field -->
 <input 
     name="<?php echo $option['id'] ?>" 
-    type="text" 
+    type="email" 
     value="<?php echo get_option($option['id'], ''); ?>" 
 />

@@ -4,10 +4,10 @@
     <?php settings_errors(); ?>
 
     <form method="post" action="options.php">
-        <?php
-            settings_fields('jamstackpress-options');
-    do_settings_sections('jamstackpress-admin');
-    submit_button();
+    <?php
+        settings_fields('jamstackpress-options');
+        do_settings_sections('jamstackpress-admin');
+        submit_button();
     ?>
     </form>
 </div>

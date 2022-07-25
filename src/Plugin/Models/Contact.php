@@ -5,33 +5,31 @@ namespace Plugin\Models;
 class Contact extends Model
 {
     /**
-     * The model's WordPress object type.
-     *
-     * @var string
+     * Return the object type.
+     * 
+     * @return array<int, string>
      */
-    public static $type = 'jp_contact';
+    public static function type() : array
+    {
+        return ['jp_contact'];
+    }
 
     /**
-     * Indicate if the model is a custom
-     * type.
-     *
-     * @var bool
+     * Return the object type's definition.
+     * 
+     * @return array<int, string>
      */
-    public static $custom = true;
-
-    /**
-     * Arguments for the $args parameter
-     * in order to register the post type
-     *
-     * @var array
-     */
-    public static $type_args = [
-        'labels' => [
-            'name' => 'Contacts',
-            'singular_name' => 'Contact',
-        ],
-        'public' => true,
-        'has_archive' => false,
-        'show_in_menu' => true,
-    ];
+    public static function definition() : array
+    {
+        return [
+            'enabled' => !! get_option(config('options.contact_route_enabled.id'), null),
+            'labels' => [
+                'name' => __('Contacts'),
+                'singular_name' => __('Contact'),
+            ],
+            'public' => true,
+            'has_archive' => false,
+            'show_in_menu' => true,
+        ];
+    }
 }

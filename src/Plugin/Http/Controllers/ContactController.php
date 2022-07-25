@@ -5,22 +5,15 @@ namespace Plugin\Http\Controllers;
 use Plugin\Models\Contact;
 use WP_REST_Response;
 
-class ContactController extends Controller
+class ContactController
 {
-
     /**
-     * Endpoint route.
-     *
-     * @var string
-     */
-    public static $route = 'contact';
-
-    /**
-     * Contact form endpoint.
-     * @param WP_REST_Request $request
+     * Store a newly created resource in storage.
+     * 
+     * @param  WP_REST_Request  $request
      * @return WP_REST_Response
      */
-    public static function store($request)
+    public static function store()
     {
         // TODO: Refactor.
         $params = $request->get_json_params();
