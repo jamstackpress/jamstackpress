@@ -1,5 +1,6 @@
+
 === JAMStackPress ===
-Contributors: jamstackpress
+Contributors: jamstackpress, scajal, guiman87
 Tags: headless,static,jamstack,pwa,spa,api,json
 Requires at least: 5.7.1
 Tested up to: 5.7.1
@@ -8,49 +9,79 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Power-up your WordPress site and get it ready for JAMStack. Take advantage of usefull fields and anedpoints extending the WP-JSON API.
+Power-up your WordPress site and get it ready for JAMStack. Take advantage of usefull fields and endpoints extending the WP-JSON API.
 
 == Description ==
 # JAMStackPress - Power-up you WordPress backend
 
-This plugin extends the WP-JSON api by adding a new useful set of fields to the WP-JSON api response, this new set of fields will make your frontend development easier. JAMStackPress also applies some optional filters
+This plugin extends the WP-JSON API by adding a new useful set of fields to the WP-JSON API response, this new set of fields will make your front-end development easier. JAMStackPress also applies some optional filters
 to the content in order to make it front-end ready (no need to make replaces at front-end level).
-We think about the possible scenarios of development for your static website, so in other words, we'll try to make your life easier, so that you only think about developing your decoupled frontend.
+We think about the possible scenarios of development for your static website, so in other words, we'll try to make your life easier, so that you only think about developing your decoupled front-end.
 
 
 
 ## Extra fields (jamstackpress object)
-We include some extra fields that can be activated in the plugins administration page, that will make your frontend development easier:
+We include some extra fields that can be activated in the plugins administration page, that will make your front-end development easier:
 
 - Human readable date field (uses the locale defined in your WordPress panel):
+ ```javascript
 "readable_date": "March 26, 2018"
+```
 
-
-- Post's full slug and frontend link respecting your Wordpress permalinks selection:
-
-"routes": {
+- Post's full slug and front-end link respecting your WordPress permalinks selection:
+ ```javascript
+ "routes": {
   "slug": "/category/post-title/",
   "front_link": "https://example.com/category/post-title/"
 }
+```
 
 - Featured image URLs one for every size:
 
+ ```javascript
 "featured_image": {
   "thumbnail": "http://example.com/wp-content/uploads/2022/07/thumbnail-150x150.jpg",
   "medium": "http://example.com/wp-content/uploads/2022/07/medium-300x200.jpg",
   "medium_large": "http://example.com/wp-content/uploads/2022/07/medium-large-768x512.jpg"
   "large": "http://example.com/wp-content/uploads/2022/07/large-1024x683.jpg"
 }
+```
 
 - SEO tags Title and Description - Compatible With Yoast and RankMath plugins:
-
+ ```javascript
 "seo": {
    "title": "Post Title",
    "description": "Post SEO description"
 }
+```
 
 ## Extra endpoints
+JAMStackPress includes 2 optional endpoints, always with the porpoise in mind of making your front end development tasks much more easier
 
+**/jamstackpress/v1/contact**
+This endpoint acts as a contact form back-end resource. Will save a jp_contact custom post and send an email on every success submission.
+  
+How to use it:
+
+ 1. Enable the custom **contact form endpoint** in the options panel.
+ 2. Fill and save the rest of the options related with the contact endpoint: **Contact email**, **Contact Fail Message**, **Contact Success Message** and **reCaptcha Secret Key**.
+ 3. Send a request to the custom contact form endpoint, here is an example of a call to the contact form endpoint using js fetch()
+ 
+ ```javascript
+fetch('https://example.com/wp-json/jamstackpress/v1/contact?' + new URLSearchParams({
+    name: 'Name',
+    email: 'example@example.com',
+    subject: 'Contact Subject',
+    message: 'Body of the contact form message',
+    recaptach_token: 'xxxxxxxxxxx'
+}))
+```
+
+**/jamstackpress/v1/sitemap**
+This endpoint will return a full list of posts and categories slugs, sample of returned list:
+ ```javascript
+["/sapiente/eveniet-velit-et-aut-est-et-inventore/","/sapiente/aliquid-aut-ut-eius-excepturi-magni/","/nulla-molestias/eius-ratione-mollitia-aliquam/","/uncategorized/aut-qui-repudiandae-nihil-iste/","/uncategorized/test/","/aliquam/","/ipsa-ratione/","/nulla-molestias/","/perferendis-modi/","/sapiente/","/uncategorized/","/unde-temporibus/","/ut-quo/"]
+```
 
 
 ## Content filters & Deploy tools

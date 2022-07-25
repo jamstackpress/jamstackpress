@@ -4,74 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Contact notification email
-    |--------------------------------------------------------------------------
-    |
-    | The receiver of the notification that is sent when a new contact is made.
-    |
-    */
-
-    'contact_notification_email' => [
-        'id' => 'jamstackpress_contact_notification_email',
-        'title' => __('Contact email'),
-        'description' => __(
-            'The e-mail address that receives a notification when a contact is made.'
-        ),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Contact route enabled.
-    |--------------------------------------------------------------------------
-    |
-    | Indicate if the contact route is enabled.
-    |
-    */
-
-    'contact_route_enabled' => [
-        'id' => 'jamstackpress_contact_route_enabled',
-        'title' => __('Enable contact route'),
-        'description' => __(
-            'Enable a contact route at <i>/jamstackpress/v1/contact</i> with reCaptcha verification 
-            (this also enables a contact post type and fires an 
-            email notificacion).'
-        ),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Failed contact message.
-    |--------------------------------------------------------------------------
-    |
-    | The message to return when a contact failed.
-    |
-    */
-
-    'failed_contact_message' => [
-        'id' => 'jamstackpress_failed_contact_message',
-        'title' => __('Failed contact message'),
-        'description' => __('The message to return when a contact failed.'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Featured image.
-    |--------------------------------------------------------------------------
-    |
-    | Indicate if the featured image field should be added to the API.
-    |
-    */
-
-    'featured_image_field_enabled' => [
-        'id' => 'jamstackpress_featured_image_field_enabled',
-        'title' => __('Enable featured image field'),
-        'description' => __(
-            'Contains the featured image URL in multiple sizes.',
-        ),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Frontend build webhook.
     |--------------------------------------------------------------------------
     |
@@ -122,20 +54,6 @@ return [
         ),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | reCaptcha secret key.
-    |--------------------------------------------------------------------------
-    |
-    | The secret key to validate a reCaptcha token.
-    |
-    */
-
-    'recaptcha_secret_key' => [
-        'id' => 'recaptcha_secret_key',
-        'title' => __('reCaptcha secret key'),
-        'description' => __('The secret key to validate a reCaptcha token.'),
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -174,19 +92,71 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Sitemap route enabled.
+    | Featured image.
     |--------------------------------------------------------------------------
     |
-    | Indicate if the sitemap route is enabled.
+    | Indicate if the featured image field should be added to the API.
     |
     */
 
-    'sitemap_route_enabled' => [
-        'id' => 'jamstackpress_sitemap_route_enabled',
-        'title' => __('Enable sitemap route'),
+    'featured_image_field_enabled' => [
+        'id' => 'jamstackpress_featured_image_field_enabled',
+        'title' => __('Enable featured image field'),
         'description' => __(
-            'Enable the sitemap route.'
+            'Contains the featured image URL in multiple sizes.',
         ),
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact route enabled.
+    |--------------------------------------------------------------------------
+    |
+    | Indicate if the contact route is enabled.
+    |
+    */
+
+    'contact_route_enabled' => [
+        'id' => 'jamstackpress_contact_route_enabled',
+        'title' => __('Enable contact route'),
+        'description' => __(
+            'Enable a contact route at <i>/jamstackpress/v1/contact</i> with reCaptcha verification 
+            (this also enables a contact post type and fires an 
+            email notificacion).'
+        ),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Contact notification email
+    |--------------------------------------------------------------------------
+    |
+    | The receiver of the notification that is sent when a new contact is made.
+    |
+    */
+
+    'contact_notification_email' => [
+        'id' => 'jamstackpress_contact_notification_email',
+        'title' => __('Contact email'),
+        'description' => __(
+            'The e-mail address that receives a notification when a contact is made.'
+        ),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | reCaptcha secret key.
+    |--------------------------------------------------------------------------
+    |
+    | The secret key to validate a reCaptcha token.
+    |
+    */
+
+    'recaptcha_secret_key' => [
+        'id' => 'recaptcha_secret_key',
+        'title' => __('reCaptcha secret key'),
+        'description' => __('The secret key to validate a reCaptcha token.'),
     ],
 
     /*
@@ -203,4 +173,41 @@ return [
         'title' => __('Successful contact message'),
         'description' => __('The message to return when a contact was successfully made.'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Failed contact message.
+    |--------------------------------------------------------------------------
+    |
+    | The message to return when a contact failed.
+    |
+    */
+
+    'failed_contact_message' => [
+        'id' => 'jamstackpress_failed_contact_message',
+        'title' => __('Failed contact message'),
+        'description' => __('The message to return when a contact failed.'),
+    ],
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sitemap route enabled.
+    |--------------------------------------------------------------------------
+    |
+    | Indicate if the sitemap route is enabled.
+    |
+    */
+
+    'sitemap_route_enabled' => [
+        'id' => 'jamstackpress_sitemap_route_enabled',
+        'title' => __('Enable sitemap route'),
+        'description' => __(
+            'Enable the sitemap route.'
+        ),
+    ],
+
+
 ];
