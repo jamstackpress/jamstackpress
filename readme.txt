@@ -1,4 +1,3 @@
-
 === JAMStackPress ===
 Contributors: jamstackpress, scajal, guiman87
 Tags: headless,static,jamstack,pwa,spa,api,json
@@ -9,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Power-up your WordPress site and get it ready for JAMStack. Take advantage of usefull fields and endpoints extending the WP-JSON API.
+Power-up your WordPress site and get it ready for JAMStack. Take advantage of useful fields and endpoints extending the WP-JSON API.
 
 == Description ==
 # JAMStackPress - Power-up you WordPress backend
@@ -86,12 +85,12 @@ This endpoint will return a full list of posts and categories slugs, sample of r
 
 ## Content filters & Deploy tools
 **Content filters**
-- Replace your WordPress base URL with the frontend URL defined in the plugin settings.
+- Replace your WordPress base URL with the front-end URL defined in the plugin settings.
 - Add image width and height attributes to  every image placed at the content.
 - Add _blank target to every external link at the content.
  
 **Deploy tools**
-- Trigger frontend build: You can specify a build webhook url for triggering a deploy in your frontend site, directly from your WordPress backend. This
+- Trigger front-end build: You can specify a build webhook url for triggering a deploy in your front-end site, directly from your WordPress back-end. This
 is specially useful to keep your frontend site always updated with the latest content, without having to manually trigger a deploy.
 
 == Screenshots ==
