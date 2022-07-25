@@ -13,7 +13,7 @@ class ContactController
      * @param  WP_REST_Request  $request
      * @return WP_REST_Response
      */
-    public static function store()
+    public static function store($request)
     {
         // TODO: Refactor.
         $params = $request->get_json_params();
