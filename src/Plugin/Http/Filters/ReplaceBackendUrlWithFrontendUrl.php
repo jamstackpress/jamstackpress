@@ -36,7 +36,7 @@ class ReplaceBackendUrlWithFrontendUrl
     protected static function replaceHomeUrl($content)
     {
         // Get the frontend url.
-        $frontendUrl = get_option('jamstackpress_frontend_base_url');
+        $frontendUrl = get_option(config('options.frontend_url.id'));
 
         return str_replace(
             'href="/',
@@ -55,7 +55,7 @@ class ReplaceBackendUrlWithFrontendUrl
     protected static function replaceUrlsExceptMedia($content)
     {
         // Get the frontend url.
-        $frontendUrl = get_option('jamstackpress_frontend_base_url');
+        $frontendUrl = get_option(config('options.frontend_url.id'));
 
         // Get the regex pattern.
         $pattern = sprintf(

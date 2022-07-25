@@ -54,7 +54,7 @@ class AddTargetToExternalUrls
     public static function isExternalUrl(string $url)
     {
         // Get the frontend URL.
-        $frontendUrl = get_option('jamstackpress_frontend_base_url');
+        $frontendUrl = get_option(config('options.frontend_url.id'));
 
         return substr($url, 0, strlen(get_site_url())) != get_site_url()
             && substr($url, 0, strlen($frontendUrl)) != $frontendUrl
