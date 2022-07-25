@@ -1,6 +1,9 @@
 <?php
 
 namespace Plugin\Http;
+use Plugin\Http\Filters\AddTargetToExternalUrls;
+use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
+
 
 class Kernel
 {
