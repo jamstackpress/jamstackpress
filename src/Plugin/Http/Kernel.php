@@ -7,20 +7,6 @@ use Plugin\Http\Filters\ReplaceBackendUrlWithFrontendUrl;
 
 class Kernel
 {
-     /**
-     * The filters for the REST Api. The key
-     * represents the WordPress hook to which
-     * the filters will be attached.
-     *
-     * @var array<string, string>
-     */
-    public static $filters = [
-        'rest_prepare_post' => [
-            AddTargetToExternalUrls::class,
-            ReplaceBackendUrlWithFrontendUrl::class,
-        ],
-    ];
-
     /**
      * Boot the HTTP services of the
      * plugin.
@@ -69,9 +55,12 @@ class Kernel
      */
     public static function applyFilters()
     {
-        foreach (static::$filters as $hook => $filters) {
+        foreach (config('filters') as $hook => $filters) {
             foreach ($filters as $filter) {
-                add_filter($hook, [$filter, 'apply'], 10, 3);
+                if (! $filter['enabled']) {
+                    return;
+                }
+                add_filter($hook, [$filter['method'], 'apply'], 10, 3);
             }
         }
     }

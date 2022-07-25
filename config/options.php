@@ -36,6 +36,43 @@ return [
         ),
     ],
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Replace Backend Url with front end URL
+    |--------------------------------------------------------------------------
+    |
+    | Indicate if the replacefilter is enabled.
+    |
+    */
+
+    'replace_filter_enabled' => [
+        'id' => 'jamstackpress_replace_filter_enabled',
+        'title' => __('Replace backend with front end URL'),
+        'description' => __(
+            'Replace your WordPress base URL with the front-end URL defined in the plugin settings.'
+        ),
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Add _blank target to every external link at the content.
+    |--------------------------------------------------------------------------
+    |
+    | Indicate if the target _blank filter is enabled.
+    |
+    */
+
+    'target_blank_filter_enabled' => [
+        'id' => 'jamstackpress_target_blank_filter_enabled',
+        'title' => __('Add _blank target to every external link at the content'),
+        'description' => __(
+            'Add _blank target to every external link at the content'
+        ),
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Readable date.
