@@ -67,13 +67,19 @@ How to use it:
  3. Send a request to the custom contact form endpoint, here is an example of a call to the contact form endpoint using js fetch()
  
  ```javascript
-fetch('https://example.com/wp-json/jamstackpress/v1/contact?' + new URLSearchParams({
-    name: 'Name',
+fetch('https://example.com/wp-json/jamstackpress/v1/contact?',{
+	method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+	body: JSON.stringify({
+	name: 'Name',
     email: 'example@example.com',
     subject: 'Contact Subject',
     message: 'Body of the contact form message',
-    recaptach_token: 'xxxxxxxxxxx'
-}))
+    recaptach_token: 'xxxxxxxxxxx'}) 
+})
 ```
 
 **/jamstackpress/v1/sitemap**
