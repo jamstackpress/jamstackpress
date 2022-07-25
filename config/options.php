@@ -189,9 +189,6 @@ return [
         'description' => __('The message to return when a contact failed.'),
     ],
 
-
-
-
     /*
     |--------------------------------------------------------------------------
     | Sitemap route enabled.

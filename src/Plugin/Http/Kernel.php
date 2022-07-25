@@ -4,6 +4,20 @@ namespace Plugin\Http;
 
 class Kernel
 {
+     /**
+     * The filters for the REST Api. The key
+     * represents the WordPress hook to which
+     * the filters will be attached.
+     *
+     * @var array<string, string>
+     */
+    public static $filters = [
+        'rest_prepare_post' => [
+            AddTargetToExternalUrls::class,
+            ReplaceBackendUrlWithFrontendUrl::class,
+        ],
+    ];
+
     /**
      * Boot the HTTP services of the
      * plugin.
@@ -14,6 +28,9 @@ class Kernel
     {
         // Register the routes in the app.
         add_action('rest_api_init', [static::class, 'registerApiRoutes']);
+
+        // Register the filters.
+        self::applyFilters();
     }
 
     /**
@@ -38,6 +55,21 @@ class Kernel
                     'permission_callback' => '__return_true',
                 ]
             );
+        }
+    }
+
+    /**
+     * Register the HTTP filters applied
+     * to the REST Api.
+     *
+     * @return void
+     */
+    public static function applyFilters()
+    {
+        foreach (static::$filters as $hook => $filters) {
+            foreach ($filters as $filter) {
+                add_filter($hook, [$filter, 'apply'], 10, 3);
+            }
         }
     }
 }
