@@ -9,11 +9,15 @@ class ContactController extends Controller
 {
 
     /**
-     * Endpoint route.
+     * Check if custom endpoint
+     * JP plugin is enabled
      *
-     * @var string
+     * @return bool
      */
-    public static $route = 'contact';
+    public static function isEnabled()
+    {
+        return contact::isEnabled();
+    }
 
     /**
      * Contact form endpoint.

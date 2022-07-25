@@ -90,7 +90,7 @@ class Kernel
             'section' => 'jamstackpress-options',
         ],
         [
-            'id' => 'jamstackpress_contact_enabled',
+            'id' => 'jamstackpress_jp_contact_enabled',
             'title' => 'Contact form endpoint',
             'callback' => 'renderContactEndpointOption',
             'page' => 'jamstackpress-admin',
