@@ -16,7 +16,8 @@
 		]
 	},
 	"require": {
-		"hassankhan/config": "^3.0"
+		"hassankhan/config": "^3.0",
+		"fasterimage/fasterimage": "^1.5"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.9"

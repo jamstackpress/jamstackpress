@@ -72,6 +72,25 @@ return [
         ),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Add image sizes.
+    |--------------------------------------------------------------------------
+    |
+    | Indicate if the filter to add the corresponding sizes to the
+    | images is enabled.
+    |
+    */
+
+    'add_image_sizes_filter_enabled' => [
+        'id' => 'jamstackpress_add_image_sizes_filter_enabled',
+        'title' => __('Add sizes to images'),
+        'description' => __(
+            'Calculate and set the corresponding sizes to the images in
+            the content of the posts.'
+        ),
+    ],
+
 
     /*
     |--------------------------------------------------------------------------

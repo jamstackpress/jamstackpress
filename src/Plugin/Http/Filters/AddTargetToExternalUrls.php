@@ -9,12 +9,15 @@ class AddTargetToExternalUrls
     /**
      * Add the target to all external urls.
      *
-     * @param  string  $content
+     * @param  WP_REST_Response  $response
+     * @param  WP_Post  $post
+     * @param  WP_REST_Request  $request
      * @return string
      */
-    public static function apply($data, $post, $context)
+    public static function apply($response, $post, $request)
     {
-        $content = $data->data['content']['rendered'];
+        $content = $response->data['content']['rendered'];
+        
         // Discard a null or empty content.
         if (! $content || empty($content)) {
             return $content;
@@ -39,9 +42,10 @@ class AddTargetToExternalUrls
             }
         }
         
-        $data->data['content']['rendered'] = $dom->saveHTML();
+        // Replace the content in the response.
+        $response->data['content']['rendered'] = $dom->saveHTML();
 
-        return $data;
+        return $response;
     }
 
     /**

@@ -7,23 +7,26 @@ class ReplaceBackendUrlWithFrontendUrl
     /**
      * Replace backend base URL with front base url.
      *
-     * @param  string  $content
+     * @param  WP_REST_Response  $response
+     * @param  WP_Post  $post
+     * @param  WP_REST_Request  $request
      * @return string
      */
-    public static function apply($data, $post, $context)
+    public static function apply($response, $post, $request)
     {
-        
-        $content = $data->data['content']['rendered'];
+        $content = $response->data['content']['rendered'];
+
         // Replace the home url with the frontend URL.
         $content = static::replaceHomeUrl($content);
 
         // Replace the urls that don't match any
         // uploaded media.
         $content = static::replaceUrlsExceptMedia($content);
+
+        // Replace the content in the response.
+        $response->data['content']['rendered'] = $content;
         
-        $data->data['content']['rendered'] = $content;
-        
-        return $data;
+        return $response;
     }
 
     /**

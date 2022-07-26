@@ -57,6 +57,7 @@ class Kernel
                 if (! $filter['enabled']) {
                     return;
                 }
+                
                 add_filter($hook, [$filter['method'], 'apply'], 10, 3);
             }
         }

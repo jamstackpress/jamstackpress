@@ -17,8 +17,8 @@ class ContactController
     {
         // TODO: Refactor.
         $params = $request->get_json_params();
-        $failMessage = get_option('jamstackpress_contact_fail_message');
-        $successMessage = get_option('jamstackpress_contact_success_message');
+        $failMessage = get_option(config('options.failed_contact_message.id'));
+        $successMessage = get_option(config('options.successful_contact_message.id'));
 
         // Verify the recaptcha token.
         $response = json_decode(
@@ -26,7 +26,7 @@ class ContactController
                 wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
                     'headers' => ['Content-Type', 'application/json'],
                     'body' => [
-                        'secret' => get_option('jamstackpress_recaptcha_secret_key'),
+                        'secret' => get_option(config('options.recaptcha_secret_key.id')),
                         'response' => $params['recaptcha_token'],
                     ],
                 ])
@@ -60,7 +60,7 @@ class ContactController
 
         // Send an email to the configured email addresses.
         $success = wp_mail(
-            get_option('jamstackpress_contact_email'),
+            get_option(config('options.contact_notification_email.id')),
             sanitize_text_field($params['subject']),
             sprintf(
                 '<b>Name: </b>%s<br /><b>Email: </b>%s<br /><b>Subject: </b>%s<br /><b>Menssage:</b><br/>%s',
