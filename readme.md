@@ -1,16 +1,3 @@
-=== JAMStackPress ===
-Contributors: santiagocajal, guilledutra, jamstackpress
-Tags: headless,static,jamstack,pwa,spa,api,json
-Requires at least: 5.7.1
-Tested up to: 6.0.1
-Stable tag: 0.1.3
-Requires PHP: 7.4
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
-Power-up your WordPress site and get it ready for JAMStack. Take advantage of useful fields, endpoints and filters extending the WP-JSON API.  
-  
-== Description ==  
 # JAMStackPress - Power-up you WordPress backend  
   
 This plugin extends the WP-JSON API by adding a new useful set of fields to the WP-JSON API response, this new set of fields will make your front-end development easier. JAMStackPress also applies some optional filters  
@@ -98,51 +85,3 @@ This endpoint will return a full list of posts and categories slugs, here is a s
 **Deploy tools**  
 - Trigger front-end build: You can specify a build webhook url for triggering a deployment in your front-end site, directly from your WordPress back-end. This  
 is specially useful to keep your front-end site always updated with the latest content, without having to manually trigger a deploy.  
-  
-== Screenshots ==  
-  
-1. Options panel.  
-  
-== Changelog ==  
-
-= 0.1.3 =
-* Fix plugin version
-* Update changelog order
-
-= 0.1.2 =
-* Fix internal GitHub deployment
-
-= 0.1.1 =  
-* Fix dependencies missing
-
-= 0.1.0 =  
-* Major changes (see readme)
-* The plugin now extends the WP-JSON API
-
-= 0.0.5 =  
-* Fix version number
-
-= 0.0.4 =  
-* Fix endpoint response not being formatted correctly.  
-  
-= 0.0.3 =  
-* Fix previous release version issues.  
-* Update screenshots and url placeholders.  
-
-= 0.0.2 =  
-* Add plugin assets dir.  
-
-= 0.0.1 =  
-* First version.  
-
-  
-
-  
-
-  
-
-
-
-
-
-
