@@ -3,7 +3,7 @@ Contributors: santiagocajal, guilledutra, jamstackpress
 Tags: headless,static,jamstack,pwa,spa,api,json
 Requires at least: 5.7.1
 Tested up to: 6.0.1
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -104,29 +104,45 @@ is specially useful to keep your front-end site always updated with the latest c
 1. Options panel.  
   
 == Changelog ==  
-  
-= 0.0.1 =  
-* First version.  
-  
-= 0.0.2 =  
-* Add plugin assets dir.  
-  
-= 0.0.3 =  
-* Fix previous release version issues.  
-* Update screenshots and url placeholders.  
-  
-= 0.0.4 =  
-* Fix endpoint response not being formatted correctly.  
-  
-= 0.0.5 =  
-* Fix version number
+
+= 0.1.3 =
+* Fix plugin version
+* Update changelog order
+
+= 0.1.2 =
+* Fix internal GitHub deployment
+
+= 0.1.1 =  
+* Fix dependencies missing
 
 = 0.1.0 =  
 * Major changes (see readme)
 * The plugin now extends the WP-JSON API
 
-= 0.1.1 =  
-* Fix dependencies missing
+= 0.0.5 =  
+* Fix version number
 
-= 0.1.2 =
-* Fix internal GitHub deployment
+= 0.0.4 =  
+* Fix endpoint response not being formatted correctly.  
+  
+= 0.0.3 =  
+* Fix previous release version issues.  
+* Update screenshots and url placeholders.  
+
+= 0.0.2 =  
+* Add plugin assets dir.  
+
+= 0.0.1 =  
+* First version.  
+
+  
+
+  
+
+  
+
+
+
+
+
+
