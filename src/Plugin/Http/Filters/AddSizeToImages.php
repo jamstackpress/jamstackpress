@@ -36,17 +36,17 @@ class AddSizeToImages
 
         // Get the content images.
         $images = $dom->getElementsByTagName('img');
-        
+
+        // Discard if there are no images.
+        if (! count($images)) {
+            return $response;
+        }
+
         // Get the image sources.
         $sources = array_map(
             fn ($image) => $image->getAttribute('src'),
-            $images
+            iterator_to_array($images)
         );
-      
-        // Discard if there is no images.
-        if (empty($sources)) {
-        return $response;
-        }
 
         // Get the sizes of the images.
         $sizes = (new FasterImage)->batch($sources);
@@ -54,6 +54,12 @@ class AddSizeToImages
         // Loop through the images and set the
         // corresponding size.
         foreach ($images as $image) {
+            // Check if the size was retrieved.
+            if (count($sizes[$image->getAttribute('src')]['size']) < 2) {
+                static::setImageSize($image);
+                continue;
+            }
+
             static::setImageSize(
                 $image, 
                 ...$sizes[$image->getAttribute('src')]['size']
@@ -71,11 +77,11 @@ class AddSizeToImages
      * the size on the image.
      * 
      * @param  \DOMElement  $image
-     * @param  int  $width
-     * @param  int  $height
+     * @param  int  $width  (optional)
+     * @param  int  $height  (optional)
      * @return void
      */
-    public static function setImageSize($image, $width, $height)
+    public static function setImageSize($image, $width = null, $height = null)
     {
         // Set the defailt "srcset" attribute.
         if (! $image->getAttribute('srcset')) {
