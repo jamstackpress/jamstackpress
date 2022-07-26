@@ -1,9 +1,9 @@
 === JAMStackPress ===
-Contributors: scajal, guilledutra, jamstackpress
+Contributors: santiagocajal, guilledutra, jamstackpress
 Tags: headless,static,jamstack,pwa,spa,api,json
 Requires at least: 5.7.1
 Tested up to: 5.7.1
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,12 +23,12 @@ We think about the possible scenarios of development for your static website, so
 We include some extra fields that can be activated in the plugins administration page, that will make your front-end development easier:  
   
 - Human readable date field (uses the locale defined in your WordPress panel):  
-```javascript  
+```  
 "readable_date": "March 26, 2018"  
 ```  
   
 - Post's full slug and front-end link respecting your WordPress permalinks selection:  
-```javascript  
+```  
 "routes": {  
 "slug": "/category/post-title/",  
 "front_link": "https://frontenddomain.com/category/post-title/"  
@@ -37,7 +37,7 @@ We include some extra fields that can be activated in the plugins administration
   
 - Featured image URLs one for every size:  
   
-```javascript  
+```  
 "featured_image": {  
 "thumbnail": "http://example.com/wp-content/uploads/2022/07/thumbnail-150x150.jpg",  
 "medium": "http://example.com/wp-content/uploads/2022/07/medium-300x200.jpg",  
@@ -47,7 +47,7 @@ We include some extra fields that can be activated in the plugins administration
 ```  
   
 - SEO tags Title and Description - Compatible With Yoast and RankMath plugins:  
-```javascript  
+```  
 "seo": {  
 "title": "Post Title",  
 "description": "Post SEO description"  
@@ -66,7 +66,7 @@ How to use it:
 2. Fill and save the rest of the options related to the contact endpoint: **Contact email**, **Contact Fail Message**, **Contact Success Message** and **reCaptcha Secret Key** (google reCaptcha V3).  
 3. Send a request to the custom contact form endpoint, here is an example of a call to the contact form endpoint using js fetch()  
   
-```javascript  
+```  
 fetch('https://example.com/wp-json/jamstackpress/v1/contact?',{  
 method: 'POST',  
 headers: {  
@@ -84,7 +84,7 @@ recaptach_token: 'xxxxxxxxxxx'})
   
 **/jamstackpress/v1/sitemap**  
 This endpoint will return a full list of posts and categories slugs, here is a sample of returned list:  
-```javascript  
+``` 
 ["/sapiente/eveniet-velit-et-aut-est-et-inventore/","/sapiente/aliquid-aut-ut-eius-excepturi-magni/","/nulla-molestias/eius-ratione-mollitia-aliquam/","/uncategorized/aut-qui-repudiandae-nihil-iste/","/uncategorized/test/","/aliquam/","/ipsa-ratione/","/nulla-molestias/","/perferendis-modi/","/sapiente/","/uncategorized/","/unde-temporibus/","/ut-quo/"]  
 ```  
   
@@ -123,4 +123,7 @@ is specially useful to keep your front-end site always updated with the latest c
 
 = 0.1.0 =  
 * Major changes (see readme)
-* The plugin now extends the WP-JSON API  
+* The plugin now extends the WP-JSON API
+
+= 0.1.1 =  
+* Fix dependencies missing
